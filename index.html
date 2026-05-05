@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
-<meta name="apple-mobile-web-app-title" content="LIFTS"/>
-<title>LIFTS</title>
+<meta name="apple-mobile-web-app-title" content="MUVIT"/>
+<title>MUVIT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -123,6 +123,13 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--fb
 .rm{background:transparent;border:none;color:var(--dim);font-size:18px;cursor:pointer;padding:0 4px;line-height:1}
 .rm:hover{color:var(--acc2)}
 
+/* ACTIVITY */
+.act-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.act-btn{background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:14px 10px;text-align:left;cursor:pointer;color:var(--ink);font-family:var(--fb);transition:all .12s}
+.act-btn:active{transform:scale(.97)}
+.act-ic{font-size:18px;margin-bottom:6px}.act-name{font-family:var(--fd);font-size:16px;letter-spacing:.04em}.act-hint{font-family:var(--fm);font-size:9px;color:var(--muted);margin-top:3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.chip{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:6px 9px;font-family:var(--fm);font-size:9px;color:var(--ink);display:flex;gap:6px;align-items:center}.chip button{border:none;background:transparent;color:var(--acc2);font-size:12px;cursor:pointer}
+
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:flex-end}
 .modal{background:var(--white);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:24px 22px 40px;width:100%;max-width:430px;margin:0 auto}
@@ -165,13 +172,13 @@ function hasLogs(st,iso){const s=st.sessions[iso];return!!(s&&Object.values(s).s
 function dayStatus(day,st,td){
   const tiso=dk(td),r=st.routine[day.dow];
   const isR=!r||!r.exercises||r.exercises.length===0;
-  if(hasLogs(st,day.iso))return'done';
+  if(hasMovement(st,day.iso))return'done';
   if(day.iso===tiso)return isR?'rest-today':'today';
   if(isR)return day.iso<tiso?'rest':'rest-future';
   if(day.iso<tiso)return'missed';
   return'future';
 }
-function calcStreak(st,td){let s=0;const d=new Date(td);for(let i=0;i<90;i++){const iso=dk(d),dow=d.getDay(),r=st.routine[dow];const isR=!r||!r.exercises||r.exercises.length===0;if(isR)s++;else if(hasLogs(st,iso))s++;else if(iso===dk(td)){}else break;d.setDate(d.getDate()-1);}return s;}
+function calcStreak(st,td){let s=0;const d=new Date(td);for(let i=0;i<90;i++){const iso=dk(d),dow=d.getDay(),r=st.routine[dow];const isR=!r||!r.exercises||r.exercises.length===0;if(isR)s++;else if(hasMovement(st,iso))s++;else if(iso===dk(td)){}else break;d.setDate(d.getDate()-1);}return s;}
 function moStats(st,td){const days=mDays(td.getFullYear(),td.getMonth());let done=0,missed=0,rest=0,vol=0;for(const d of days){const s=dayStatus(d,st,td);if(s==='done')done++;else if(s==='missed')missed++;else if(s==='rest')rest++;const ses=st.sessions[d.iso];if(ses)for(const arr of Object.values(ses))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.weight&&s.reps)vol+=s.weight*s.reps;}return{done,missed,rest,vol};}
 
 const TPL={
@@ -184,10 +191,18 @@ const TPL={
   0:{focus:'DESCANSO',exercises:[]},
 };
 
-const KEY='lifts_v1';
-const load=()=>{try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r);}catch(e){}return null;};
+const KEY='muvit_v1';
+const OLD_KEY='lifts_v1';
+const ensureShape=s=>({activities:{},goalStages:[],notes:{},...s,user:{bodyFat:null,movementGoal:20,...(s?.user||{})}});
+const load=()=>{try{let r=localStorage.getItem(KEY);if(r)return ensureShape(JSON.parse(r));r=localStorage.getItem(OLD_KEY);if(r){const migrated=ensureShape(JSON.parse(r));localStorage.setItem(KEY,JSON.stringify(migrated));return migrated;}}catch(e){}return null;};
 const persist=s=>{try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}};
-const blank=()=>({onboarded:false,user:{name:'',weightKg:null,heightCm:null,goal:'',monthlyGoal:16},routine:{},sessions:{},notes:{}});
+const blank=()=>({onboarded:false,user:{name:'',weightKg:null,heightCm:null,bodyFat:null,goal:'',monthlyGoal:12,movementGoal:20},routine:{},sessions:{},activities:{},goalStages:[],notes:{}});
+const ACTS=[{id:'gym',name:'Gym',ic:'🏋️'},{id:'pilates',name:'Pilates',ic:'◌'},{id:'yoga',name:'Yoga',ic:'△'},{id:'running',name:'Running',ic:'↗'},{id:'walk',name:'Caminata',ic:'○'},{id:'other',name:'Otro',ic:'+'}];
+const actName=id=>(ACTS.find(a=>a.id===id)||{}).name||id;
+const actIcon=id=>(ACTS.find(a=>a.id===id)||{}).ic||'•';
+const dayActs=(st,iso)=>(st.activities&&st.activities[iso])||[];
+const hasMovement=(st,iso)=>hasLogs(st,iso)||dayActs(st,iso).length>0;
+function moActivityStats(st,td){const days=mDays(td.getFullYear(),td.getMonth());const by={gym:0,pilates:0,yoga:0,running:0,walk:0,other:0};let total=0,activeDays=0;for(const d of days){let moved=false;if(hasLogs(st,d.iso)){by.gym++;total++;moved=true;}for(const a of dayActs(st,d.iso)){by[a.type]=(by[a.type]||0)+1;total++;moved=true;}if(moved)activeDays++;}return{by,total,activeDays};}
 
 function Logo(){return(
   <div className="logo">
@@ -199,13 +214,13 @@ function Logo(){return(
       <rect x="10" y="4" width="4" height="3" rx="1" fill="var(--acc2)"/>
       <rect x="10" y="17" width="4" height="3" rx="1" fill="var(--acc2)"/>
     </svg>
-    <span>LIFTS</span>
+    <span>MUVIT</span>
   </div>
 );}
 
 function Onboarding({onDone}){
   const [step,setStep]=useState(0);
-  const [u,setU]=useState({name:'',weightKg:'',heightCm:'',goal:'Bajar grasa',monthlyGoal:16});
+  const [u,setU]=useState({name:'',weightKg:'',heightCm:'',bodyFat:'',goal:'Bajar grasa',monthlyGoal:12,movementGoal:20});
   const [tDays,setTDays]=useState([1,2,4,5,6]);
   const [rtn,setRtn]=useState({});
   const [editDow,setEditDow]=useState(null);
@@ -226,7 +241,7 @@ function Onboarding({onDone}){
   const updEx=(dow,id,f,v)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.map(e=>e.id===id?{...e,[f]:v}:e)}}));
   const rmEx=(dow,id)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.filter(e=>e.id!==id)}}));
   const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...p[dow],focus:v}}));
-  const finish=()=>onDone({onboarded:true,user:{name:u.name.trim()||'ATLETA',weightKg:parseFloat(u.weightKg)||null,heightCm:parseInt(u.heightCm)||null,goal:u.goal,monthlyGoal:parseInt(u.monthlyGoal)||16},routine:rtn,sessions:{},notes:{}});
+  const finish=()=>onDone({onboarded:true,user:{name:u.name.trim()||'ATLETA',weightKg:parseFloat(u.weightKg)||null,heightCm:parseInt(u.heightCm)||null,bodyFat:parseFloat(u.bodyFat)||null,goal:u.goal,monthlyGoal:parseInt(u.monthlyGoal)||12,movementGoal:parseInt(u.movementGoal)||20},routine:rtn,sessions:{},activities:{},goalStages:[{id:gid(),date:todayISO(),goal:u.goal}],notes:{}});
   const can0=u.name.trim().length>0,can1=tDays.length>0;
 
   return(
@@ -243,7 +258,7 @@ function Onboarding({onDone}){
           <label><span>Altura (cm)</span><input type="number" inputMode="numeric" value={u.heightCm} onChange={e=>setU({...u,heightCm:e.target.value})} placeholder="165"/></label>
         </div>
         <label><span>Objetivo</span><select value={u.goal} onChange={e=>setU({...u,goal:e.target.value})}><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Mantener</option><option>Recomposición</option></select></label>
-        <label><span>Meta sesiones / mes</span><input type="number" inputMode="numeric" value={u.monthlyGoal} onChange={e=>setU({...u,monthlyGoal:e.target.value})}/></label>
+        <div className="row2"><label><span>Gym / mes</span><input type="number" inputMode="numeric" value={u.monthlyGoal} onChange={e=>setU({...u,monthlyGoal:e.target.value})}/></label><label><span>Movimiento / mes</span><input type="number" inputMode="numeric" value={u.movementGoal} onChange={e=>setU({...u,movementGoal:e.target.value})}/></label></div><label><span>% grasa opcional</span><input type="number" inputMode="decimal" value={u.bodyFat} onChange={e=>setU({...u,bodyFat:e.target.value})} placeholder="Opcional"/></label>
         <button className="btn btn-p" disabled={!can0} style={{opacity:can0?1:.4,marginTop:18}} onClick={()=>setStep(1)}><span>SIGUIENTE</span><span className="ar">→</span></button>
       </div>}
       {step===1&&<div className="fade">
@@ -331,12 +346,33 @@ function CalMini({st,td,onPick}){
   </>);
 }
 
-function Home({st,onStart,onCal,onAv}){
+
+function QuickActivityModal({st,setSt,onClose,onGym}){
+  const add=type=>{
+    if(type==='gym'){onClose();onGym();return;}
+    const iso=todayISO();
+    setSt(s=>{const activities={...(s.activities||{})};activities[iso]=[...(activities[iso]||[]),{id:gid(),type,createdAt:new Date().toISOString()}];return{...s,activities};});
+    onClose();
+  };
+  return(<div className="modal-bg" onClick={onClose}>
+    <div className="modal" onClick={e=>e.stopPropagation()}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
+        <div><div className="D" style={{fontSize:24,color:'var(--ink)'}}>REGISTRAR</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:4}}>Un toque y listo. Sin llenar formularios.</div></div>
+        <button onClick={onClose} style={{background:'transparent',border:'none',color:'var(--muted)',fontSize:20,cursor:'pointer'}}>✕</button>
+      </div>
+      <div className="act-grid">{ACTS.map(a=><button key={a.id} className="act-btn" onClick={()=>add(a.id)}><div className="act-ic">{a.ic}</div><div className="act-name">{a.name.toUpperCase()}</div><div className="act-hint">MARCAR HECHO</div></button>)}</div>
+    </div>
+  </div>);
+}
+
+function Home({st,onStart,onCal,onAv,onLog,setSt}){
   const td=now(),dow=td.getDay(),rtn=st.routine[dow]||{focus:'DESCANSO',exercises:[]};
-  const isR=rtn.exercises.length===0,stats=moStats(st,td),strk=calcStreak(st,td);
-  const pct=Math.min(100,Math.round((stats.done/st.user.monthlyGoal)*100));
+  const isR=rtn.exercises.length===0,stats=moStats(st,td),astats=moActivityStats(st,td),strk=calcStreak(st,td);
+  const pct=Math.min(100,Math.round((astats.total/(st.user.movementGoal||20))*100));
   const tSes=st.sessions[todayISO()]||{},totalS=rtn.exercises.length*3;
   const doneS=Object.values(tSes).reduce((n,a)=>n+(Array.isArray(a)?a.filter(s=>s&&s.done).length:0),0);
+  const tActs=dayActs(st,todayISO());
+  const removeAct=id=>setSt(s=>{const activities={...(s.activities||{})};activities[todayISO()]=(activities[todayISO()]||[]).filter(a=>a.id!==id);return{...s,activities};});
   const mo=fmtMo(td);
   const DS=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
   const wk=[];const diff=dow===0?-6:1-dow;for(let i=0;i<7;i++){const d=new Date(td);d.setDate(td.getDate()+diff+i);wk.push(d);}
@@ -356,25 +392,25 @@ function Home({st,onStart,onCal,onAv}){
         </div>
         <div style={{textAlign:'right'}}>
           <div className="L" style={{color:'rgba(255,255,255,.45)'}}>{mo.split(' ')[0]}</div>
-          <div className="D" style={{fontSize:32,marginTop:4,color:'var(--white)'}}>{stats.done}<span style={{color:'rgba(255,255,255,.28)',fontSize:20}}>/{st.user.monthlyGoal}</span></div>
-          <div className="M" style={{fontSize:8,color:'rgba(255,255,255,.38)'}}>SESIONES</div>
+          <div className="D" style={{fontSize:32,marginTop:4,color:'var(--white)'}}>{astats.total}<span style={{color:'rgba(255,255,255,.28)',fontSize:20}}>/{st.user.movementGoal||20}</span></div>
+          <div className="M" style={{fontSize:8,color:'rgba(255,255,255,.38)'}}>MOVIMIENTOS</div>
         </div>
       </div>
     </div>
 
     <div style={{padding:'0 20px',marginBottom:14}}>
       <div style={{display:'flex',justifyContent:'space-between',marginBottom:5}}>
-        <span className="L">PROGRESO {mo}</span>
+        <span className="L">MOVIMIENTO {mo}</span>
         <span className="M" style={{fontSize:10,color:'var(--ink)',fontWeight:500}}>{pct}%</span>
       </div>
       <div className="pb"><div className="pf" style={{width:`${pct}%`}}/></div>
     </div>
 
     <div style={{display:'flex',gap:5,padding:'0 20px',overflowX:'auto',marginBottom:14,paddingBottom:2}}>
-      {wk.map(d=>{const k=dk(d),jd=d.getDay(),r=st.routine[jd]||{exercises:[]},isDone=hasLogs(st,k),isT=k===todayISO(),isRst=r.exercises.length===0;
+      {wk.map(d=>{const k=dk(d),jd=d.getDay(),r=st.routine[jd]||{exercises:[]},acts=dayActs(st,k),isDone=hasMovement(st,k),isT=k===todayISO(),isRst=r.exercises.length===0;
         return(<div key={k} className={`wday${isT?' wt':isDone?' wd':''}`} style={{flex:'0 0 44px'}}>
           <div className="M" style={{fontSize:8,color:isT?'var(--acc)':'var(--muted)'}}>{DS[jd]}</div>
-          <div className="D" style={{fontSize:9,marginTop:2,color:isT?'var(--white)':isDone?'var(--ink)':isRst?'var(--dim)':'var(--muted)'}}>{r.focus?r.focus.split('·')[0].trim().split(' ')[0].slice(0,5):'—'}</div>
+          <div className="D" style={{fontSize:9,marginTop:2,color:isT?'var(--white)':isDone?'var(--ink)':isRst?'var(--dim)':'var(--muted)'}}>{acts.length?actName(acts[0].type).slice(0,5):(hasLogs(st,k)?'GYM':(r.focus?r.focus.split('·')[0].trim().split(' ')[0].slice(0,5):'—'))}</div>
           {isDone&&!isT&&<div style={{width:4,height:4,borderRadius:'50%',background:'var(--ink)',margin:'3px auto 0'}}/>}
         </div>);
       })}
@@ -383,7 +419,12 @@ function Home({st,onStart,onCal,onAv}){
     <Tape>{mo}</Tape>
     <CalMini st={st} td={td} onPick={onCal}/>
 
-    <Tape>SESIÓN DE HOY</Tape>
+    <Tape>MOVIMIENTO DE HOY</Tape>
+    <div style={{padding:'0 20px',marginBottom:12}}>
+      <button className="btn btn-p" onClick={onLog}><span>+ REGISTRAR MOVIMIENTO</span><span className="ar">+</span></button>
+      {(hasLogs(st,todayISO())||tActs.length>0)&&<div className="chips">{hasLogs(st,todayISO())&&<span className="chip">🏋️ GYM</span>}{tActs.map(a=><span key={a.id} className="chip">{actIcon(a.type)} {actName(a.type).toUpperCase()} <button onClick={()=>removeAct(a.id)}>×</button></span>)}</div>}
+    </div>
+    <Tape>SESIÓN DE GYM</Tape>
     <div style={{padding:'0 20px'}}>
       <div className="card" style={{marginBottom:10}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
@@ -480,15 +521,15 @@ function ExCard({ex,num,sets,editable,onUpd,onTog}){
 }
 
 function Calendar({st}){
-  const td=now(),stats=moStats(st,td),strk=calcStreak(st,td);
+  const td=now(),stats=moStats(st,td),astats=moActivityStats(st,td),strk=calcStreak(st,td);
   const days=mDays(td.getFullYear(),td.getMonth()),first=days[0].dow,mo=fmtMo(td);
   return(<div className="body">
     <TB user={st.user} sub={mo}/>
     <div style={{padding:'0 20px',marginBottom:4}}>
       <div className="card card-ink" style={{padding:'16px 18px',display:'flex',alignItems:'flex-start',justifyContent:'space-between'}}>
-        <div><div className="L" style={{color:'rgba(255,255,255,.45)'}}>SESIONES</div><div className="D" style={{fontSize:64,color:'var(--acc)',marginTop:2}}>{stats.done}</div><div className="M" style={{fontSize:11,color:'rgba(255,255,255,.4)'}}>de {st.user.monthlyGoal} objetivo</div></div>
+        <div><div className="L" style={{color:'rgba(255,255,255,.45)'}}>MOVIMIENTOS</div><div className="D" style={{fontSize:64,color:'var(--acc)',marginTop:2}}>{astats.total}</div><div className="M" style={{fontSize:11,color:'rgba(255,255,255,.4)'}}>de {st.user.movementGoal||20} objetivo</div></div>
         <div style={{display:'flex',flexDirection:'column',gap:8,alignItems:'flex-end',marginTop:4}}>
-          {[[stats.done,'var(--acc)','entrenadas'],[stats.rest,'rgba(255,255,255,.2)','descanso'],[stats.missed,'var(--acc2)','perdidas']].map(([n,c,l])=><div key={l} style={{display:'flex',alignItems:'center',gap:6}}><span style={{width:8,height:8,borderRadius:2,background:c}}/><span className="M" style={{fontSize:11,color:'rgba(255,255,255,.6)'}}>{n} {l}</span></div>)}
+          {[[astats.by.gym,'var(--acc)','gym'],[astats.by.pilates,'rgba(255,255,255,.45)','pilates'],[astats.by.running+astats.by.walk,'var(--acc2)','cardio/walk']].map(([n,c,l])=><div key={l} style={{display:'flex',alignItems:'center',gap:6}}><span style={{width:8,height:8,borderRadius:2,background:c}}/><span className="M" style={{fontSize:11,color:'rgba(255,255,255,.6)'}}>{n} {l}</span></div>)}
         </div>
       </div>
     </div>
@@ -508,7 +549,7 @@ function Calendar({st}){
 }
 
 function Stats({st}){
-  const td=now(),stats=moStats(st,td);
+  const td=now(),stats=moStats(st,td),astats=moActivityStats(st,td);
   const weeks=[];
   for(let w=5;w>=0;w--){const end=new Date(td);end.setDate(end.getDate()-w*7);const start=new Date(end);start.setDate(start.getDate()-6);let kg=0;for(const[iso,day]of Object.entries(st.sessions)){const d=iso2d(iso);if(d>=start&&d<=end)for(const arr of Object.values(day))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.weight&&s.reps)kg+=s.weight*s.reps;}const tmp=new Date(end);tmp.setDate(tmp.getDate()-end.getDay()+1);const oj=new Date(tmp.getFullYear(),0,1);weeks.push({w:'W'+Math.ceil((((tmp-oj)/86400000)+oj.getDay()+1)/7),kg});}
   const maxKg=Math.max(1,...weeks.map(w=>w.kg));
@@ -525,6 +566,10 @@ function Stats({st}){
     <div style={{padding:'0 20px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:4}}>
       <div className="card" style={{padding:13}}><div className="L">VOLUMEN MES</div><div className="D" style={{fontSize:32,marginTop:4,color:'var(--ink)'}}>{(stats.vol/1000).toFixed(1)}<span style={{fontSize:13,color:'var(--muted)'}}>t</span></div><div className="M" style={{fontSize:9,color:'var(--muted)'}}>{stats.vol.toLocaleString()} KG</div></div>
       <div className="card" style={{padding:13}}><div className="L">RIR PROM.</div><div className="D" style={{fontSize:32,marginTop:4,color:'var(--ink)'}}>{avgRIR==null?'—':avgRIR.toFixed(1)}</div><div className="M" style={{fontSize:9,color:'var(--muted)'}}>{avgRIR==null?'SIN DATOS':avgRIR<1.5?'INTENSIDAD ALTA':'MODERADA'}</div></div>
+    </div>
+    <Tape>DISCIPLINAS DEL MES</Tape>
+    <div style={{padding:'0 20px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:4}}>
+      {ACTS.filter(a=>a.id!=='other').map(a=><div key={a.id} className="card" style={{padding:'12px 13px'}}><div className="M" style={{fontSize:18}}>{a.ic}</div><div className="D" style={{fontSize:26,color:'var(--ink)',marginTop:3}}>{astats.by[a.id]||0}</div><div className="L">{a.name}</div></div>)}
     </div>
     <Tape>VOLUMEN POR SEMANA</Tape>
     <div style={{padding:'0 20px'}}><div className="card" style={{padding:'14px 14px 10px'}}>
@@ -554,25 +599,60 @@ function ProfileModal({st,setSt,onClose}){
   const [name,setName]=useState(st.user.name||'');
   const [wt,setWt]=useState(st.user.weightKg||'');
   const [ht,setHt]=useState(st.user.heightCm||'');
-  const [mg,setMg]=useState(st.user.monthlyGoal||16);
+  const [bf,setBf]=useState(st.user.bodyFat||'');
+  const [goal,setGoal]=useState(st.user.goal||'');
+  const [mg,setMg]=useState(st.user.monthlyGoal||12);
+  const [mov,setMov]=useState(st.user.movementGoal||20);
+  const [rtn,setRtn]=useState(JSON.parse(JSON.stringify(st.routine||{})));
+  const [editDow,setEditDow]=useState(null);
   const iStyle={background:'var(--bg2)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:15,padding:'10px 12px',borderRadius:10,width:'100%',outline:'none'};
-  const save=()=>{setSt(s=>({...s,user:{...s.user,name:name.trim()||s.user.name,weightKg:parseFloat(wt)||s.user.weightKg,heightCm:parseInt(ht)||s.user.heightCm,monthlyGoal:parseInt(mg)||s.user.monthlyGoal}}));onClose();};
-  const reset=()=>{if(confirm('¿Borrar todos los datos y empezar de cero?')){localStorage.removeItem(KEY);window.location.reload();}};
+  const addEx=dow=>setRtn(p=>({...p,[dow]:{...(p[dow]||{}),focus:p[dow]?.focus||'ENTRENAMIENTO',exercises:[...(p[dow]?.exercises||[]),{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));
+  const updEx=(dow,id,f,v)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:(p[dow].exercises||[]).map(e=>e.id===id?{...e,[f]:v}:e)}}));
+  const rmEx=(dow,id)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:(p[dow].exercises||[]).filter(e=>e.id!==id)}}));
+  const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...(p[dow]||{}),focus:v,exercises:p[dow]?.exercises||[]}}));
+  const makeRest=dow=>setRtn(p=>({...p,[dow]:{focus:'DESCANSO',exercises:[]}}));
+  const makeTrain=dow=>setRtn(p=>({...p,[dow]:{focus:'ENTRENAMIENTO',exercises:p[dow]?.exercises?.length?p[dow].exercises:[{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));
+  const save=()=>{setSt(s=>{const newStage=goal&&goal!==s.user.goal?{id:gid(),date:todayISO(),goal}:null;return{...s,user:{...s.user,name:name.trim()||s.user.name,weightKg:parseFloat(wt)||null,heightCm:parseInt(ht)||null,bodyFat:parseFloat(bf)||null,goal,monthlyGoal:parseInt(mg)||12,movementGoal:parseInt(mov)||20},routine:rtn,goalStages:newStage?[...(s.goalStages||[]),newStage]:(s.goalStages||[])};});onClose();};
+  const reset=()=>{if(confirm('¿Borrar todos los datos y empezar de cero?')){localStorage.removeItem(KEY);localStorage.removeItem(OLD_KEY);window.location.reload();}};
   return(<div className="modal-bg" onClick={onClose}>
-    <div className="modal" onClick={e=>e.stopPropagation()}>
+    <div className="modal" onClick={e=>e.stopPropagation()} style={{maxHeight:'92vh',overflowY:'auto'}}>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:20}}>
-        <div className="D" style={{fontSize:22,color:'var(--ink)'}}>PERFIL</div>
+        <div className="D" style={{fontSize:22,color:'var(--ink)'}}>PERFIL & RUTINA</div>
         <button onClick={onClose} style={{background:'transparent',border:'none',color:'var(--muted)',fontSize:20,cursor:'pointer'}}>✕</button>
       </div>
       <div style={{display:'grid',gap:10}}>
         <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">NOMBRE</span><input style={iStyle} value={name} onChange={e=>setName(e.target.value)}/></label>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">PESO KG</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={wt} onChange={e=>setWt(e.target.value)}/></label>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">ALTURA CM</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={ht} onChange={e=>setHt(e.target.value)}/></label>
+        <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">ETAPA / OBJETIVO ACTUAL</span><select style={iStyle} value={goal} onChange={e=>setGoal(e.target.value)}><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Mantener</option><option>Recomposición</option><option>Retomar constancia</option></select></label>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8}}>
+          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">PESO</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={wt} onChange={e=>setWt(e.target.value)}/></label>
+          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">ALTURA</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={ht} onChange={e=>setHt(e.target.value)}/></label>
+          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">% GRASA</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={bf} onChange={e=>setBf(e.target.value)} placeholder="—"/></label>
         </div>
-        <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">META SESIONES/MES</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={mg} onChange={e=>setMg(e.target.value)}/></label>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">GYM/MES</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={mg} onChange={e=>setMg(e.target.value)}/></label>
+          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">MOV./MES</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={mov} onChange={e=>setMov(e.target.value)}/></label>
+        </div>
       </div>
-      <button className="btn btn-p" style={{marginTop:18}} onClick={save}><span>GUARDAR</span><span className="ar">✓</span></button>
+      <Tape>EDITAR RUTINA</Tape>
+      {[1,2,3,4,5,6,0].map(dow=>{const day=rtn[dow]||{focus:'DESCANSO',exercises:[]};const isR=day.exercises.length===0,isO=editDow===dow;return(<div key={dow} style={{marginBottom:8,background:isO?'var(--bg2)':'var(--white)',border:'1px solid var(--line)',borderRadius:13,overflow:'hidden'}}>
+        <div onClick={()=>setEditDow(isO?null:dow)} style={{padding:'12px 14px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}>
+          <div><div className="D" style={{fontSize:17,letterSpacing:'.06em',color:'var(--ink)'}}>{DOWS[dow]}</div><div className="M" style={{fontSize:10,color:'var(--muted)',marginTop:2}}>{isR?'Descanso':`${day.exercises.length} ejercicios · ${day.focus}`}</div></div>
+          <div style={{color:'var(--dim)',fontSize:16,fontFamily:'var(--fm)'}}>{isO?'−':'+'}</div>
+        </div>
+        {isO&&<div style={{padding:'0 14px 14px',borderTop:'1px solid var(--line)'}}>
+          <div style={{display:'flex',gap:8,margin:'10px 0'}}><button className="btn btn-g" onClick={()=>makeRest(dow)}>DESCANSO</button><button className="btn btn-g" onClick={()=>makeTrain(dow)}>ENTRENAR</button></div>
+          {!isR&&<>
+            <div className="L" style={{marginBottom:4}}>FOCO DEL DÍA</div>
+            <input value={day.focus} onChange={e=>updFocus(dow,e.target.value)} style={{...iStyle,fontFamily:'var(--fm)',fontSize:13,marginBottom:10}}/>
+            {(day.exercises||[]).map(ex=><div key={ex.id} className="ee">
+              <div style={{display:'flex',alignItems:'center',gap:8}}><input value={ex.name} onChange={e=>updEx(dow,ex.id,'name',e.target.value)} placeholder="Ejercicio" style={{flex:1,...iStyle,fontSize:13,padding:'8px 10px'}}/><button className="rm" onClick={()=>rmEx(dow,ex.id)}>×</button></div>
+              <div className="ee-row"><input value={ex.muscle} onChange={e=>updEx(dow,ex.id,'muscle',e.target.value)} placeholder="Músculo"/><input value={ex.target} onChange={e=>updEx(dow,ex.id,'target',e.target.value)} placeholder="10–12 reps"/></div>
+            </div>)}
+            <button className="add-ex" onClick={()=>addEx(dow)}>+ AGREGAR EJERCICIO</button>
+          </>}
+        </div>}
+      </div>);})}
+      <button className="btn btn-p" style={{marginTop:18}} onClick={save}><span>GUARDAR CAMBIOS</span><span className="ar">✓</span></button>
       <button onClick={reset} style={{width:'100%',marginTop:10,padding:12,border:'1px solid var(--line)',borderRadius:12,background:'transparent',color:'var(--acc2)',fontFamily:'var(--fm)',fontSize:11,letterSpacing:'.06em',cursor:'pointer'}}>BORRAR TODOS LOS DATOS</button>
     </div>
   </div>);
@@ -582,16 +662,18 @@ function App(){
   const [st,setSt]=useState(()=>load()||blank());
   const [tab,setTab]=useState('home');
   const [prof,setProf]=useState(false);
+  const [act,setAct]=useState(false);
   useEffect(()=>{persist(st);},[st]);
   if(!st.onboarded)return <Onboarding onDone={s=>setSt({...blank(),...s,onboarded:true})}/>;
   let body;
-  if(tab==='home')body=<Home st={st} onStart={()=>setTab('workout')} onCal={()=>setTab('calendar')} onAv={()=>setProf(true)}/>;
+  if(tab==='home')body=<Home st={st} setSt={setSt} onStart={()=>setTab('workout')} onCal={()=>setTab('calendar')} onAv={()=>setProf(true)} onLog={()=>setAct(true)}/>;
   else if(tab==='calendar')body=<Calendar st={st}/>;
   else if(tab==='workout')body=<Workout st={st} setSt={setSt}/>;
   else if(tab==='stats')body=<Stats st={st}/>;
   return(<>
     <div className="app"><div className="scroll">{body}</div><Nav active={tab} onChange={setTab}/></div>
     {prof&&<ProfileModal st={st} setSt={setSt} onClose={()=>setProf(false)}/>}
+    {act&&<QuickActivityModal st={st} setSt={setSt} onClose={()=>setAct(false)} onGym={()=>setTab('workout')}/>}
   </>);
 }
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
