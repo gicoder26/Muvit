@@ -8,141 +8,28 @@
 <meta name="apple-mobile-web-app-title" content="MUVIT"/>
 <title>MUVIT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F7F6F2;--bg2:#F1EFE8;--bg3:#E8E6DE;
-  --ink:#1A1A2E;--ink2:#2C2C2A;--muted:#888780;--dim:#B4B2A9;
-  --line:#D8D6CC;--white:#FFFFFF;
-  --acc:#E8FF3A;--acc2:#FF4D1F;--ok:#1F8A5B;
-  --fd:'Anton','Impact',sans-serif;
-  --fb:'Sora',system-ui,sans-serif;
-  --fm:'JetBrains Mono',ui-monospace,monospace;
+  --bg:#F7F6F2;--bg2:#F0EEE7;--bg3:#E7E4DA;--card:#FFFFFF;
+  --ink:#1A1A2E;--ink2:#303039;--muted:#7E7C73;--dim:#B9B5AA;
+  --line:#D8D4C8;--acc:#E8FF3A;--acc2:#FF5A2E;--ok:#228B61;
+  --fd:'Anton','Impact',sans-serif;--fb:'Sora',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;
 }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--fb);-webkit-font-smoothing:antialiased;overscroll-behavior:none}
-#root{height:100%}
-.app{width:100%;min-height:100vh;max-width:430px;margin:0 auto;background:var(--bg);display:flex;flex-direction:column}
-.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:100px}
-.scroll::-webkit-scrollbar{display:none}
-.body{padding-top:16px}
-
-/* TOPBAR */
-.tb{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 8px}
-.tb-brand{font-family:var(--fd);font-size:18px;letter-spacing:.12em;color:var(--ink);line-height:1;margin-bottom:6px}
-.tb-sub{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:600;font-family:var(--fm)}
-.tb-name{font-family:var(--fd);font-size:24px;letter-spacing:.02em;line-height:1;margin-top:2px;color:var(--ink)}
-.av{width:36px;height:36px;border-radius:50%;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;font-family:var(--fd);font-size:15px;color:var(--muted);cursor:pointer;flex-shrink:0}
-
-/* TAPE */
-.tape{font-family:var(--fd);letter-spacing:.08em;font-size:10px;color:var(--muted);text-transform:uppercase;display:flex;align-items:center;gap:10px;margin:16px 20px 8px}
-.tape::after{content:"";flex:1;height:4px;background-image:repeating-linear-gradient(-45deg,var(--line) 0 3px,transparent 3px 6px)}
-
-/* CARDS */
-.card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:14px 16px;position:relative;overflow:hidden}
-.card-ink{background:var(--ink);color:var(--white);border:none}
-.card-acc{background:var(--acc);color:var(--ink);border:none}
-.D{font-family:var(--fd);letter-spacing:.01em;line-height:.9}
-.M{font-family:var(--fm)}
-.L{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;font-family:var(--fm)}
-
-/* PROGRESS */
-.pb{height:8px;background:var(--bg2);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
-.pf{height:100%;background:var(--ink);border-radius:999px;transition:width .4s cubic-bezier(.2,.8,.2,1);background-image:repeating-linear-gradient(-45deg,rgba(255,255,255,0) 0 4px,rgba(255,255,255,.15) 4px 8px)}
-
-/* BUTTONS */
-.btn{border:none;font-family:var(--fd);letter-spacing:.055em;text-transform:uppercase;cursor:pointer;transition:transform .12s,background .15s,color .15s,border-color .15s;display:flex;align-items:center;justify-content:center;gap:8px;text-align:center;min-height:48px;line-height:1}
-.btn:active{transform:scale(.985)}
-.btn:disabled{cursor:default}
-.btn-p{background:var(--ink);color:var(--acc);padding:15px 18px;border-radius:14px;font-size:16px;width:100%;box-shadow:0 3px 0 rgba(0,0,0,.06)}
-.btn-p .ar{background:transparent;color:currentColor;border-radius:0;width:auto;height:auto;display:inline-flex;align-items:center;justify-content:center;font-size:15px;line-height:1;margin-left:2px;opacity:.9;transform:translateY(-1px)}
-.btn-g{background:transparent;border:1px solid var(--line);color:var(--muted);padding:13px 16px;border-radius:14px;font-size:13px;width:100%;justify-content:center}
-
-/* NAV */
-.nav{position:fixed;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:6px;display:flex;z-index:20;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.nt{flex:1;border:none;background:transparent;color:var(--muted);padding:9px 0;font-family:var(--fb);font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border-radius:999px;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .15s}
-.nt.on{background:var(--ink);color:var(--acc)}
-.nt .ic{font-size:14px}
-
-/* CALENDAR */
-.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 20px}
-.cd-h{font-family:var(--fm);font-size:9px;color:var(--muted);text-align:center;letter-spacing:.08em}
-.cd{aspect-ratio:1;border-radius:7px;background:var(--bg2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:11px;color:var(--muted);position:relative;cursor:pointer;transition:transform .1s}
-.cd:active{transform:scale(.9)}
-.cd.done{background:var(--ink);color:var(--acc);border-color:var(--ink);font-weight:700}
-.cd.today{border:2px solid var(--ink);color:var(--ink);font-weight:600}
-.cd.rest{opacity:.35}
-.cd.future{opacity:.22}
-.cd.missed::after{content:"";position:absolute;bottom:3px;width:4px;height:4px;border-radius:2px;background:var(--acc2)}
-
-/* EXERCISE */
-.ex-row{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:8px;display:flex;flex-direction:column;gap:9px}
-.ex-n{font-family:var(--fd);font-size:17px;letter-spacing:.02em;line-height:1;color:var(--ink)}
-.ex-m{font-family:var(--fm);font-size:9px;color:var(--muted);margin-top:3px;letter-spacing:.06em}
-.sh{display:grid;grid-template-columns:22px 1fr 1fr 1fr 30px;gap:5px}
-.ch{text-align:center;font-family:var(--fm);font-size:8px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
-.sr{display:grid;grid-template-columns:22px 1fr 1fr 1fr 30px;gap:5px;align-items:center}
-.sn{font-family:var(--fd);font-size:14px;color:var(--dim)}
-.inp{background:var(--bg2);border:1px solid var(--line);color:var(--ink);font-family:var(--fm);font-size:14px;font-weight:500;padding:8px 3px;border-radius:9px;text-align:center;width:100%;outline:none;transition:border-color .15s;-moz-appearance:textfield}
-.inp::-webkit-outer-spin-button,.inp::-webkit-inner-spin-button{-webkit-appearance:none}
-.inp:focus{border-color:var(--ink)}
-.inp.done{background:rgba(26,26,46,.06);border-color:var(--ink);color:var(--ink);font-weight:700}
-.chk{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg2);display:grid;place-items:center;cursor:pointer;color:var(--muted);font-size:12px;transition:all .15s;flex-shrink:0}
-.chk.done{background:var(--ink);color:var(--acc);border-color:var(--ink)}
-.chk:disabled{opacity:.35;cursor:default}
-
-/* DAY PILLS */
-.dp{flex:0 0 auto;padding:7px 12px;background:var(--white);color:var(--muted);border:1px solid var(--line);border-radius:9px;font-family:var(--fd);font-size:11px;letter-spacing:.06em;cursor:pointer;position:relative;transition:all .15s}
-.dp.on{background:var(--ink);color:var(--acc);border-color:var(--ink)}
-.dp .dot{position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:var(--acc2)}
-
-/* TIMER */
-.timer-b{position:fixed;top:16px;right:16px;background:var(--ink);color:var(--acc);border-radius:999px;padding:8px 16px;font-family:var(--fd);font-size:18px;letter-spacing:.04em;z-index:50}
-
-/* ONBOARDING */
-.onb{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;padding:40px 24px 60px;max-width:430px;margin:0 auto}
-.onb h1{font-family:var(--fd);font-size:48px;line-height:.9;letter-spacing:.01em;color:var(--ink);margin:14px 0 10px}
-.onb h1 .a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--acc);text-underline-offset:6px;text-decoration-thickness:4px}
-.onb .lead{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:22px}
-.onb label{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
-.onb label span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;font-family:var(--fm)}
-.onb input,.onb select{background:var(--white);border:1px solid var(--line);color:var(--ink);font-family:var(--fb);font-size:16px;padding:12px 14px;border-radius:10px;width:100%;outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
-.onb input:focus,.onb select:focus{border-color:var(--ink)}
-.onb .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.dots{display:flex;gap:6px;margin-bottom:22px}
-.dots span{width:6px;height:6px;border-radius:50%;background:var(--line);transition:all .2s}
-.dots span.on{width:18px;border-radius:3px;background:var(--ink)}
-.dtog-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.dtog{padding:10px 16px;border:1px solid var(--line);border-radius:10px;background:var(--white);color:var(--muted);font-family:var(--fd);font-size:13px;letter-spacing:.06em;cursor:pointer;transition:all .15s}
-.dtog.on{background:var(--ink);color:var(--acc);border-color:var(--ink)}
-.tpl-box{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:16px}
-.add-ex{width:100%;padding:10px;border:1px dashed var(--line);border-radius:10px;background:transparent;color:var(--muted);font-family:var(--fm);font-size:12px;letter-spacing:.08em;cursor:pointer;margin-top:6px;transition:border-color .15s}
-.add-ex:hover{border-color:var(--ink);color:var(--ink)}
-.ee{background:var(--bg2);border-radius:10px;padding:10px;margin-bottom:8px}
-.ee-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
-.ee-row input{background:var(--white);border:1px solid var(--line);color:var(--ink);font-family:var(--fm);font-size:12px;padding:7px 10px;border-radius:7px;width:100%;outline:none}
-.ee-row input:focus{border-color:var(--ink)}
-.rm{background:transparent;border:none;color:var(--dim);font-size:18px;cursor:pointer;padding:0 4px;line-height:1}
-.rm:hover{color:var(--acc2)}
-
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:flex-end}
-.modal{background:var(--white);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:24px 22px 40px;width:100%;max-width:430px;margin:0 auto}
-.modal-inp{background:var(--bg2);border:1px solid var(--line);color:var(--ink);font-family:var(--fb);font-size:15px;padding:10px 12px;border-radius:10px;width:100%;outline:none}
-.modal-inp:focus{border-color:var(--ink)}
-
-/* LOGO */
-.logo{display:inline-flex;align-items:center;gap:8px}
-.logo svg{display:none}
-.logo span{font-family:var(--fd);font-size:24px;letter-spacing:.12em;color:var(--ink)}
-
-/* WEEK STRIP */
-.wday{flex:0 0 auto;background:var(--bg2);border:1.5px solid var(--line);border-radius:9px;padding:6px 3px;text-align:center}
-.wday.wt{background:var(--ink);border-color:var(--ink)}
-.wday.wd{background:rgba(26,26,46,.06);border-color:rgba(26,26,46,.18)}
-
-@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.fade{animation:fu .25s ease both}
+button,input,select{font-family:inherit}button{cursor:pointer}.hidden{display:none!important}
+#root{height:100%}.app{width:100%;min-height:100vh;max-width:430px;margin:0 auto;background:var(--bg);display:flex;flex-direction:column}.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:104px}.scroll::-webkit-scrollbar{display:none}.body{padding:14px 18px 0}.fade{animation:up .24s ease both}@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.brand{font-family:var(--fd);font-size:30px;letter-spacing:.08em;line-height:1}.tb{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}.tb-sub{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:700;font-family:var(--fm);margin-top:3px}.tb-title{font-family:var(--fd);font-size:26px;letter-spacing:.025em;line-height:.95;margin-top:4px}.av{width:38px;height:38px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-family:var(--fd);font-size:16px;color:var(--ink);box-shadow:0 2px 0 rgba(0,0,0,.03)}
+.L{font-family:var(--fm);font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:700}.M{font-family:var(--fm)}.D{font-family:var(--fd);letter-spacing:.02em;line-height:.95}.section{font-family:var(--fm);font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin:18px 2px 9px;display:flex;align-items:center;gap:9px}.section:after{content:"";flex:1;height:4px;background-image:repeating-linear-gradient(-45deg,var(--line) 0 3px,transparent 3px 6px)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 1px 0 rgba(0,0,0,.02)}.card.dark{background:var(--ink);border-color:var(--ink);color:#fff}.card.soft{background:var(--bg2)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}.kpi .num{font-family:var(--fd);font-size:38px;line-height:.9;margin-top:6px}.btn{border:none;border-radius:15px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;font-family:var(--fd);font-size:15px;letter-spacing:.06em;text-transform:uppercase;transition:transform .1s}.btn:active{transform:scale(.98)}.btn-p{background:var(--ink);color:var(--acc)}.btn-s{background:var(--card);color:var(--ink);border:1px solid var(--line)}.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}.round{width:auto;height:auto;border-radius:0;display:inline-flex;place-items:center;background:transparent;color:currentColor;font-family:var(--fd);margin-left:4px}.small-btn{border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:999px;padding:8px 11px;font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.06em}.small-btn.dark{background:var(--ink);color:var(--acc);border-color:var(--ink)}
+.nav{position:fixed;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:398px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px;display:flex;z-index:20;box-shadow:0 7px 24px rgba(0,0,0,.09)}.nt{flex:1;border:none;background:transparent;color:var(--muted);padding:9px 0;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;display:flex;flex-direction:column;align-items:center;gap:2px}.nt.on{background:var(--ink);color:var(--acc)}.nt .ic{font-size:14px}
+.pbar{height:8px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;overflow:hidden}.pfill{height:100%;background:var(--ink);border-radius:999px;transition:width .3s}.pfill.acc{background:var(--acc2)}.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.wd{border:1px solid var(--line);background:var(--card);border-radius:13px;min-height:58px;padding:7px 3px;text-align:center}.wd.on{background:var(--ink);color:#fff;border-color:var(--ink)}.wd.today{outline:2px solid var(--ink)}.wd .d{font-family:var(--fm);font-size:8px;color:var(--muted);font-weight:700}.wd.on .d{color:rgba(255,255,255,.55)}.wd .e{font-size:18px;margin-top:6px;line-height:1}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.qbtn{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 6px;text-align:center}.qbtn .em{font-size:24px;display:block;margin-bottom:6px}.qbtn .tx{font-family:var(--fm);font-size:9px;text-transform:uppercase;color:var(--muted);font-weight:700}.qbtn.done{background:var(--ink);border-color:var(--ink)}.qbtn.done .tx{color:var(--acc)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.calh{text-align:center;font-family:var(--fm);font-size:9px;color:var(--muted);font-weight:700}.day{aspect-ratio:1;border:1px solid var(--line);border-radius:10px;background:var(--card);font-family:var(--fm);font-size:10px;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}.day.today{border:2px solid var(--ink);color:var(--ink)}.day.active{background:var(--ink);color:#fff;border-color:var(--ink)}.day .ems{font-size:12px;line-height:1;min-height:14px}.pill-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}.pill-row::-webkit-scrollbar{display:none}.pill{flex:0 0 auto;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-family:var(--fm);font-size:10px;color:var(--muted);font-weight:700}.pill strong{font-family:var(--fd);font-size:18px;color:var(--ink);margin-right:4px}
+.ex-row{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}.ex-n{font-family:var(--fd);font-size:17px;line-height:1;color:var(--ink)}.ex-m{font-family:var(--fm);font-size:9px;color:var(--muted);letter-spacing:.06em;margin-top:4px;text-transform:uppercase}.sh,.sr{display:grid;grid-template-columns:24px 1fr 1fr 1fr 34px;gap:6px;align-items:center}.sh{margin-top:12px}.ch{text-align:center;font-family:var(--fm);font-size:8px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}.sn{font-family:var(--fd);font-size:14px;color:var(--dim)}.inp{background:var(--bg2);border:1px solid var(--line);border-radius:11px;color:var(--ink);font-family:var(--fm);font-size:14px;font-weight:600;padding:9px 3px;text-align:center;width:100%;outline:none}.inp:focus{border-color:var(--ink)}.inp.done{background:rgba(26,26,46,.06);border-color:var(--ink)}.chk{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg2);display:grid;place-items:center;color:var(--muted);font-size:12px}.chk.done{background:var(--ink);color:var(--acc);border-color:var(--ink)}.note{background:var(--bg2);border:1px dashed var(--line);border-radius:12px;padding:9px 10px;font-family:var(--fm);font-size:9px;color:var(--muted);line-height:1.45;margin-top:10px}.suggest{position:relative}.sugbox{position:absolute;z-index:60;left:0;right:0;top:calc(100% + 4px);background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.12);overflow:hidden}.sugbox button{display:block;width:100%;border:none;background:transparent;text-align:left;padding:10px 12px;font-size:13px;color:var(--ink)}.sugbox button+button{border-top:1px solid var(--line)}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px}.bars{height:122px;display:flex;gap:8px;align-items:flex-end;border-bottom:1px dashed var(--line);padding:0 2px 6px}.bar{flex:1;border-radius:7px 7px 2px 2px;background:var(--ink);min-height:4px;position:relative}.bar span{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:8px;color:var(--muted)}.xaxis{display:flex;gap:8px;margin-top:6px}.xaxis span{flex:1;text-align:center;font-family:var(--fm);font-size:8px;color:var(--muted)}.hbar{display:grid;grid-template-columns:80px 1fr 24px;align-items:center;gap:8px;margin:9px 0}.hbar label{font-family:var(--fm);font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase}.hbar .track{height:9px;background:var(--bg2);border-radius:999px;overflow:hidden}.hbar .fill{height:100%;background:var(--ink);border-radius:999px}.hbar b{font-family:var(--fd);font-size:16px;text-align:right}.line{height:90px;display:flex;align-items:flex-end;gap:7px;border-bottom:1px dashed var(--line);padding:0 3px 6px}.dotcol{flex:1;display:flex;align-items:flex-end;justify-content:center}.dot{width:12px;height:12px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 5px var(--bg2)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:100;display:flex;align-items:flex-end}.modal{background:var(--card);border:1px solid var(--line);border-radius:24px 24px 0 0;padding:22px 20px 36px;width:100%;max-width:430px;margin:0 auto;max-height:92vh;overflow-y:auto}.field{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}.field span{font-family:var(--fm);font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:700}.field input,.field select,.input{background:var(--bg2);border:1px solid var(--line);color:var(--ink);font-size:15px;padding:11px 12px;border-radius:12px;width:100%;outline:none}.field input:focus,.field select:focus,.input:focus{border-color:var(--ink)}.date-row{display:flex;gap:8px;align-items:center}.date-row input{flex:1}.empty{padding:22px;text-align:center;color:var(--muted);font-size:12px;line-height:1.5}
+.onb{min-height:100vh;max-width:430px;margin:0 auto;background:var(--bg);padding:38px 24px 60px}.onb h1{font-family:var(--fd);font-size:48px;line-height:.9;letter-spacing:.02em;margin:18px 0 12px}.onb .lead{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:22px}.dots{display:flex;gap:6px;margin:22px 0}.dots span{width:6px;height:6px;border-radius:50%;background:var(--line)}.dots span.on{width:18px;border-radius:8px;background:var(--ink)}.dtog-wrap{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}.dtog{padding:11px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--muted);font-family:var(--fd);font-size:13px;letter-spacing:.06em}.dtog.on{background:var(--ink);color:var(--acc);border-color:var(--ink)}
 </style>
 </head>
 <body>
@@ -151,458 +38,69 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--fb
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
 <script type="text/babel">
-const {useState,useEffect}=React;
-
+const {useState,useEffect,useMemo}=React;
+const KEY='muvit_v3',OLD1='muvit_v2',OLD2='lifts_v1';
 const dk=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-const now=()=>new Date();
-const todayISO=()=>dk(now());
-const iso2d=iso=>{const[y,m,d]=iso.split('-').map(Number);return new Date(y,m-1,d);};
-const gid=()=>'x'+Math.random().toString(36).slice(2,9);
+const todayISO=()=>dk(new Date());
+const iso2d=iso=>{const[y,m,d]=String(iso).split('-').map(Number);return new Date(y,m-1,d)};
+const gid=()=> 'x'+Math.random().toString(36).slice(2,10);
 const DOWS=['DOM','LUN','MAR','MIÉ','JUE','VIE','SÁB'];
+const DOWSF=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MTHS=['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
-const fmtSub=d=>{const ds=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],ms=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return`${ds[d.getDay()]} · ${String(d.getDate()).padStart(2,'0')} ${ms[d.getMonth()]}`;};
-const fmtMo=d=>`${MTHS[d.getMonth()]} ${d.getFullYear()}`;
-function mDays(y,m){const l=new Date(y,m+1,0).getDate(),a=[];for(let d=1;d<=l;d++){const dt=new Date(y,m,d);a.push({day:d,dow:dt.getDay(),iso:dk(dt),date:dt});}return a;}
-function hasLogs(st,iso){const s=st.sessions[iso];return!!(s&&Object.values(s).some(a=>Array.isArray(a)&&a.some(x=>x&&x.done)));}
-function dayStatus(day,st,td){
-  const tiso=dk(td),r=st.routine[day.dow];
-  const isR=!r||!r.exercises||r.exercises.length===0;
-  if(hasLogs(st,day.iso))return'done';
-  if(day.iso===tiso)return isR?'rest-today':'today';
-  if(isR)return day.iso<tiso?'rest':'rest-future';
-  if(day.iso<tiso)return'missed';
-  return'future';
-}
-function calcStreak(st,td){let s=0;const d=new Date(td);for(let i=0;i<90;i++){const iso=dk(d),dow=d.getDay(),r=st.routine[dow];const isR=!r||!r.exercises||r.exercises.length===0;if(isR)s++;else if(hasLogs(st,iso))s++;else if(iso===dk(td)){}else break;d.setDate(d.getDate()-1);}return s;}
-function moStats(st,td){const days=mDays(td.getFullYear(),td.getMonth());let done=0,missed=0,rest=0,vol=0;for(const d of days){const s=dayStatus(d,st,td);if(s==='done')done++;else if(s==='missed')missed++;else if(s==='rest')rest++;const ses=st.sessions[d.iso];if(ses)for(const arr of Object.values(ses))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.weight&&s.reps)vol+=s.weight*s.reps;}return{done,missed,rest,vol};}
-
+const fmtDate=iso=>{const d=iso2d(iso),ms=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return `${DOWSF[d.getDay()]} · ${String(d.getDate()).padStart(2,'0')} ${ms[d.getMonth()]}`};
+const fmtMonth=d=>`${MTHS[d.getMonth()]} ${d.getFullYear()}`;
+const monthDays=(d=new Date())=>{const y=d.getFullYear(),m=d.getMonth(),last=new Date(y,m+1,0).getDate(),a=[];for(let i=1;i<=last;i++)a.push(new Date(y,m,i));return a};
+const ACTS={gym:{label:'Gym',emoji:'🏋️'},pilates:{label:'Pilates',emoji:'🧘‍♀️'},yoga:{label:'Yoga',emoji:'🧘'},running:{label:'Running',emoji:'🏃'},walk:{label:'Caminata',emoji:'🚶'},other:{label:'Otro',emoji:'✨'}};
+const ACT_ORDER=['gym','pilates','yoga','running','walk','other'];
+const EX_LIBRARY=[
+ {name:'Hip thrust',muscle:'Glúteo',target:'8–12 reps'},{name:'Peso muerto rumano',muscle:'Posterior',target:'8–10 reps'},{name:'Sentadilla en Smith',muscle:'Pierna',target:'8–10 reps'},{name:'Sentadilla libre',muscle:'Pierna',target:'6–10 reps'},{name:'Prensa',muscle:'Cuádriceps',target:'10–12 reps'},{name:'Extensión de cuádriceps',muscle:'Cuádriceps',target:'12–15 reps'},{name:'Curl femoral sentado',muscle:'Femoral',target:'10–12 reps'},{name:'Curl femoral echado',muscle:'Femoral',target:'10–12 reps'},{name:'Abductores en máquina',muscle:'Glúteo medio',target:'15–20 reps'},{name:'Patada de glúteo en polea',muscle:'Glúteo',target:'12–15 reps'},{name:'Zancadas caminando',muscle:'Pierna',target:'10–12 reps'},{name:'Bulgarian split squat',muscle:'Pierna',target:'8–10 reps'},
+ {name:'Press banca',muscle:'Pecho',target:'8–10 reps'},{name:'Press inclinado mancuernas',muscle:'Pecho',target:'8–12 reps'},{name:'Aperturas en máquina',muscle:'Pecho',target:'12–15 reps'},{name:'Jalón al pecho',muscle:'Espalda',target:'10–12 reps'},{name:'Remo sentado',muscle:'Espalda',target:'10–12 reps'},{name:'Remo con mancuerna',muscle:'Espalda',target:'8–12 reps'},{name:'Pull down',muscle:'Espalda',target:'10–12 reps'},
+ {name:'Press militar',muscle:'Hombro',target:'8–10 reps'},{name:'Elevaciones laterales',muscle:'Hombro',target:'12–15 reps'},{name:'Face pull',muscle:'Hombro posterior',target:'12–15 reps'},{name:'Curl bíceps',muscle:'Bíceps',target:'10–12 reps'},{name:'Curl martillo',muscle:'Bíceps',target:'10–12 reps'},{name:'Tríceps en polea',muscle:'Tríceps',target:'10–12 reps'},{name:'Fondos asistidos',muscle:'Tríceps',target:'8–12 reps'},
+ {name:'Plancha',muscle:'Core',target:'45–60 seg'},{name:'Crunch en polea',muscle:'Abdomen',target:'12–15 reps'},{name:'Elevación de piernas',muscle:'Core',target:'10–15 reps'},{name:'Cardio en cinta',muscle:'Cardio',target:'20 min'},{name:'Escaladora',muscle:'Cardio',target:'15–20 min'}
+];
 const TPL={
-  1:{focus:'GLÚTEOS · POSTERIOR',exercises:[{id:gid(),name:'Hip thrust',muscle:'Glúteo',target:'10–12 reps'},{id:gid(),name:'Curl femoral',muscle:'Femoral',target:'12 reps'},{id:gid(),name:'Peso muerto rumano',muscle:'Posterior',target:'8–10 reps'},{id:gid(),name:'Abductores en máquina',muscle:'Glúteo medio',target:'15 reps'}]},
-  2:{focus:'BRAZOS · HOMBRO',exercises:[{id:gid(),name:'Tríceps polea',muscle:'Tríceps',target:'12 reps'},{id:gid(),name:'Pull down',muscle:'Espalda',target:'10–12 reps'},{id:gid(),name:'Curl bíceps',muscle:'Bíceps',target:'10–12 reps'},{id:gid(),name:'Elevaciones laterales',muscle:'Hombro',target:'12–15 reps'}]},
-  3:{focus:'DESCANSO',exercises:[]},
-  4:{focus:'CUÁDRICEPS · GLÚTEO',exercises:[{id:gid(),name:'Prensa',muscle:'Cuádriceps',target:'10–12 reps'},{id:gid(),name:'Sentadilla en Smith',muscle:'Pierna',target:'8–10 reps'},{id:gid(),name:'Extensión cuádriceps',muscle:'Cuádriceps',target:'12–15 reps'},{id:gid(),name:'Abductores en máquina',muscle:'Glúteo medio',target:'15 reps'}]},
-  5:{focus:'CORE · CARDIO',exercises:[{id:gid(),name:'Plank',muscle:'Core',target:'45–60 seg'},{id:gid(),name:'Crunch polea',muscle:'Abdomen',target:'15–20 reps'},{id:gid(),name:'Cardio (cinta/escalera)',muscle:'Cardio',target:'20 min'}]},
-  6:{focus:'FULL PIERNAS',exercises:[{id:gid(),name:'Hip thrust pesado',muscle:'Glúteo',target:'8 reps'},{id:gid(),name:'Sentadilla en Smith',muscle:'Pierna',target:'8 reps'},{id:gid(),name:'Peso muerto rumano',muscle:'Posterior',target:'8 reps'},{id:gid(),name:'Prensa',muscle:'Cuádriceps',target:'12–15 reps'}]},
-  0:{focus:'DESCANSO',exercises:[]},
+ 1:{focus:'GLÚTEOS · POSTERIOR',exercises:['Hip thrust','Curl femoral sentado','Peso muerto rumano','Abductores en máquina']},
+ 2:{focus:'BRAZOS · HOMBRO',exercises:['Tríceps en polea','Pull down','Curl bíceps','Elevaciones laterales']},
+ 3:{focus:'DESCANSO',exercises:[]},
+ 4:{focus:'CUÁDRICEPS · GLÚTEO',exercises:['Prensa','Sentadilla en Smith','Extensión de cuádriceps','Patada de glúteo en polea']},
+ 5:{focus:'CORE · CARDIO',exercises:['Plancha','Crunch en polea','Cardio en cinta']},
+ 6:{focus:'FULL PIERNAS',exercises:['Hip thrust','Sentadilla en Smith','Peso muerto rumano','Prensa']},
+ 0:{focus:'DESCANSO',exercises:[]}
 };
-
-const KEY='muvit_v1';
-const LEGACY_KEY='lifts_v1';
-const load=()=>{try{const r=localStorage.getItem(KEY)||localStorage.getItem(LEGACY_KEY);if(r)return JSON.parse(r);}catch(e){}return null;};
-const persist=s=>{try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}};
-const blank=()=>({onboarded:false,user:{name:'',weightKg:null,heightCm:null,goal:'',monthlyGoal:16},routine:{},sessions:{},notes:{}});
-const resetApp=()=>{
-  const ok=confirm('Esto borrará tu rutina, sesiones y progreso guardado en este dispositivo. ¿Quieres reiniciar MUVIT?');
-  if(!ok)return;
-  const sure=confirm('Última confirmación: esta acción no se puede deshacer.');
-  if(!sure)return;
-  try{localStorage.removeItem(KEY);localStorage.removeItem(LEGACY_KEY);}catch(e){}
-  window.location.reload();
-};
-
-function Logo(){return(
-  <div className="logo">
-    <span>MUVIT</span>
-  </div>
-);}
-
-function Onboarding({onDone}){
-  const [step,setStep]=useState(0);
-  const [u,setU]=useState({name:'',weightKg:'',heightCm:'',goal:'Bajar grasa',monthlyGoal:16});
-  const [tDays,setTDays]=useState([1,2,4,5,6]);
-  const [rtn,setRtn]=useState({});
-  const [editDow,setEditDow]=useState(null);
-  const DL=[{d:1,l:'LUN'},{d:2,l:'MAR'},{d:3,l:'MIÉ'},{d:4,l:'JUE'},{d:5,l:'VIE'},{d:6,l:'SÁB'},{d:0,l:'DOM'}];
-  const tog=d=>setTDays(p=>p.includes(d)?p.filter(x=>x!==d):[...p,d]);
-  const useTpl=()=>{
-    const r={},src=[1,2,4,5,6,0,3].filter(d=>TPL[d]&&TPL[d].exercises.length>0);
-    let i=0;for(const dow of [...tDays].sort()){const s=TPL[src[i%src.length]];r[dow]={focus:s.focus,exercises:s.exercises.map(e=>({...e,id:gid()}))};i++;}
-    for(const d of[0,1,2,3,4,5,6])if(!r[d])r[d]={focus:'DESCANSO',exercises:[]};
-    setRtn(r);setStep(3);
-  };
-  const useBlank=()=>{
-    const r={};for(const d of tDays)r[d]={focus:'ENTRENAMIENTO',exercises:[]};
-    for(const d of[0,1,2,3,4,5,6])if(!r[d])r[d]={focus:'DESCANSO',exercises:[]};
-    setRtn(r);setStep(3);
-  };
-  const addEx=dow=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:[...(p[dow]?.exercises||[]),{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));
-  const updEx=(dow,id,f,v)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.map(e=>e.id===id?{...e,[f]:v}:e)}}));
-  const rmEx=(dow,id)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.filter(e=>e.id!==id)}}));
-  const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...p[dow],focus:v}}));
-  const finish=()=>onDone({onboarded:true,user:{name:u.name.trim()||'ATLETA',weightKg:parseFloat(u.weightKg)||null,heightCm:parseInt(u.heightCm)||null,goal:u.goal,monthlyGoal:parseInt(u.monthlyGoal)||16},routine:rtn,sessions:{},notes:{}});
-  const can0=u.name.trim().length>0,can1=tDays.length>0;
-
-  return(
-    <div className="onb">
-      <Logo/>
-      <div className="dots" style={{marginTop:22}}>{[0,1,2,3].map(i=><span key={i} className={i<=step?'on':''}/>)}</div>
-      {step===0&&<div className="fade">
-        <div className="L">PASO 1 DE 4</div>
-        <h1>HO<span className="a">LA</span></h1>
-        <p className="lead"><strong style={{color:'var(--ink)'}}>Todo movimiento cuenta.</strong><br/>Planifica tu semana, registra tus sesiones y mira tu progreso sin complicarte.</p>
-        <label><span>¿Cómo te llamas?</span><input value={u.name} onChange={e=>setU({...u,name:e.target.value})} placeholder="Tu nombre" autoFocus/></label>
-        <div className="row2">
-          <label><span>Peso (kg)</span><input type="number" inputMode="decimal" value={u.weightKg} onChange={e=>setU({...u,weightKg:e.target.value})} placeholder="60"/></label>
-          <label><span>Altura (cm)</span><input type="number" inputMode="numeric" value={u.heightCm} onChange={e=>setU({...u,heightCm:e.target.value})} placeholder="165"/></label>
-        </div>
-        <label><span>Objetivo</span><select value={u.goal} onChange={e=>setU({...u,goal:e.target.value})}><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Mantener</option><option>Recomposición</option></select></label>
-        <label><span>Sesiones de gym al mes</span><input type="number" inputMode="numeric" value={u.monthlyGoal} onChange={e=>setU({...u,monthlyGoal:e.target.value})}/></label>
-        <button className="btn btn-p" disabled={!can0} style={{opacity:can0?1:.4,marginTop:18}} onClick={()=>setStep(1)}><span>SIGUIENTE</span><span className="ar">→</span></button>
-      </div>}
-      {step===1&&<div className="fade">
-        <div className="L">PASO 2 DE 4</div>
-        <h1>DÍAS DE<br/><span className="a">GYM</span></h1>
-        <p className="lead">Selecciona tus días de entrenamiento.</p>
-        <div className="dtog-wrap">{DL.map(d=><button key={d.d} className={`dtog${tDays.includes(d.d)?' on':''}`} onClick={()=>tog(d.d)}>{d.l}</button>)}</div>
-        <div style={{display:'flex',gap:10}}>
-          <button className="btn btn-g" style={{flex:1}} onClick={()=>setStep(0)}>← ATRÁS</button>
-          <button className="btn btn-p" disabled={!can1} style={{opacity:can1?1:.4,flex:2}} onClick={()=>setStep(2)}><span>SIGUIENTE</span><span className="ar">→</span></button>
-        </div>
-      </div>}
-      {step===2&&<div className="fade">
-        <div className="L">PASO 3 DE 4</div>
-        <h1>TU<br/><span className="a">RUTINA</span></h1>
-        <p className="lead">Empieza con una plantilla o crea desde cero.</p>
-        <button className="btn btn-p" onClick={useTpl}><span>USAR PLANTILLA</span><span className="ar">✦</span></button>
-        <button className="btn btn-g" style={{marginTop:10}} onClick={useBlank}>CREAR DESDE CERO</button>
-        <button className="btn btn-g" style={{marginTop:8,borderColor:'transparent',color:'var(--muted)'}} onClick={()=>setStep(1)}>← ATRÁS</button>
-        <div className="tpl-box">
-          <div className="L" style={{marginBottom:8}}>PLANTILLA INCLUYE</div>
-          <div style={{fontSize:13,color:'var(--muted)',lineHeight:1.7}}>Glúteos · Brazos · Cuádriceps · Core y cardio · Full piernas<br/><span style={{fontSize:11}}>Editable en el paso siguiente</span></div>
-        </div>
-      </div>}
-      {step===3&&<div className="fade">
-        <div className="L">PASO 4 DE 4</div>
-        <h1>REVISA &<br/><span className="a">AJUSTA</span></h1>
-        <p className="lead">Toca un día para editar sus ejercicios.</p>
-        {[1,2,3,4,5,6,0].map(dow=>{
-          const day=rtn[dow];if(!day)return null;
-          const isR=day.exercises.length===0,isO=editDow===dow;
-          return(<div key={dow} style={{marginBottom:8,background:isO?'var(--bg2)':'var(--white)',border:'1px solid var(--line)',borderRadius:13,overflow:'hidden'}}>
-            <div onClick={()=>setEditDow(isO?null:dow)} style={{padding:'12px 14px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}>
-              <div><div className="D" style={{fontSize:17,letterSpacing:'.06em',color:'var(--ink)'}}>{DOWS[dow]}</div><div className="M" style={{fontSize:10,color:'var(--muted)',marginTop:2}}>{isR?'Descanso':`${day.exercises.length} ejercicios · ${day.focus}`}</div></div>
-              <div style={{color:'var(--dim)',fontSize:16,fontFamily:'var(--fm)'}}>{isO?'−':'+'}</div>
-            </div>
-            {isO&&!isR&&<div style={{padding:'0 14px 14px',borderTop:'1px solid var(--line)'}}>
-              <div style={{marginBottom:10,marginTop:10}}>
-                <div className="L" style={{marginBottom:4}}>FOCO DEL DÍA</div>
-                <input value={day.focus} onChange={e=>updFocus(dow,e.target.value)} style={{background:'var(--white)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fm)',fontSize:13,padding:'8px 10px',borderRadius:8,width:'100%',outline:'none'}}/>
-              </div>
-              {day.exercises.map(ex=><div key={ex.id} className="ee">
-                <div style={{display:'flex',alignItems:'center',gap:8}}>
-                  <input value={ex.name} onChange={e=>updEx(dow,ex.id,'name',e.target.value)} placeholder="Nombre del ejercicio" style={{flex:1,background:'var(--white)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:14,padding:'8px 10px',borderRadius:7,outline:'none'}}/>
-                  <button className="rm" onClick={()=>rmEx(dow,ex.id)}>×</button>
-                </div>
-                <div className="ee-row">
-                  <input value={ex.muscle} onChange={e=>updEx(dow,ex.id,'muscle',e.target.value)} placeholder="Músculo"/>
-                  <input value={ex.target} onChange={e=>updEx(dow,ex.id,'target',e.target.value)} placeholder="10–12 reps"/>
-                </div>
-              </div>)}
-              <button className="add-ex" onClick={()=>addEx(dow)}>+ AGREGAR EJERCICIO</button>
-            </div>}
-          </div>);
-        })}
-        <div style={{display:'flex',gap:10,marginTop:18}}>
-          <button className="btn btn-g" style={{flex:1}} onClick={()=>setStep(2)}>← ATRÁS</button>
-          <button className="btn btn-p" style={{flex:2}} onClick={finish}><span>¡EMPEZAR!</span><span className="ar">✓</span></button>
-        </div>
-      </div>}
-    </div>
-  );
-}
-
-function TB({user,sub,onAv}){return(
-  <div className="tb">
-    <div>
-      <div className="tb-brand">MUVIT</div>
-      <div className="tb-sub">{sub||fmtSub(now())}</div>
-      <div className="tb-name">HOLA, {(user?.name||'').toUpperCase()}</div>
-    </div>
-    <div className="av" onClick={onAv}>{(user?.name||'?')[0].toUpperCase()}</div>
-  </div>
-);}
-function Tape({children}){return <div className="tape">{children}</div>;}
-function Nav({active,onChange}){
-  const tabs=[{id:'home',l:'HOY',ic:'▣'},{id:'calendar',l:'MES',ic:'▦'},{id:'workout',l:'TRAIN',ic:'◉'},{id:'stats',l:'STATS',ic:'◢'}];
-  return(<nav className="nav">{tabs.map(t=><button key={t.id} className={`nt${active===t.id?' on':''}`} onClick={()=>onChange(t.id)}><span className="ic">{t.ic}</span><span>{t.l}</span></button>)}</nav>);
-}
-
-function CalMini({st,td,onPick}){
-  const days=mDays(td.getFullYear(),td.getMonth()),first=days[0].dow;
-  return(<>
-    <div className="cg" style={{marginBottom:5}}>{['D','L','M','M','J','V','S'].map((d,i)=><div key={i} className="cd-h">{d}</div>)}</div>
-    <div className="cg">
-      {Array.from({length:first}).map((_,i)=><div key={'b'+i}/>)}
-      {days.map(d=>{const s=dayStatus(d,st,td);let c='cd';if(s==='done')c+=' done';else if(s==='today')c+=' today';else if(s.startsWith('rest'))c+=' rest';else if(s==='future')c+=' future';else if(s==='missed')c+=' missed';return<div key={d.day} className={c} onClick={()=>onPick&&onPick(d.iso)}>{d.day}</div>;})}
-    </div>
-  </>);
-}
-
-function Home({st,onStart,onCal,onAv,onReset}){
-  const td=now(),dow=td.getDay(),rtn=st.routine[dow]||{focus:'DESCANSO',exercises:[]};
-  const isR=rtn.exercises.length===0,stats=moStats(st,td),strk=calcStreak(st,td);
-  const pct=Math.min(100,Math.round((stats.done/st.user.monthlyGoal)*100));
-  const tSes=st.sessions[todayISO()]||{},totalS=rtn.exercises.length*3;
-  const doneS=Object.values(tSes).reduce((n,a)=>n+(Array.isArray(a)?a.filter(s=>s&&s.done).length:0),0);
-  const mo=fmtMo(td);
-  const DS=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const wk=[];const diff=dow===0?-6:1-dow;for(let i=0;i<7;i++){const d=new Date(td);d.setDate(td.getDate()+diff+i);wk.push(d);}
-
-  return(<div className="body">
-    <TB user={st.user} onAv={onAv}/>
-
-    <div style={{padding:'0 20px',marginBottom:12}}>
-      <div className="card card-ink" style={{padding:'16px 18px',display:'flex',alignItems:'flex-end',justifyContent:'space-between'}}>
-        <div>
-          <div className="L" style={{color:'rgba(255,255,255,.45)'}}>RACHA</div>
-          <div style={{display:'flex',alignItems:'baseline',gap:6,marginTop:2}}>
-            <div className="D" style={{fontSize:76,color:'var(--acc)'}}>{strk}</div>
-            <div className="M" style={{fontSize:12,color:'rgba(255,255,255,.45)'}}>{strk===1?'día':'días'}</div>
-          </div>
-          <div className="M" style={{fontSize:9,color:'rgba(255,255,255,.4)',marginTop:2}}>{strk===0?'TODO MOVIMIENTO CUENTA':'SIGUES EN MOVIMIENTO'}</div>
-        </div>
-        <div style={{textAlign:'right'}}>
-          <div className="L" style={{color:'rgba(255,255,255,.45)'}}>{mo.split(' ')[0]}</div>
-          <div className="D" style={{fontSize:32,marginTop:4,color:'var(--white)'}}>{stats.done}<span style={{color:'rgba(255,255,255,.28)',fontSize:20}}>/{st.user.monthlyGoal}</span></div>
-          <div className="M" style={{fontSize:8,color:'rgba(255,255,255,.38)'}}>SESIONES</div>
-        </div>
-      </div>
-    </div>
-
-    <div style={{padding:'0 20px',marginBottom:14}}>
-      <div style={{display:'flex',justifyContent:'space-between',marginBottom:5}}>
-        <span className="L">PROGRESO {mo}</span>
-        <span className="M" style={{fontSize:10,color:'var(--ink)',fontWeight:500}}>{pct}%</span>
-      </div>
-      <div className="pb"><div className="pf" style={{width:`${pct}%`}}/></div>
-    </div>
-
-    <div style={{display:'flex',gap:5,padding:'0 20px',overflowX:'auto',marginBottom:14,paddingBottom:2}}>
-      {wk.map(d=>{const k=dk(d),jd=d.getDay(),r=st.routine[jd]||{exercises:[]},isDone=hasLogs(st,k),isT=k===todayISO(),isRst=r.exercises.length===0;
-        return(<div key={k} className={`wday${isT?' wt':isDone?' wd':''}`} style={{flex:'0 0 44px'}}>
-          <div className="M" style={{fontSize:8,color:isT?'var(--acc)':'var(--muted)'}}>{DS[jd]}</div>
-          <div className="D" style={{fontSize:9,marginTop:2,color:isT?'var(--white)':isDone?'var(--ink)':isRst?'var(--dim)':'var(--muted)'}}>{r.focus?r.focus.split('·')[0].trim().split(' ')[0].slice(0,5):'—'}</div>
-          {isDone&&!isT&&<div style={{width:4,height:4,borderRadius:'50%',background:'var(--ink)',margin:'3px auto 0'}}/>}
-        </div>);
-      })}
-    </div>
-
-    <Tape>{mo}</Tape>
-    <CalMini st={st} td={td} onPick={onCal}/>
-
-    <Tape>SESIÓN DE HOY</Tape>
-    <div style={{padding:'0 20px'}}>
-      <div className="card" style={{marginBottom:10}}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
-          <div>
-            <div className="L">{DOWS[dow]} {String(td.getDate()).padStart(2,'0')}</div>
-            <div className="D" style={{fontSize:21,marginTop:5,maxWidth:180,lineHeight:1.05,color:'var(--ink)'}}>{rtn.focus}</div>
-          </div>
-          <div style={{textAlign:'right'}}>
-            {isR?<div className="D" style={{fontSize:18,color:'var(--dim)'}}>REST</div>:<>
-              <div className="M" style={{fontSize:22,color:'var(--ink)',fontWeight:700}}>{rtn.exercises.length}</div>
-              <div className="L" style={{marginTop:2}}>ejercicios</div>
-            </>}
-          </div>
-        </div>
-        {!isR&&doneS>0&&<div style={{marginTop:10}}>
-          <div className="pb" style={{height:6}}><div className="pf" style={{width:`${(doneS/totalS)*100}%`}}/></div>
-          <div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:4}}>{doneS}/{totalS} series</div>
-        </div>}
-      </div>
-      {!isR
-        ?<button className="btn btn-p" style={{marginBottom:16}} onClick={onStart}><span>{doneS>0?'CONTINUAR SESIÓN':'EMPEZAR SESIÓN'}</span><span className="ar">→</span></button>
-        :<div className="card" style={{padding:18,textAlign:'center',marginBottom:16}}><div className="D" style={{fontSize:20,color:'var(--ink)'}}>DESCANSO</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Recupera para mañana</div></div>
-      }
-      <button onClick={onReset} style={{width:'100%',marginTop:2,padding:'11px 12px',border:'1px solid var(--line)',borderRadius:12,background:'transparent',color:'var(--muted)',fontFamily:'var(--fm)',fontSize:10,letterSpacing:'.08em',textTransform:'uppercase',cursor:'pointer'}}>Reiniciar app</button>
-      <div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginTop:6,marginBottom:8}}>Borra los datos guardados en este dispositivo.</div>
-    </div>
-  </div>);
-}
-
-function Workout({st,setSt}){
-  const td=now(),tdDow=td.getDay();
-  const [selDow,setSelDow]=useState(tdDow);
-  const [timer,setTimer]=useState(null);
-  const rtn=st.routine[selDow]||{focus:'DESCANSO',exercises:[]};
-  const iso=todayISO();
-  useEffect(()=>{if(!timer)return;const t=setInterval(()=>setTimer(r=>r&&r>1?r-1:null),1000);return()=>clearInterval(t);},[timer]);
-  const getSets=exId=>(st.sessions[iso]||{})[exId]||[{weight:0,reps:0,rir:null,done:false},{weight:0,reps:0,rir:null,done:false},{weight:0,reps:0,rir:null,done:false}];
-  const upd=(exId,si,f,v)=>setSt(s=>{const ses={...s.sessions},day={...(ses[iso]||{})},cur=day[exId]||getSets(exId);day[exId]=cur.map((x,i)=>i===si?{...x,[f]:v}:x);ses[iso]=day;return{...s,sessions:ses};});
-  const tog=(exId,si)=>{const was=getSets(exId)[si].done;upd(exId,si,'done',!was);if(!was)setTimer(90);};
-  const totS=rtn.exercises.length*3,doneS=rtn.exercises.reduce((n,ex)=>n+getSets(ex.id).filter(s=>s.done).length,0),pct=totS?Math.round((doneS/totS)*100):0;
-  const DP=[{d:1,l:'LUN'},{d:2,l:'MAR'},{d:3,l:'MIÉ'},{d:4,l:'JUE'},{d:5,l:'VIE'},{d:6,l:'SÁB'},{d:0,l:'DOM'}];
-  const isRest=rtn.exercises.length===0;
-
-  return(<div className="body">
-    {timer&&<div className="timer-b">{Math.floor(timer/60)}:{String(timer%60).padStart(2,'0')}</div>}
-    <TB user={st.user} sub={rtn.focus}/>
-    <div style={{display:'flex',gap:5,padding:'4px 20px 12px',overflowX:'auto'}}>
-      {DP.map(d=>{const isOn=d.d===selDow,isT=d.d===tdDow;return(<button key={d.d} className={`dp${isOn?' on':''}`} onClick={()=>setSelDow(d.d)}>{d.l}{isT&&!isOn&&<span className="dot"/>}</button>);})}
-    </div>
-    {isRest
-      ?<div style={{padding:'0 20px'}}><div className="card" style={{padding:28,textAlign:'center'}}><div className="D" style={{fontSize:24,color:'var(--ink)'}}>DESCANSO</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:10}}>Hidratación · sueño · recuperación</div></div></div>
-      :<>
-        <div style={{padding:'0 20px',marginBottom:4}}>
-          <div className="card card-ink" style={{padding:'14px 16px'}}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:10}}>
-              <div><div className="L" style={{color:'rgba(255,255,255,.5)'}}>{selDow===tdDow?'SESIÓN DE HOY':'VISTA PREVIA'}</div><div className="D" style={{fontSize:26,color:'var(--white)',marginTop:2}}>{doneS}<span style={{opacity:.4}}>/{totS}</span> SETS</div></div>
-              <div className="M" style={{fontSize:20,fontWeight:700,color:'var(--acc)'}}>{pct}<span style={{fontSize:12}}>%</span></div>
-            </div>
-            <div style={{height:5,background:'rgba(255,255,255,.15)',borderRadius:999,overflow:'hidden'}}><div style={{width:`${pct}%`,height:'100%',background:'var(--acc)',transition:'width .4s'}}/></div>
-          </div>
-        </div>
-        <Tape>EJERCICIOS · 3 SERIES · 8–10 REPS</Tape>
-        <div style={{padding:'0 20px'}}>
-          {rtn.exercises.map((ex,idx)=><ExCard key={ex.id} ex={ex} num={idx+1} sets={getSets(ex.id)} editable={selDow===tdDow} onUpd={(si,f,v)=>upd(ex.id,si,f,v)} onTog={si=>tog(ex.id,si)}/>)}
-          {selDow===tdDow&&doneS===totS&&totS>0&&<div className="card card-ink" style={{padding:20,textAlign:'center',marginTop:8}}><div className="D" style={{fontSize:22,color:'var(--acc)'}}>SESIÓN COMPLETADA</div><div className="M" style={{fontSize:11,color:'rgba(255,255,255,.6)',marginTop:4}}>+1 día de racha</div></div>}
-        </div>
-      </>
-    }
-  </div>);
-}
-
-function ExCard({ex,num,sets,editable,onUpd,onTog}){
-  const [open,setOpen]=useState(true);
-  const allD=sets.every(s=>s.done);
-  return(<div className="ex-row">
-    <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',cursor:'pointer'}} onClick={()=>setOpen(!open)}>
-      <div style={{flex:1}}>
-        <div style={{display:'flex',alignItems:'center',gap:8}}>
-          <div className="D" style={{fontSize:11,color:'var(--dim)',width:18}}>0{num}</div>
-          <div className="ex-n">{ex.name.toUpperCase()}</div>
-        </div>
-        <div className="ex-m">{(ex.muscle||'').toUpperCase()} · {ex.target} · 3 SETS</div>
-      </div>
-      <div style={{width:27,height:27,borderRadius:999,background:allD?'var(--ink)':'var(--bg2)',color:allD?'var(--acc)':'var(--muted)',display:'grid',placeItems:'center',fontFamily:'var(--fm)',fontSize:10,fontWeight:700,border:'1px solid var(--line)',flexShrink:0}}>{sets.filter(s=>s.done).length}/3</div>
-    </div>
-    {open&&<><div className="sh"><div/><div className="ch">KG</div><div className="ch">REPS</div><div className="ch">RIR</div><div/></div>
-      {sets.map((s,i)=><div key={i} className="sr">
-        <div className="sn">{i+1}</div>
-        <input type="number" inputMode="decimal" disabled={!editable} className={`inp${s.done?' done':''}`} value={s.weight||''} placeholder="—" onChange={e=>onUpd(i,'weight',parseFloat(e.target.value)||0)}/>
-        <input type="number" inputMode="numeric" disabled={!editable} className={`inp${s.done?' done':''}`} value={s.reps||''} placeholder="—" onChange={e=>onUpd(i,'reps',parseInt(e.target.value)||0)}/>
-        <input type="number" inputMode="numeric" disabled={!editable} className={`inp${s.done?' done':''}`} value={s.rir!=null?s.rir:''} placeholder="—" min={0} max={4} onChange={e=>onUpd(i,'rir',e.target.value===''?null:parseInt(e.target.value))}/>
-        <button className={`chk${s.done?' done':''}`} onClick={()=>onTog(i)} disabled={!editable}>✓</button>
-      </div>)}
-    </>}
-  </div>);
-}
-
-function Calendar({st}){
-  const td=now(),stats=moStats(st,td),strk=calcStreak(st,td);
-  const days=mDays(td.getFullYear(),td.getMonth()),first=days[0].dow,mo=fmtMo(td);
-  return(<div className="body">
-    <TB user={st.user} sub={mo}/>
-    <div style={{padding:'0 20px',marginBottom:4}}>
-      <div className="card card-ink" style={{padding:'16px 18px',display:'flex',alignItems:'flex-start',justifyContent:'space-between'}}>
-        <div><div className="L" style={{color:'rgba(255,255,255,.45)'}}>SESIONES</div><div className="D" style={{fontSize:64,color:'var(--acc)',marginTop:2}}>{stats.done}</div><div className="M" style={{fontSize:11,color:'rgba(255,255,255,.4)'}}>de {st.user.monthlyGoal} objetivo</div></div>
-        <div style={{display:'flex',flexDirection:'column',gap:8,alignItems:'flex-end',marginTop:4}}>
-          {[[stats.done,'var(--acc)','entrenadas'],[stats.rest,'rgba(255,255,255,.2)','descanso'],[stats.missed,'var(--acc2)','perdidas']].map(([n,c,l])=><div key={l} style={{display:'flex',alignItems:'center',gap:6}}><span style={{width:8,height:8,borderRadius:2,background:c}}/><span className="M" style={{fontSize:11,color:'rgba(255,255,255,.6)'}}>{n} {l}</span></div>)}
-        </div>
-      </div>
-    </div>
-    <Tape>{mo}</Tape>
-    <div className="cg" style={{marginBottom:5}}>{['D','L','M','M','J','V','S'].map((d,i)=><div key={i} className="cd-h">{d}</div>)}</div>
-    <div className="cg">
-      {Array.from({length:first}).map((_,i)=><div key={'b'+i}/>)}
-      {days.map(d=>{const s=dayStatus(d,st,td);let c='cd';if(s==='done')c+=' done';else if(s==='today')c+=' today';else if(s.startsWith('rest'))c+=' rest';else if(s==='future')c+=' future';else if(s==='missed')c+=' missed';return<div key={d.day} className={c}>{d.day}</div>;})}
-    </div>
-    <Tape>RACHA & VOLUMEN</Tape>
-    <div style={{padding:'0 20px'}}><div className="card" style={{padding:16,display:'flex',alignItems:'center',justifyContent:'space-around'}}>
-      <div><div className="L">RACHA</div><div style={{display:'flex',alignItems:'baseline',gap:5}}><div className="D" style={{fontSize:40,color:'var(--ink)'}}>{strk}</div><div className="M" style={{fontSize:11,color:'var(--muted)'}}>días</div></div></div>
-      <div style={{width:1,alignSelf:'stretch',background:'var(--line)'}}/>
-      <div><div className="L">VOLUMEN MES</div><div style={{display:'flex',alignItems:'baseline',gap:5}}><div className="D" style={{fontSize:40,color:'var(--ink)'}}>{(stats.vol/1000).toFixed(1)}</div><div className="M" style={{fontSize:11,color:'var(--muted)'}}>t</div></div></div>
-    </div></div>
-  </div>);
-}
-
-function Stats({st}){
-  const td=now(),stats=moStats(st,td);
-  const weeks=[];
-  for(let w=5;w>=0;w--){const end=new Date(td);end.setDate(end.getDate()-w*7);const start=new Date(end);start.setDate(start.getDate()-6);let kg=0;for(const[iso,day]of Object.entries(st.sessions)){const d=iso2d(iso);if(d>=start&&d<=end)for(const arr of Object.values(day))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.weight&&s.reps)kg+=s.weight*s.reps;}const tmp=new Date(end);tmp.setDate(tmp.getDate()-end.getDay()+1);const oj=new Date(tmp.getFullYear(),0,1);weeks.push({w:'W'+Math.ceil((((tmp-oj)/86400000)+oj.getDay()+1)/7),kg});}
-  const maxKg=Math.max(1,...weeks.map(w=>w.kg));
-  const prMap={};
-  for(const[iso,day]of Object.entries(st.sessions))for(const[exId,arr]of Object.entries(day)){if(!Array.isArray(arr))continue;for(const s of arr)if(s&&s.done&&s.weight&&(!prMap[exId]||s.weight>prMap[exId].kg))prMap[exId]={kg:s.weight,reps:s.reps||0,date:iso};}
-  const exN={};for(const dow of Object.keys(st.routine))for(const ex of(st.routine[dow].exercises||[]))exN[ex.id]=ex.name;
-  const prs=Object.entries(prMap).map(([id,v])=>({...v,name:exN[id]||id})).sort((a,b)=>b.kg-a.kg).slice(0,8);
-  let rS=0,rC=0;for(const day of Object.values(st.sessions))for(const arr of Object.values(day))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.rir!=null){rS+=s.rir;rC++;}
-  const avgRIR=rC?rS/rC:null;
-  const empty=stats.done===0&&prs.length===0;
-
-  return(<div className="body">
-    <TB user={st.user} sub="Tu progreso"/>
-    <div style={{padding:'0 20px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:4}}>
-      <div className="card" style={{padding:13}}><div className="L">VOLUMEN MES</div><div className="D" style={{fontSize:32,marginTop:4,color:'var(--ink)'}}>{(stats.vol/1000).toFixed(1)}<span style={{fontSize:13,color:'var(--muted)'}}>t</span></div><div className="M" style={{fontSize:9,color:'var(--muted)'}}>{stats.vol.toLocaleString()} KG</div></div>
-      <div className="card" style={{padding:13}}><div className="L">RIR PROM.</div><div className="D" style={{fontSize:32,marginTop:4,color:'var(--ink)'}}>{avgRIR==null?'—':avgRIR.toFixed(1)}</div><div className="M" style={{fontSize:9,color:'var(--muted)'}}>{avgRIR==null?'SIN DATOS':avgRIR<1.5?'INTENSIDAD ALTA':'MODERADA'}</div></div>
-    </div>
-    <Tape>VOLUMEN POR SEMANA</Tape>
-    <div style={{padding:'0 20px'}}><div className="card" style={{padding:'14px 14px 10px'}}>
-      {empty?<div style={{padding:'26px 0',textAlign:'center'}}><div className="D" style={{fontSize:16,color:'var(--dim)'}}>SIN DATOS AÚN</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Completa sesiones para ver tu progreso</div></div>
-        :<>
-          <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',height:110,gap:5,borderBottom:'1px dashed var(--line)',paddingBottom:5}}>
-            {weeks.map((w,i)=>{const h=(w.kg/maxKg)*100,isL=i===weeks.length-1;return(<div key={i} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-end',height:'100%'}}>
-              <div className="M" style={{fontSize:7,color:'var(--muted)',marginBottom:2}}>{w.kg>0?(w.kg/1000).toFixed(1)+'t':'—'}</div>
-              <div style={{width:'100%',height:w.kg>0?`${h}%`:'2px',background:isL?'var(--ink)':'var(--bg3)',border:`1px solid ${isL?'var(--ink)':'var(--line)'}`,borderRadius:3}}/>
-            </div>);})}
-          </div>
-          <div style={{display:'flex',marginTop:4}}>{weeks.map((w,i)=><div key={i} className="M" style={{fontSize:7,color:'var(--muted)',flex:1,textAlign:'center'}}>{w.w}</div>)}</div>
-        </>}
-    </div></div>
-    <Tape>RÉCORDS PERSONALES</Tape>
-    <div style={{padding:'0 20px'}}>
-      {prs.length===0?<div className="card" style={{padding:18,textAlign:'center'}}><div className="M" style={{fontSize:11,color:'var(--muted)'}}>Tus PRs aparecerán al completar series</div></div>
-        :prs.map((pr,i)=><div key={i} className="card" style={{padding:'12px 14px',marginBottom:8,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <div><div style={{display:'flex',alignItems:'center',gap:8}}><span className="D" style={{fontSize:9,color:'var(--acc2)'}}>PR</span><span style={{fontFamily:'var(--fd)',fontSize:14,color:'var(--ink)'}}>{(pr.name||'').toUpperCase().slice(0,22)}</span></div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:2}}>{pr.date} · {pr.reps} reps</div></div>
-          <div style={{textAlign:'right'}}><div className="D" style={{fontSize:26,color:'var(--ink)'}}>{pr.kg}</div><div className="M" style={{fontSize:8,color:'var(--muted)',letterSpacing:'.1em'}}>KG</div></div>
-        </div>)}
-    </div>
-  </div>);
-}
-
-function ProfileModal({st,setSt,onClose}){
-  const [name,setName]=useState(st.user.name||'');
-  const [wt,setWt]=useState(st.user.weightKg||'');
-  const [ht,setHt]=useState(st.user.heightCm||'');
-  const [mg,setMg]=useState(st.user.monthlyGoal||16);
-  const iStyle={background:'var(--bg2)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:15,padding:'10px 12px',borderRadius:10,width:'100%',outline:'none'};
-  const save=()=>{setSt(s=>({...s,user:{...s.user,name:name.trim()||s.user.name,weightKg:parseFloat(wt)||s.user.weightKg,heightCm:parseInt(ht)||s.user.heightCm,monthlyGoal:parseInt(mg)||s.user.monthlyGoal}}));onClose();};
-  const reset=()=>resetApp();
-  return(<div className="modal-bg" onClick={onClose}>
-    <div className="modal" onClick={e=>e.stopPropagation()}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:20}}>
-        <div className="D" style={{fontSize:22,color:'var(--ink)'}}>PERFIL</div>
-        <button onClick={onClose} style={{background:'transparent',border:'none',color:'var(--muted)',fontSize:20,cursor:'pointer'}}>✕</button>
-      </div>
-      <div style={{display:'grid',gap:10}}>
-        <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">NOMBRE</span><input style={iStyle} value={name} onChange={e=>setName(e.target.value)}/></label>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">PESO KG</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={wt} onChange={e=>setWt(e.target.value)}/></label>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">ALTURA CM</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={ht} onChange={e=>setHt(e.target.value)}/></label>
-        </div>
-        <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">META SESIONES/MES</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={mg} onChange={e=>setMg(e.target.value)}/></label>
-      </div>
-      <button className="btn btn-p" style={{marginTop:18}} onClick={save}><span>GUARDAR</span><span className="ar">✓</span></button>
-      <button onClick={reset} style={{width:'100%',marginTop:10,padding:12,border:'1px solid var(--line)',borderRadius:12,background:'transparent',color:'var(--acc2)',fontFamily:'var(--fm)',fontSize:11,letterSpacing:'.06em',cursor:'pointer'}}>BORRAR TODOS LOS DATOS</button>
-    </div>
-  </div>);
-}
-
-function App(){
-  const [st,setSt]=useState(()=>load()||blank());
-  const [tab,setTab]=useState('home');
-  const [prof,setProf]=useState(false);
-  useEffect(()=>{persist(st);},[st]);
-  if(!st.onboarded)return <Onboarding onDone={s=>setSt({...blank(),...s,onboarded:true})}/>;
-  let body;
-  if(tab==='home')body=<Home st={st} onStart={()=>setTab('workout')} onCal={()=>setTab('calendar')} onAv={()=>setProf(true)} onReset={resetApp}/>;
-  else if(tab==='calendar')body=<Calendar st={st}/>;
-  else if(tab==='workout')body=<Workout st={st} setSt={setSt}/>;
-  else if(tab==='stats')body=<Stats st={st}/>;
-  return(<>
-    <div className="app"><div className="scroll">{body}</div><Nav active={tab} onChange={setTab}/></div>
-    {prof&&<ProfileModal st={st} setSt={setSt} onClose={()=>setProf(false)}/>}
-  </>);
-}
+const libEx=name=>{const f=EX_LIBRARY.find(e=>e.name.toLowerCase()===String(name).toLowerCase());return {id:gid(),name:f?.name||name,muscle:f?.muscle||'',target:f?.target||'10–12 reps'}};
+const blank=()=>({onboarded:false,user:{name:'',weightKg:null,heightCm:null,bodyFatPct:null,goal:'Retomar constancia',monthlyGoalGym:12,monthlyGoalMove:20,stages:[],bodyLog:[]},routine:{},sessions:{}});
+function normalizeRoutine(r){const out={};for(const d of[0,1,2,3,4,5,6]){const day=r?.[d]||{};out[d]={focus:day.focus||'DESCANSO',exercises:(day.exercises||[]).map(e=>({id:e.id||gid(),name:e.name||'',muscle:e.muscle||'',target:e.target||'10–12 reps'}))};}return out}
+function migrate(raw){const b=blank(),u=raw?.user||{};b.onboarded=!!raw?.onboarded;b.user={...b.user,...u,monthlyGoalGym:u.monthlyGoalGym||u.monthlyGoal||12,monthlyGoalMove:u.monthlyGoalMove||u.monthlyGoal||20,stages:u.stages?.length?u.stages:[{id:gid(),goal:u.goal||'Retomar constancia',start:todayISO()}],bodyLog:u.bodyLog||[]};b.routine=normalizeRoutine(raw?.routine||{});b.sessions={};for(const[iso,val]of Object.entries(raw?.sessions||{})){if(val?.gym||val?.activities){b.sessions[iso]={gym:{sets:val.gym?.sets||{},omitted:val.gym?.omitted||[],extras:val.gym?.extras||[]},activities:val.activities||[]};continue}const sets={};for(const[k,v]of Object.entries(val||{}))if(Array.isArray(v))sets[k]=v;b.sessions[iso]={gym:{sets,omitted:[],extras:[]},activities:Object.keys(sets).length?[{id:gid(),type:'gym'}]:[]};}return b}
+const load=()=>{try{for(const k of[KEY,OLD1,OLD2]){const r=localStorage.getItem(k);if(r)return migrate(JSON.parse(r))}}catch(e){}return blank()};
+const persist=s=>{try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}};
+const resetApp=()=>{const ok=confirm('Esto borrará tu rutina, sesiones y progreso guardado en este dispositivo. ¿Quieres reiniciar MUVIT?');if(!ok)return;const sure=confirm('Última confirmación: esta acción no se puede deshacer.');if(!sure)return;try{[KEY,OLD1,OLD2].forEach(k=>localStorage.removeItem(k))}catch(e){}window.location.reload()};
+function emptyDay(){return {gym:{sets:{},omitted:[],extras:[]},activities:[]}}
+function getDay(st,iso){return st.sessions?.[iso]||emptyDay()}
+function updateDay(setSt,iso,fn){setSt(s=>{const d=getDay(s,iso);return {...s,sessions:{...s.sessions,[iso]:fn(JSON.parse(JSON.stringify(d)))}}})}
+function hasGym(st,iso){const d=getDay(st,iso);return (d.activities||[]).some(a=>a.type==='gym')||Object.values(d.gym?.sets||{}).some(arr=>arr?.some(x=>x?.done))}
+function dayActs(st,iso){const d=getDay(st,iso);const a=[...(d.activities||[])];if(hasGym(st,iso)&&!a.some(x=>x.type==='gym'))a.unshift({id:'auto-gym',type:'gym'});return a}
+function markActivity(setSt,iso,type){updateDay(setSt,iso,d=>{if(!d.activities.some(a=>a.type===type))d.activities.push({id:gid(),type,ts:Date.now()});return d})}
+function weekDates(base=todayISO()){const d=iso2d(base),diff=d.getDay()===0?-6:1-d.getDay(),start=new Date(d);start.setDate(d.getDate()+diff);return Array.from({length:7},(_,i)=>{const x=new Date(start);x.setDate(start.getDate()+i);return x})}
+function calcStreak(st){let n=0,d=new Date();for(let i=0;i<180;i++){const iso=dk(d);if(dayActs(st,iso).length)n++;else if(iso===todayISO()){}else break;d.setDate(d.getDate()-1)}return n}
+function rangeStats(st,dates){const counts=Object.fromEntries(ACT_ORDER.map(k=>[k,0]));let activeDays=0,total=0,vol=0;dates.forEach(dt=>{const iso=dk(dt),acts=dayActs(st,iso);if(acts.length)activeDays++;acts.forEach(a=>{counts[a.type]=(counts[a.type]||0)+1;total++});const g=getDay(st,iso).gym;Object.values(g.sets||{}).forEach(arr=>(arr||[]).forEach(s=>{if(s?.done&&s.weight&&s.reps)vol+=Number(s.weight)*Number(s.reps)}))});return{counts,activeDays,total,vol}}
+function monthStats(st,date=new Date()){return rangeStats(st,monthDays(date))}
+function allExerciseNames(st){const m={};Object.values(st.routine||{}).forEach(d=>(d.exercises||[]).forEach(e=>m[e.id]=e.name));Object.values(st.sessions||{}).forEach(d=>(d.gym?.extras||[]).forEach(e=>m[e.id]=e.name));return m}
+function exerciseHistory(st,ex){const names=allExerciseNames(st);const target=String(ex.name||'').toLowerCase();const hist=[];for(const[iso,day]of Object.entries(st.sessions||{})){for(const[id,arr]of Object.entries(day.gym?.sets||{})){if((names[id]||'').toLowerCase()!==target)continue;(arr||[]).forEach(s=>{if(s?.done&&s.weight)hist.push({iso,weight:Number(s.weight),reps:Number(s.reps)||0})})}}hist.sort((a,b)=>a.iso.localeCompare(b.iso));return{last:hist[hist.length-1]||null,best:hist.slice().sort((a,b)=>b.weight-a.weight)[0]||null,all:hist}}
+function Logo(){return <div className="brand">MUVIT</div>}
+function TB({user,sub,onAv}){return <div className="tb"><div><Logo/><div className="tb-sub">{sub}</div></div><button className="av" onClick={onAv}>{(user?.name||'M')[0].toUpperCase()}</button></div>}
+function Section({children}){return <div className="section">{children}</div>}
+function Nav({active,onChange}){const tabs=[['home','HOY','▣'],['calendar','MES','▦'],['workout','GYM','◉'],['stats','STATS','◢']];return <nav className="nav">{tabs.map(([id,l,ic])=><button key={id} className={`nt${active===id?' on':''}`} onClick={()=>onChange(id)}><span className="ic">{ic}</span><span>{l}</span></button>)}</nav>}
+function Onboarding({onDone}){const [step,setStep]=useState(0),[u,setU]=useState({name:'',weightKg:'',bodyFatPct:'',goal:'Retomar constancia',monthlyGoalGym:12,monthlyGoalMove:20}),[days,setDays]=useState([1,2,4,5,6]);const toggle=d=>setDays(p=>p.includes(d)?p.filter(x=>x!==d):[...p,d]);const finish=()=>{const routine={};for(const d of[0,1,2,3,4,5,6]){const src=days.includes(d)?TPL[d]||{focus:'ENTRENAMIENTO',exercises:[]}:TPL[3];routine[d]={focus:src.focus,exercises:(src.exercises||[]).map(libEx)}}onDone({onboarded:true,user:{...blank().user,name:u.name.trim()||'ATLETA',weightKg:parseFloat(u.weightKg)||null,bodyFatPct:parseFloat(u.bodyFatPct)||null,goal:u.goal,monthlyGoalGym:parseInt(u.monthlyGoalGym)||12,monthlyGoalMove:parseInt(u.monthlyGoalMove)||20,stages:[{id:gid(),goal:u.goal,start:todayISO()}],bodyLog:[{id:gid(),date:todayISO(),weightKg:parseFloat(u.weightKg)||null,bodyFatPct:parseFloat(u.bodyFatPct)||null}]},routine,sessions:{}})};return <div className="onb"><Logo/><div className="dots">{[0,1].map(i=><span key={i} className={i<=step?'on':''}/>)}</div>{step===0?<div className="fade"><div className="L">PASO 1 DE 2</div><h1>¡HOLA!</h1><p className="lead"><strong style={{color:'var(--ink)'}}>Todo movimiento cuenta.</strong> Planifica tu semana, registra tus sesiones y mira tu progreso sin complicarte.</p><label className="field"><span>Nombre</span><input value={u.name} onChange={e=>setU({...u,name:e.target.value})} placeholder="Tu nombre"/></label><div className="grid2"><label className="field"><span>Peso kg</span><input type="number" value={u.weightKg} onChange={e=>setU({...u,weightKg:e.target.value})} placeholder="Opcional"/></label><label className="field"><span>% grasa</span><input type="number" value={u.bodyFatPct} onChange={e=>setU({...u,bodyFatPct:e.target.value})} placeholder="Opcional"/></label></div><label className="field"><span>Etapa actual</span><select value={u.goal} onChange={e=>setU({...u,goal:e.target.value})}><option>Retomar constancia</option><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Recomposición</option><option>Mantener</option></select></label><div className="grid2"><label className="field"><span>Sesiones de gym al mes</span><input type="number" value={u.monthlyGoalGym} onChange={e=>setU({...u,monthlyGoalGym:e.target.value})}/></label><label className="field"><span>Movimientos totales al mes</span><input type="number" value={u.monthlyGoalMove} onChange={e=>setU({...u,monthlyGoalMove:e.target.value})}/></label></div><button className="btn btn-p" disabled={!u.name.trim()} style={{opacity:u.name.trim()?1:.45,marginTop:10}} onClick={()=>setStep(1)}><span>Siguiente</span><span className="round">→</span></button></div>:<div className="fade"><div className="L">PASO 2 DE 2</div><h1>TU SEMANA<br/>BASE</h1><p className="lead">Elige tus días de gym. Luego podrás editar ejercicios, días de descanso y rutina completa.</p><div className="dtog-wrap">{[1,2,3,4,5,6,0].map(d=><button key={d} className={`dtog${days.includes(d)?' on':''}`} onClick={()=>toggle(d)}>{DOWS[d]}</button>)}</div><div style={{display:'flex',gap:10}}><button className="btn btn-ghost" style={{flex:1}} onClick={()=>setStep(0)}>Atrás</button><button className="btn btn-p" style={{flex:2}} onClick={finish}><span>Crear MUVIT</span><span className="round">✓</span></button></div></div>}</div>}
+function Home({st,setSt,onAv,onStartGym,onReset}){const today=todayISO(),dow=iso2d(today).getDay(),r=st.routine[dow]||{focus:'DESCANSO',exercises:[]},week=weekDates(today),ws=rangeStats(st,week),streak=calcStreak(st),target=Math.max(1,Math.ceil((st.user.monthlyGoalMove||20)/4)),pct=Math.min(100,Math.round(ws.total/target*100));return <div className="body fade"><TB user={st.user} sub={fmtDate(today)} onAv={onAv}/><div className="card dark"><div className="L" style={{color:'rgba(255,255,255,.48)'}}>ETAPA ACTUAL</div><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',gap:12,marginTop:8}}><div><div className="D" style={{fontSize:30,color:'var(--acc)'}}>{st.user.goal||'Retomar constancia'}</div><div className="M" style={{fontSize:10,color:'rgba(255,255,255,.55)',marginTop:8}}>Racha activa: {streak} {streak===1?'día':'días'}</div></div><div style={{fontSize:26}}>{Array.from({length:Math.min(5,Math.max(1,streak||1))}).map((_,i)=>i<streak?'🔥':'○').join('')}</div></div></div><Section>Plan de hoy</Section><div className="card"><div className="L">SESIÓN DE HOY</div><div className="D" style={{fontSize:28,marginTop:8}}>{r.exercises?.length?r.focus:'DÍA SIN GYM PROGRAMADO'}</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:8}}>{r.exercises?.length?`${r.exercises.length} ejercicios en tu rutina base`:'Puedes registrar caminata, pilates, yoga u otro movimiento.'}</div><button className="btn btn-p" style={{marginTop:14}} onClick={()=>onStartGym(today)}><span>{r.exercises?.length?'Empezar gym':'Registrar gym'}</span><span className="round">→</span></button></div><Section>Racha y semana</Section><div className="card"><div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}><div><div className="L">AVANCE SEMANAL</div><div className="D" style={{fontSize:25,marginTop:5}}>{ws.total}/{target} movimientos</div></div><div className="D" style={{fontSize:30}}>{pct}%</div></div><div className="pbar"><div className="pfill" style={{width:`${pct}%`}}/></div><div className="week" style={{marginTop:13}}>{week.map(d=>{const iso=dk(d),acts=dayActs(st,iso),em=acts[0]?ACTS[acts[0].type]?.emoji:'○';return <div key={iso} className={`wd${acts.length?' on':''}${iso===today?' today':''}`}><div className="d">{DOWS[d.getDay()]}</div><div className="e">{acts.length>1?`${em}+`:em}</div></div>})}</div></div><Section>Registrar rápido</Section><QuickRegister st={st} setSt={setSt} defaultDate={today} onGym={onStartGym}/><button className="small-btn" style={{width:'100%',marginTop:12,borderRadius:14,padding:12}} onClick={onReset}>Reiniciar app</button><div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginTop:6}}>Borra los datos guardados en este dispositivo.</div></div>}
+function QuickRegister({st,setSt,defaultDate,onGym}){const [date,setDate]=useState(defaultDate||todayISO());return <div className="card"><div className="date-row" style={{marginBottom:12}}><input className="input" type="date" value={date} onChange={e=>setDate(e.target.value)}/><button className="small-btn dark" onClick={()=>setDate(todayISO())}>Hoy</button></div><div className="quick">{ACT_ORDER.map(t=>{const done=dayActs(st,date).some(a=>a.type===t);return <button key={t} className={`qbtn${done?' done':''}`} onClick={()=>t==='gym'?onGym(date):markActivity(setSt,date,t)}><span className="em">{ACTS[t].emoji}</span><span className="tx">{ACTS[t].label}</span></button>})}</div></div>}
+function Calendar({st,setSt,onAv,onGym}){const nowd=new Date(),m=monthStats(st,nowd),goal=st.user.monthlyGoalMove||20,pct=Math.min(100,Math.round(m.total/goal*100)),days=monthDays(nowd),first=days[0].getDay();return <div className="body fade"><TB user={st.user} sub={fmtMonth(nowd)} onAv={onAv}/><div className="card dark"><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end'}}><div><div className="L" style={{color:'rgba(255,255,255,.45)'}}>MOVIMIENTOS DEL MES</div><div className="D" style={{fontSize:58,color:'var(--acc)',marginTop:5}}>{m.total}<span style={{fontSize:24,color:'rgba(255,255,255,.35)'}}>/{goal}</span></div></div><div className="D" style={{fontSize:30}}>{pct}%</div></div><div className="pbar" style={{marginTop:12,borderColor:'rgba(255,255,255,.14)',background:'rgba(255,255,255,.12)'}}><div className="pfill" style={{width:`${pct}%`,background:'var(--acc)'}}/></div></div><Section>Por disciplina</Section><div className="chart">{ACT_ORDER.map(t=>{const max=Math.max(1,...ACT_ORDER.map(k=>m.counts[k]||0));return <div className="hbar" key={t}><label>{ACTS[t].emoji} {ACTS[t].label}</label><div className="track"><div className="fill" style={{width:`${(m.counts[t]||0)/max*100}%`}}/></div><b>{m.counts[t]||0}</b></div>})}</div><Section>Calendario mensual</Section><div className="cal"><div className="calh">D</div><div className="calh">L</div><div className="calh">M</div><div className="calh">M</div><div className="calh">J</div><div className="calh">V</div><div className="calh">S</div>{Array.from({length:first}).map((_,i)=><div key={'b'+i}/>) }{days.map(d=>{const iso=dk(d),acts=dayActs(st,iso),ems=acts.slice(0,2).map(a=>ACTS[a.type]?.emoji).join('');return <div key={iso} className={`day${acts.length?' active':''}${iso===todayISO()?' today':''}`}><span>{d.getDate()}</span><span className="ems">{acts.length>2?`${ems}+`:ems}</span></div>})}</div><Section>Registrar otro día</Section><QuickRegister st={st} setSt={setSt} defaultDate={todayISO()} onGym={onGym}/></div>}
+function Workout({st,setSt,onAv,activeDate,setActiveDate}){const iso=activeDate||todayISO(),d=iso2d(iso),dow=d.getDay(),base=st.routine[dow]||{focus:'DESCANSO',exercises:[]},day=getDay(st,iso),extras=day.gym.extras||[],omitted=day.gym.omitted||[],exs=[...(base.exercises||[]),...extras],totalSets=exs.length*3,doneSets=exs.reduce((n,e)=>n+((day.gym.sets[e.id]||[]).filter(s=>s.done).length),0);const getSets=id=>day.gym.sets[id]||[{weight:0,reps:0,rir:null,done:false},{weight:0,reps:0,rir:null,done:false},{weight:0,reps:0,rir:null,done:false}];const upd=(id,si,f,v)=>updateDay(setSt,iso,dd=>{const cur=dd.gym.sets[id]||getSets(id);dd.gym.sets[id]=cur.map((x,i)=>i===si?{...x,[f]:v}:x);if(!dd.activities.some(a=>a.type==='gym'))dd.activities.push({id:gid(),type:'gym'});return dd});const tog=(id,si)=>{const was=getSets(id)[si].done;upd(id,si,'done',!was)};const omit=id=>updateDay(setSt,iso,dd=>{dd.gym.omitted=dd.gym.omitted.includes(id)?dd.gym.omitted.filter(x=>x!==id):[...dd.gym.omitted,id];return dd});const addEx=ex=>updateDay(setSt,iso,dd=>{dd.gym.extras.push({...ex,id:gid()});if(!dd.activities.some(a=>a.type==='gym'))dd.activities.push({id:gid(),type:'gym'});return dd});const delEx=id=>updateDay(setSt,iso,dd=>{dd.gym.extras=dd.gym.extras.filter(e=>e.id!==id);delete dd.gym.sets[id];dd.gym.omitted=dd.gym.omitted.filter(x=>x!==id);return dd});return <div className="body fade"><TB user={st.user} sub={fmtDate(iso)} onAv={onAv}/><div className="card dark"><div className="date-row"><input className="input" type="date" value={iso} onChange={e=>setActiveDate(e.target.value)}/><button className="small-btn dark" onClick={()=>setActiveDate(todayISO())}>Hoy</button></div><div className="L" style={{marginTop:15,color:'rgba(255,255,255,.45)'}}>GYM</div><div className="D" style={{fontSize:34,color:'var(--acc)',marginTop:6}}>{base.exercises?.length?base.focus:'RUTINA LIBRE'}</div><div className="M" style={{fontSize:10,color:'rgba(255,255,255,.55)',marginTop:7}}>{doneSets}/{totalSets||0} series completadas</div></div><Section>Ejercicios</Section>{exs.length===0&&<div className="empty card">No hay ejercicios en este día. Agrega uno para registrar tu sesión.</div>}{exs.map((ex,i)=><ExCard key={ex.id} ex={ex} num={i+1} sets={getSets(ex.id)} omitted={omitted.includes(ex.id)} extra={extras.some(e=>e.id===ex.id)} hist={exerciseHistory(st,ex)} onUpd={(si,f,v)=>upd(ex.id,si,f,v)} onTog={si=>tog(ex.id,si)} onOmit={()=>omit(ex.id)} onDelete={()=>delEx(ex.id)}/>) }<AddExercise onAdd={addEx}/></div>}
+function AddExercise({onAdd}){const [open,setOpen]=useState(false),[name,setName]=useState(''),[muscle,setMuscle]=useState(''),[target,setTarget]=useState('10–12 reps');const matches=EX_LIBRARY.filter(e=>e.name.toLowerCase().includes(name.toLowerCase())).slice(0,6);const pick=e=>{setName(e.name);setMuscle(e.muscle);setTarget(e.target)};const add=()=>{if(!name.trim())return;onAdd({name:name.trim(),muscle,target});setName('');setMuscle('');setTarget('10–12 reps');setOpen(false)};return <div className="card" style={{marginTop:10}}>{!open?<button className="btn btn-p" style={{width:'100%'}} onClick={()=>setOpen(true)}><span>Agregar ejercicio</span><span className="round">+</span></button>:<><div className="L" style={{marginBottom:8}}>AGREGAR EJERCICIO</div><div className="suggest"><input className="input" value={name} onChange={e=>setName(e.target.value)} placeholder="Busca: hip thrust, sentadilla, prensa..."/>{name&&matches.length>0&&<div className="sugbox">{matches.map(e=><button key={e.name} onClick={()=>pick(e)}>{e.name} · {e.muscle}</button>)}</div>}</div><div className="grid2" style={{marginTop:9}}><input className="input" value={muscle} onChange={e=>setMuscle(e.target.value)} placeholder="Músculo"/><input className="input" value={target} onChange={e=>setTarget(e.target.value)} placeholder="Objetivo"/></div><div style={{display:'flex',gap:8,marginTop:10}}><button className="small-btn" style={{flex:1}} onClick={()=>setOpen(false)}>Cancelar</button><button className="small-btn dark" style={{flex:2}} onClick={add}>Agregar</button></div></>}</div>}
+function ExCard({ex,num,sets,omitted,extra,hist,onUpd,onTog,onOmit,onDelete}){const allDone=sets.filter(s=>s.done).length;return <div className="ex-row" style={{opacity:omitted?.55:1}}><div style={{display:'flex',justifyContent:'space-between',gap:8}}><div style={{flex:1}}><div style={{display:'flex',gap:8,alignItems:'center'}}><div className="D" style={{fontSize:11,color:'var(--dim)',width:18}}>0{num}</div><div className="ex-n">{ex.name.toUpperCase()}</div></div><div className="ex-m">{omitted?'OMITIDO HOY':`${ex.muscle||'Sin músculo'} · ${ex.target||''}`}</div></div><div style={{display:'flex',gap:6,alignItems:'flex-start'}}><button className="small-btn" onClick={onOmit}>{omitted?'hacer':'omitir'}</button>{extra&&<button className="small-btn" onClick={onDelete}>eliminar</button>}</div></div>{!omitted&&<><div className="note">Última vez: {hist.last?`${hist.last.weight} kg · ${hist.last.reps} reps (${hist.last.iso})`:'sin registro previo'}<br/>Mejor marca: {hist.best?`${hist.best.weight} kg · ${hist.best.reps} reps`:'—'}</div><div className="sh"><div/><div className="ch">KG</div><div className="ch">REPS</div><div className="ch">RIR</div><div className="ch">{allDone}/3</div></div>{sets.map((s,i)=><div key={i} className="sr"><div className="sn">{i+1}</div><input className={`inp${s.done?' done':''}`} type="number" inputMode="decimal" value={s.weight||''} placeholder="—" onChange={e=>onUpd(i,'weight',parseFloat(e.target.value)||0)}/><input className={`inp${s.done?' done':''}`} type="number" inputMode="numeric" value={s.reps||''} placeholder="—" onChange={e=>onUpd(i,'reps',parseInt(e.target.value)||0)}/><input className={`inp${s.done?' done':''}`} type="number" inputMode="numeric" value={s.rir??''} placeholder="—" onChange={e=>onUpd(i,'rir',e.target.value===''?null:parseInt(e.target.value))}/><button className={`chk${s.done?' done':''}`} onClick={()=>onTog(i)}>✓</button></div>)}</>}</div>}
+function Stats({st,onAv}){const nowd=new Date(),m=monthStats(st,nowd),streak=calcStreak(st),weeks=Array.from({length:6},(_,i)=>{const end=new Date();end.setDate(end.getDate()-(5-i)*7);return rangeStats(st,weekDates(dk(end)))}),maxW=Math.max(1,...weeks.map(w=>w.total));const names=allExerciseNames(st),prs=[];Object.values(st.sessions||{}).forEach(day=>Object.entries(day.gym?.sets||{}).forEach(([id,arr])=>(arr||[]).forEach(s=>{if(s?.done&&s.weight)prs.push({name:names[id]||'Ejercicio',kg:Number(s.weight),reps:s.reps||0})})));prs.sort((a,b)=>b.kg-a.kg);const unique=[];prs.forEach(p=>{if(!unique.some(u=>u.name===p.name))unique.push(p)});const body=st.user.bodyLog||[];return <div className="body fade"><TB user={st.user} sub="Análisis de progreso" onAv={onAv}/><div className="card dark"><div className="L" style={{color:'rgba(255,255,255,.45)'}}>ETAPA ACTUAL</div><div className="D" style={{fontSize:34,color:'var(--acc)',marginTop:6}}>{st.user.goal}</div><div className="M" style={{fontSize:10,color:'rgba(255,255,255,.55)',marginTop:8}}>Esta etapa aparece aquí porque define cómo lees tus avances.</div></div><Section>Constancia</Section><div className="grid2"><div className="kpi"><div className="L">Racha</div><div className="num">{streak}<span style={{fontSize:14,color:'var(--muted)'}}>d</span></div><div style={{fontSize:18,marginTop:5}}>{Array.from({length:7}).map((_,i)=>i<Math.min(streak,7)?'🔥':'○').join(' ')}</div></div><div className="kpi"><div className="L">Volumen mes</div><div className="num">{(m.vol/1000).toFixed(1)}<span style={{fontSize:14,color:'var(--muted)'}}>t</span></div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>{m.vol.toLocaleString()} kg</div></div></div><Section>Movimientos por semana</Section><div className="chart"><div className="bars">{weeks.map((w,i)=><div key={i} className="bar" style={{height:`${Math.max(4,w.total/maxW*100)}%`}}><span>{w.total}</span></div>)}</div><div className="xaxis">{weeks.map((_,i)=><span key={i}>S{i+1}</span>)}</div></div><Section>Distribución mensual</Section><div className="chart">{ACT_ORDER.map(t=>{const max=Math.max(1,...ACT_ORDER.map(k=>m.counts[k]||0));return <div className="hbar" key={t}><label>{ACTS[t].emoji} {ACTS[t].label}</label><div className="track"><div className="fill" style={{width:`${(m.counts[t]||0)/max*100}%`}}/></div><b>{m.counts[t]||0}</b></div>})}</div><Section>Récords de fuerza</Section><div>{unique.length===0?<div className="empty card">Completa series para ver récords y comparativas.</div>:unique.slice(0,7).map((p,i)=><div key={i} className="card" style={{marginBottom:8,display:'flex',justifyContent:'space-between',alignItems:'center'}}><div><div className="D" style={{fontSize:15}}>{p.name.toUpperCase()}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:4}}>{p.reps} reps</div></div><div className="D" style={{fontSize:28}}>{p.kg}<span style={{fontSize:11,color:'var(--muted)'}}>kg</span></div></div>)}</div><Section>Evolución corporal</Section><div className="chart">{body.filter(x=>x.weightKg||x.bodyFatPct).length<2?<div className="empty">Actualiza peso o % grasa en Perfil para ver evolución.</div>:<><div className="line">{body.slice(-8).map((b,i)=>{const vals=body.slice(-8).map(x=>Number(x.weightKg)||0),max=Math.max(...vals),min=Math.min(...vals),h=max===min?50:((Number(b.weightKg)-min)/(max-min))*80+8;return <div className="dotcol" key={b.id||i}><div className="dot" style={{marginBottom:`${h}px`}}/></div>})}</div><div className="xaxis">{body.slice(-8).map((b,i)=><span key={i}>{String(b.date||'').slice(5)}</span>)}</div></>}</div></div>}
+function ProfileModal({st,setSt,onClose}){const [name,setName]=useState(st.user.name||''),[goal,setGoal]=useState(st.user.goal||'Retomar constancia'),[wt,setWt]=useState(st.user.weightKg||''),[bf,setBf]=useState(st.user.bodyFatPct||''),[mg,setMg]=useState(st.user.monthlyGoalGym||12),[mm,setMm]=useState(st.user.monthlyGoalMove||20),[edit,setEdit]=useState(false);const save=()=>{setSt(s=>{const stages=goal!==s.user.goal?[...(s.user.stages||[]),{id:gid(),goal,start:todayISO()}]:(s.user.stages||[]);const bodyLog=[...(s.user.bodyLog||[])];const nw=parseFloat(wt)||null,nb=parseFloat(bf)||null;if(nw!==s.user.weightKg||nb!==s.user.bodyFatPct)bodyLog.push({id:gid(),date:todayISO(),weightKg:nw,bodyFatPct:nb});return {...s,user:{...s.user,name:name.trim()||s.user.name,goal,weightKg:nw,bodyFatPct:nb,monthlyGoalGym:parseInt(mg)||12,monthlyGoalMove:parseInt(mm)||20,stages,bodyLog}}});onClose()};if(edit)return <RoutineEditor st={st} setSt={setSt} onBack={()=>setEdit(false)}/>;return <div className="modal-bg" onClick={onClose}><div className="modal" onClick={e=>e.stopPropagation()}><div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}><div className="D" style={{fontSize:24}}>PERFIL</div><button className="small-btn" onClick={onClose}>cerrar</button></div><label className="field"><span>Nombre</span><input value={name} onChange={e=>setName(e.target.value)}/></label><label className="field"><span>Etapa actual</span><select value={goal} onChange={e=>setGoal(e.target.value)}><option>Retomar constancia</option><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Recomposición</option><option>Mantener</option></select></label><div className="grid2"><label className="field"><span>Peso kg</span><input type="number" value={wt} onChange={e=>setWt(e.target.value)} placeholder="Opcional"/></label><label className="field"><span>% grasa</span><input type="number" value={bf} onChange={e=>setBf(e.target.value)} placeholder="Opcional"/></label></div><div className="grid2"><label className="field"><span>Sesiones de gym al mes</span><input type="number" value={mg} onChange={e=>setMg(e.target.value)}/></label><label className="field"><span>Movimientos totales al mes</span><input type="number" value={mm} onChange={e=>setMm(e.target.value)}/></label></div><button className="btn btn-s" style={{width:'100%',marginTop:8}} onClick={()=>setEdit(true)}><span>Editar rutina semanal</span><span>→</span></button><button className="btn btn-p" style={{width:'100%',marginTop:10}} onClick={save}><span>Guardar perfil</span><span className="round">✓</span></button><div style={{borderTop:'1px solid var(--line)',marginTop:18,paddingTop:14}}><div className="L" style={{marginBottom:8,color:'var(--dim)'}}>ZONA DE SEGURIDAD</div><button className="small-btn" style={{width:'100%',borderColor:'var(--acc2)',color:'var(--acc2)',borderRadius:14,padding:12}} onClick={resetApp}>Borrar todos los datos</button><div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginTop:6}}>Reinicia MUVIT en este dispositivo.</div></div></div></div>}
+function RoutineEditor({st,setSt,onBack}){const [rtn,setRtn]=useState(JSON.parse(JSON.stringify(normalizeRoutine(st.routine)))),[dow,setDow]=useState(1);const day=rtn[dow];const updateEx=(id,field,val)=>setRtn(r=>({...r,[dow]:{...r[dow],exercises:r[dow].exercises.map(e=>e.id===id?{...e,[field]:val}:e)}}));const add=ex=>setRtn(r=>({...r,[dow]:{...r[dow],focus:r[dow].focus==='DESCANSO'?'ENTRENAMIENTO':r[dow].focus,exercises:[...r[dow].exercises,{...ex,id:gid()}]}}));const del=id=>setRtn(r=>({...r,[dow]:{...r[dow],exercises:r[dow].exercises.filter(e=>e.id!==id)}}));const save=()=>{setSt(s=>({...s,routine:normalizeRoutine(rtn)}));onBack()};return <div className="modal-bg"><div className="modal"><button className="small-btn" onClick={onBack}>← perfil</button><div className="D" style={{fontSize:25,margin:'14px 0'}}>EDITAR RUTINA</div><div className="dtog-wrap">{[1,2,3,4,5,6,0].map(d=><button key={d} className={`dtog${dow===d?' on':''}`} onClick={()=>setDow(d)}>{DOWS[d]}</button>)}</div><label className="field"><span>Foco del día</span><input value={day.focus} onChange={e=>setRtn(r=>({...r,[dow]:{...r[dow],focus:e.target.value}}))}/></label>{day.exercises.map(ex=><div className="card" key={ex.id} style={{marginBottom:8}}><div className="suggest"><input className="input" value={ex.name} onChange={e=>updateEx(ex.id,'name',e.target.value)} placeholder="Ejercicio"/></div><div className="grid2" style={{marginTop:8}}><input className="input" value={ex.muscle} onChange={e=>updateEx(ex.id,'muscle',e.target.value)} placeholder="Músculo"/><input className="input" value={ex.target} onChange={e=>updateEx(ex.id,'target',e.target.value)} placeholder="Objetivo"/></div><button className="small-btn" style={{marginTop:8}} onClick={()=>del(ex.id)}>Eliminar</button></div>)}<AddExercise onAdd={add}/><button className="btn btn-p" style={{width:'100%',marginTop:12}} onClick={save}><span>Guardar rutina</span><span className="round">✓</span></button></div></div>}
+function App(){const [st,setSt]=useState(()=>load()),[tab,setTab]=useState('home'),[prof,setProf]=useState(false),[activeDate,setActiveDate]=useState(todayISO());useEffect(()=>persist(st),[st]);if(!st.onboarded)return <Onboarding onDone={setSt}/>;const openGym=iso=>{setActiveDate(iso);markActivity(setSt,iso,'gym');setTab('workout')};let body=tab==='home'?<Home st={st} setSt={setSt} onAv={()=>setProf(true)} onStartGym={openGym} onReset={resetApp}/>:tab==='calendar'?<Calendar st={st} setSt={setSt} onAv={()=>setProf(true)} onGym={openGym}/>:tab==='workout'?<Workout st={st} setSt={setSt} onAv={()=>setProf(true)} activeDate={activeDate} setActiveDate={setActiveDate}/>:<Stats st={st} onAv={()=>setProf(true)}/>;return <><div className="app"><div className="scroll">{body}</div><Nav active={tab} onChange={setTab}/></div>{prof&&<ProfileModal st={st} setSt={setSt} onClose={()=>setProf(false)}/>}</>}
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
