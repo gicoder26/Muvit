@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
-<meta name="apple-mobile-web-app-title" content="MUVIT"/>
-<title>MUVIT</title>
+<meta name="apple-mobile-web-app-title" content="LIFTS"/>
+<title>LIFTS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -123,13 +123,6 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--fb
 .rm{background:transparent;border:none;color:var(--dim);font-size:18px;cursor:pointer;padding:0 4px;line-height:1}
 .rm:hover{color:var(--acc2)}
 
-/* ACTIVITY */
-.act-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.act-btn{background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:14px 10px;text-align:left;cursor:pointer;color:var(--ink);font-family:var(--fb);transition:all .12s}
-.act-btn:active{transform:scale(.97)}
-.act-ic{font-size:18px;margin-bottom:6px}.act-name{font-family:var(--fd);font-size:16px;letter-spacing:.04em}.act-hint{font-family:var(--fm);font-size:9px;color:var(--muted);margin-top:3px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.chip{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:6px 9px;font-family:var(--fm);font-size:9px;color:var(--ink);display:flex;gap:6px;align-items:center}.chip button{border:none;background:transparent;color:var(--acc2);font-size:12px;cursor:pointer}
-
 /* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:100;display:flex;align-items:flex-end}
 .modal{background:var(--white);border:1px solid var(--line);border-radius:20px 20px 0 0;padding:24px 22px 40px;width:100%;max-width:430px;margin:0 auto}
@@ -148,6 +141,35 @@ html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--fb
 
 @keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .fade{animation:fu .25s ease both}
+
+/* MUVIT V2 */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 20px;margin-bottom:10px}
+.mini-card{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:13px}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 20px}
+.qbtn{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:12px 8px;font-family:var(--fb);font-weight:600;font-size:12px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
+.qbtn:active{transform:scale(.97)}
+.qbtn .em{font-size:22px}
+.week-row{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;padding:0 20px}
+.week-cell{background:var(--white);border:1px solid var(--line);border-radius:13px;padding:8px 3px;text-align:center;min-height:62px;display:flex;flex-direction:column;justify-content:space-between;align-items:center}
+.week-cell.on{background:var(--ink);color:var(--acc);border-color:var(--ink)}
+.week-cell.today{border:2px solid var(--ink)}
+.week-day{font-family:var(--fm);font-size:8px;color:var(--muted)}
+.week-cell.on .week-day{color:rgba(232,255,58,.75)}
+.week-emoji{font-size:19px;line-height:1}.week-num{font-family:var(--fd);font-size:11px}
+.month-cell{aspect-ratio:1;border-radius:9px;background:var(--bg2);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--fm);font-size:10px;color:var(--muted);gap:2px;position:relative}
+.month-cell.today{border:2px solid var(--ink);color:var(--ink)}
+.month-cell.active{background:var(--white);color:var(--ink)}
+.month-emoji{font-size:13px;line-height:1;min-height:14px}
+.pill-row{display:flex;gap:6px;overflow-x:auto;padding:0 20px 8px}
+.pill{flex:0 0 auto;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-family:var(--fm);font-size:10px;color:var(--muted)}
+.pill strong{font-family:var(--fd);font-size:14px;color:var(--ink);margin-right:4px}
+.slink{background:transparent;border:none;color:var(--muted);font-family:var(--fm);font-size:10px;text-decoration:underline;cursor:pointer}
+.note-box{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:10px;font-family:var(--fm);font-size:10px;color:var(--muted);line-height:1.45}
+.small-btn{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:9px 10px;color:var(--ink);font-family:var(--fm);font-size:10px;cursor:pointer}
+.small-btn.danger{color:var(--acc2)}
+.tag{display:inline-flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-family:var(--fm);font-size:9px;color:var(--muted)}
+.date-inp{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:var(--fm);font-size:13px;color:var(--ink);width:100%}
+
 </style>
 </head>
 <body>
@@ -168,18 +190,10 @@ const MTHS=['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','S
 const fmtSub=d=>{const ds=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],ms=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return`${ds[d.getDay()]} · ${String(d.getDate()).padStart(2,'0')} ${ms[d.getMonth()]}`;};
 const fmtMo=d=>`${MTHS[d.getMonth()]} ${d.getFullYear()}`;
 function mDays(y,m){const l=new Date(y,m+1,0).getDate(),a=[];for(let d=1;d<=l;d++){const dt=new Date(y,m,d);a.push({day:d,dow:dt.getDay(),iso:dk(dt),date:dt});}return a;}
-function hasLogs(st,iso){const s=st.sessions[iso];return!!(s&&Object.values(s).some(a=>Array.isArray(a)&&a.some(x=>x&&x.done)));}
-function dayStatus(day,st,td){
-  const tiso=dk(td),r=st.routine[day.dow];
-  const isR=!r||!r.exercises||r.exercises.length===0;
-  if(hasMovement(st,day.iso))return'done';
-  if(day.iso===tiso)return isR?'rest-today':'today';
-  if(isR)return day.iso<tiso?'rest':'rest-future';
-  if(day.iso<tiso)return'missed';
-  return'future';
-}
-function calcStreak(st,td){let s=0;const d=new Date(td);for(let i=0;i<90;i++){const iso=dk(d),dow=d.getDay(),r=st.routine[dow];const isR=!r||!r.exercises||r.exercises.length===0;if(isR)s++;else if(hasMovement(st,iso))s++;else if(iso===dk(td)){}else break;d.setDate(d.getDate()-1);}return s;}
-function moStats(st,td){const days=mDays(td.getFullYear(),td.getMonth());let done=0,missed=0,rest=0,vol=0;for(const d of days){const s=dayStatus(d,st,td);if(s==='done')done++;else if(s==='missed')missed++;else if(s==='rest')rest++;const ses=st.sessions[d.iso];if(ses)for(const arr of Object.values(ses))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.weight&&s.reps)vol+=s.weight*s.reps;}return{done,missed,rest,vol};}
+const KEY='muvit_v2';
+const OLD_KEY='lifts_v1';
+const ACTS={gym:{label:'Gym',emoji:'🏋️'},pilates:{label:'Pilates',emoji:'🧘‍♀️'},yoga:{label:'Yoga',emoji:'🧘'},running:{label:'Running',emoji:'🏃'},walk:{label:'Caminata',emoji:'🚶'},other:{label:'Otro',emoji:'✨'}};
+const ACT_ORDER=['gym','pilates','yoga','running','walk','other'];
 
 const TPL={
   1:{focus:'GLÚTEOS · POSTERIOR',exercises:[{id:gid(),name:'Hip thrust',muscle:'Glúteo',target:'10–12 reps'},{id:gid(),name:'Curl femoral',muscle:'Femoral',target:'12 reps'},{id:gid(),name:'Peso muerto rumano',muscle:'Posterior',target:'8–10 reps'},{id:gid(),name:'Abductores en máquina',muscle:'Glúteo medio',target:'15 reps'}]},
@@ -190,492 +204,69 @@ const TPL={
   6:{focus:'FULL PIERNAS',exercises:[{id:gid(),name:'Hip thrust pesado',muscle:'Glúteo',target:'8 reps'},{id:gid(),name:'Sentadilla en Smith',muscle:'Pierna',target:'8 reps'},{id:gid(),name:'Peso muerto rumano',muscle:'Posterior',target:'8 reps'},{id:gid(),name:'Prensa',muscle:'Cuádriceps',target:'12–15 reps'}]},
   0:{focus:'DESCANSO',exercises:[]},
 };
-
-const KEY='muvit_v1';
-const OLD_KEY='lifts_v1';
-const ensureShape=s=>({activities:{},goalStages:[],notes:{},...s,user:{bodyFat:null,movementGoal:20,...(s?.user||{})}});
-const load=()=>{try{let r=localStorage.getItem(KEY);if(r)return ensureShape(JSON.parse(r));r=localStorage.getItem(OLD_KEY);if(r){const migrated=ensureShape(JSON.parse(r));localStorage.setItem(KEY,JSON.stringify(migrated));return migrated;}}catch(e){}return null;};
+const blank=()=>({onboarded:false,user:{name:'',weightKg:null,heightCm:null,bodyFatPct:null,goal:'Retomar constancia',monthlyGoalGym:12,monthlyGoalMove:20,stages:[]},routine:{},sessions:{},notes:{}});
+function normalizeRoutine(r){const out={};for(const d of[0,1,2,3,4,5,6]){out[d]=r&&r[d]?{focus:r[d].focus||'ENTRENAMIENTO',exercises:(r[d].exercises||[]).map(e=>({...e,id:e.id||gid()}))}:{focus:'DESCANSO',exercises:[]};}return out;}
+function migrate(old){const b=blank();const u=old.user||{};b.onboarded=!!old.onboarded;b.user={...b.user,name:u.name||'',weightKg:u.weightKg||null,heightCm:u.heightCm||null,bodyFatPct:u.bodyFatPct||null,goal:u.goal||'Retomar constancia',monthlyGoalGym:u.monthlyGoalGym||u.monthlyGoal||12,monthlyGoalMove:u.monthlyGoalMove||u.monthlyGoal||20,stages:u.stages||[{id:gid(),goal:u.goal||'Retomar constancia',start:todayISO()}]};b.routine=normalizeRoutine(old.routine||{});b.sessions={};for(const[iso,val]of Object.entries(old.sessions||{})){if(val&&val.gym){b.sessions[iso]=val;continue;}const gym={sets:{},omitted:[],extras:[]};for(const[k,v]of Object.entries(val||{}))if(Array.isArray(v))gym.sets[k]=v;b.sessions[iso]={gym,activities:Object.keys(gym.sets).length?[{id:gid(),type:'gym',ts:Date.now()}]:[]};}return b;}
+const load=()=>{try{const r=localStorage.getItem(KEY);if(r)return migrate(JSON.parse(r));const o=localStorage.getItem(OLD_KEY);if(o)return migrate(JSON.parse(o));}catch(e){}return blank();};
 const persist=s=>{try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}};
-const blank=()=>({onboarded:false,user:{name:'',weightKg:null,heightCm:null,bodyFat:null,goal:'',monthlyGoal:12,movementGoal:20},routine:{},sessions:{},activities:{},goalStages:[],notes:{}});
-const ACTS=[{id:'gym',name:'Gym',ic:'🏋️'},{id:'pilates',name:'Pilates',ic:'◌'},{id:'yoga',name:'Yoga',ic:'△'},{id:'running',name:'Running',ic:'↗'},{id:'walk',name:'Caminata',ic:'○'},{id:'other',name:'Otro',ic:'+'}];
-const actName=id=>(ACTS.find(a=>a.id===id)||{}).name||id;
-const actIcon=id=>(ACTS.find(a=>a.id===id)||{}).ic||'•';
-const dayActs=(st,iso)=>(st.activities&&st.activities[iso])||[];
-const hasMovement=(st,iso)=>hasLogs(st,iso)||dayActs(st,iso).length>0;
-function moActivityStats(st,td){const days=mDays(td.getFullYear(),td.getMonth());const by={gym:0,pilates:0,yoga:0,running:0,walk:0,other:0};let total=0,activeDays=0;for(const d of days){let moved=false;if(hasLogs(st,d.iso)){by.gym++;total++;moved=true;}for(const a of dayActs(st,d.iso)){by[a.type]=(by[a.type]||0)+1;total++;moved=true;}if(moved)activeDays++;}return{by,total,activeDays};}
 
-function Logo(){return(
-  <div className="logo">
-    <svg viewBox="0 0 24 24" fill="none">
-      <rect x="1" y="10" width="4" height="4" rx="1.5" fill="var(--ink)"/>
-      <rect x="19" y="10" width="4" height="4" rx="1.5" fill="var(--ink)"/>
-      <rect x="5" y="7" width="14" height="10" rx="2" fill="var(--ink)" opacity=".12"/>
-      <rect x="5" y="7" width="14" height="10" rx="2" stroke="var(--ink)" strokeWidth="1.5"/>
-      <rect x="10" y="4" width="4" height="3" rx="1" fill="var(--acc2)"/>
-      <rect x="10" y="17" width="4" height="3" rx="1" fill="var(--acc2)"/>
-    </svg>
-    <span>MUVIT</span>
-  </div>
-);}
+function daySession(st,iso){return st.sessions[iso]||{gym:{sets:{},omitted:[],extras:[]},activities:[]};}
+function setDay(st,iso,day){return {...st,sessions:{...st.sessions,[iso]:day}};}
+function hasGym(st,iso){const d=daySession(st,iso);return !!(d.activities||[]).some(a=>a.type==='gym') || Object.values(d.gym?.sets||{}).some(arr=>Array.isArray(arr)&&arr.some(x=>x&&x.done));}
+function dayActivities(st,iso){const d=daySession(st,iso);const acts=[...(d.activities||[])];if(hasGym(st,iso)&&!acts.some(a=>a.type==='gym'))acts.unshift({id:'gym-auto',type:'gym'});return acts;}
+function hasMovement(st,iso){return dayActivities(st,iso).length>0;}
+function weekRange(base){const d=iso2d(base||todayISO());const diff=d.getDay()===0?-6:1-d.getDay();const start=new Date(d);start.setDate(d.getDate()+diff);return Array.from({length:7},(_,i)=>{const x=new Date(start);x.setDate(start.getDate()+i);return x;});}
+function statsForRange(st,start,end){const counts={gym:0,pilates:0,yoga:0,running:0,walk:0,other:0},activeDays=new Set();let total=0,vol=0;for(const[iso,day]of Object.entries(st.sessions||{})){const d=iso2d(iso);if(d<start||d>end)continue;const acts=dayActivities(st,iso);if(acts.length)activeDays.add(iso);for(const a of acts){counts[a.type]=(counts[a.type]||0)+1;total++;}for(const arr of Object.values(day.gym?.sets||{}))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.weight&&s.reps)vol+=Number(s.weight)*Number(s.reps);}return{counts,total,activeDays:activeDays.size,vol};}
+function moStats(st,td=now()){const start=new Date(td.getFullYear(),td.getMonth(),1),end=new Date(td.getFullYear(),td.getMonth()+1,0);return statsForRange(st,start,end);}
+function calcStreak(st,td=now()){let s=0;const d=new Date(td);for(let i=0;i<120;i++){const iso=dk(d);if(hasMovement(st,iso))s++;else if(iso===todayISO()){}else break;d.setDate(d.getDate()-1);}return s;}
+function ensureGym(day){return {...day,gym:{sets:{...(day.gym?.sets||{})},omitted:[...(day.gym?.omitted||[])],extras:[...(day.gym?.extras||[])]},activities:[...(day.activities||[])]};}
+function markActivity(setSt,iso,type){setSt(s=>{let day=ensureGym(daySession(s,iso));if(type==='gym'){if(!day.activities.some(a=>a.type==='gym'))day.activities.unshift({id:gid(),type,ts:Date.now()});}else{day.activities=day.activities.filter(a=>a.type!==type);day.activities.push({id:gid(),type,ts:Date.now()});}return setDay(s,iso,day);});}
+function removeActivity(setSt,iso,type){setSt(s=>{let day=ensureGym(daySession(s,iso));day.activities=day.activities.filter(a=>a.type!==type);return setDay(s,iso,day);});}
+function findExerciseName(st,id){for(const d of Object.values(st.routine||{}))for(const ex of(d.exercises||[]))if(ex.id===id)return ex.name;for(const day of Object.values(st.sessions||{}))for(const ex of(day.gym?.extras||[]))if(ex.id===id)return ex.name;return id;}
+function lastForExercise(st,ex,beforeISO){const name=(ex.name||'').toLowerCase().trim();let last=null,best=null;for(const[iso,day]of Object.entries(st.sessions||{})){if(iso>=beforeISO)continue;const arr=(day.gym?.sets||{})[ex.id]||[];let used=arr;if(!used.length&&name){for(const[id,a]of Object.entries(day.gym?.sets||{})){if((findExerciseName(st,id)||'').toLowerCase().trim()===name){used=a;break;}}}for(const s of used||[])if(s&&s.done){const rec={iso,weight:Number(s.weight)||0,reps:Number(s.reps)||0};if(!last||iso>last.iso)last=rec;if(!best||rec.weight>best.weight)best=rec;}}return{last,best};}
+
+function Logo(){return <div className="logo"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="var(--ink)" strokeWidth="1.8"/><path d="M7 14c2.5-5 7.5-5 10 0" stroke="var(--ink)" strokeWidth="1.8" strokeLinecap="round"/><circle cx="8" cy="9" r="1.5" fill="var(--acc2)"/><circle cx="16" cy="9" r="1.5" fill="var(--acc2)"/></svg><span>MUVIT</span></div>}
+function TB({user,sub,onAv}){return <div className="tb"><div><div className="tb-sub">{sub||fmtSub(now())}</div><div className="tb-name">HOLA, {(user?.name||'').toUpperCase()}</div></div><div className="av" onClick={onAv}>{(user?.name||'?')[0].toUpperCase()}</div></div>}
+function Tape({children}){return <div className="tape">{children}</div>}
+function Nav({active,onChange}){const tabs=[{id:'home',l:'HOY',ic:'▣'},{id:'calendar',l:'MES',ic:'▦'},{id:'workout',l:'GYM',ic:'◉'},{id:'stats',l:'STATS',ic:'◢'}];return <nav className="nav">{tabs.map(t=><button key={t.id} className={`nt${active===t.id?' on':''}`} onClick={()=>onChange(t.id)}><span className="ic">{t.ic}</span><span>{t.l}</span></button>)}</nav>}
 
 function Onboarding({onDone}){
-  const [step,setStep]=useState(0);
-  const [u,setU]=useState({name:'',weightKg:'',heightCm:'',bodyFat:'',goal:'Bajar grasa',monthlyGoal:12,movementGoal:20});
-  const [tDays,setTDays]=useState([1,2,4,5,6]);
-  const [rtn,setRtn]=useState({});
-  const [editDow,setEditDow]=useState(null);
-  const DL=[{d:1,l:'LUN'},{d:2,l:'MAR'},{d:3,l:'MIÉ'},{d:4,l:'JUE'},{d:5,l:'VIE'},{d:6,l:'SÁB'},{d:0,l:'DOM'}];
-  const tog=d=>setTDays(p=>p.includes(d)?p.filter(x=>x!==d):[...p,d]);
-  const useTpl=()=>{
-    const r={},src=[1,2,4,5,6,0,3].filter(d=>TPL[d]&&TPL[d].exercises.length>0);
-    let i=0;for(const dow of [...tDays].sort()){const s=TPL[src[i%src.length]];r[dow]={focus:s.focus,exercises:s.exercises.map(e=>({...e,id:gid()}))};i++;}
-    for(const d of[0,1,2,3,4,5,6])if(!r[d])r[d]={focus:'DESCANSO',exercises:[]};
-    setRtn(r);setStep(3);
-  };
-  const useBlank=()=>{
-    const r={};for(const d of tDays)r[d]={focus:'ENTRENAMIENTO',exercises:[]};
-    for(const d of[0,1,2,3,4,5,6])if(!r[d])r[d]={focus:'DESCANSO',exercises:[]};
-    setRtn(r);setStep(3);
-  };
-  const addEx=dow=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:[...(p[dow]?.exercises||[]),{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));
-  const updEx=(dow,id,f,v)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.map(e=>e.id===id?{...e,[f]:v}:e)}}));
-  const rmEx=(dow,id)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.filter(e=>e.id!==id)}}));
-  const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...p[dow],focus:v}}));
-  const finish=()=>onDone({onboarded:true,user:{name:u.name.trim()||'ATLETA',weightKg:parseFloat(u.weightKg)||null,heightCm:parseInt(u.heightCm)||null,bodyFat:parseFloat(u.bodyFat)||null,goal:u.goal,monthlyGoal:parseInt(u.monthlyGoal)||12,movementGoal:parseInt(u.movementGoal)||20},routine:rtn,sessions:{},activities:{},goalStages:[{id:gid(),date:todayISO(),goal:u.goal}],notes:{}});
-  const can0=u.name.trim().length>0,can1=tDays.length>0;
+ const [step,setStep]=useState(0);const [u,setU]=useState({name:'',weightKg:'',heightCm:'',bodyFatPct:'',goal:'Retomar constancia',monthlyGoalGym:12,monthlyGoalMove:20});const [tDays,setTDays]=useState([1,2,4,5,6]);const [rtn,setRtn]=useState({});const [editDow,setEditDow]=useState(null);const DL=[{d:1,l:'LUN'},{d:2,l:'MAR'},{d:3,l:'MIÉ'},{d:4,l:'JUE'},{d:5,l:'VIE'},{d:6,l:'SÁB'},{d:0,l:'DOM'}];
+ const tog=d=>setTDays(p=>p.includes(d)?p.filter(x=>x!==d):[...p,d]);
+ const buildTpl=()=>{const r={},src=[1,2,4,5,6,0,3].filter(d=>TPL[d]&&TPL[d].exercises.length>0);let i=0;for(const dow of [...tDays].sort()){const s=TPL[src[i%src.length]];r[dow]={focus:s.focus,exercises:s.exercises.map(e=>({...e,id:gid()}))};i++;}for(const d of[0,1,2,3,4,5,6])if(!r[d])r[d]={focus:'DESCANSO',exercises:[]};setRtn(r);setStep(3);};
+ const buildBlank=()=>{const r={};for(const d of tDays)r[d]={focus:'ENTRENAMIENTO',exercises:[]};for(const d of[0,1,2,3,4,5,6])if(!r[d])r[d]={focus:'DESCANSO',exercises:[]};setRtn(r);setStep(3);};
+ const addEx=dow=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:[...(p[dow]?.exercises||[]),{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));
+ const updEx=(dow,id,f,v)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.map(e=>e.id===id?{...e,[f]:v}:e)}}));
+ const rmEx=(dow,id)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.filter(e=>e.id!==id)}}));
+ const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...p[dow],focus:v}}));
+ const finish=()=>onDone({onboarded:true,user:{name:u.name.trim()||'ATLETA',weightKg:parseFloat(u.weightKg)||null,heightCm:parseInt(u.heightCm)||null,bodyFatPct:parseFloat(u.bodyFatPct)||null,goal:u.goal,monthlyGoalGym:parseInt(u.monthlyGoalGym)||12,monthlyGoalMove:parseInt(u.monthlyGoalMove)||20,stages:[{id:gid(),goal:u.goal,start:todayISO()}]},routine:rtn,sessions:{},notes:{}});
+ return <div className="onb"><Logo/><div className="dots" style={{marginTop:22}}>{[0,1,2,3].map(i=><span key={i} className={i<=step?'on':''}/>)}</div>
+ {step===0&&<div className="fade"><div className="L">PASO 1 DE 4</div><h1>EMPIEZA<br/><span className="a">MUVIT</span></h1><p className="lead">Tu tracker para registrar gym, movimiento y progreso sin complicarte.</p><label><span>Nombre</span><input value={u.name} onChange={e=>setU({...u,name:e.target.value})} placeholder="Tu nombre" autoFocus/></label><div className="row2"><label><span>Peso kg</span><input type="number" value={u.weightKg} onChange={e=>setU({...u,weightKg:e.target.value})} placeholder="Opcional"/></label><label><span>% grasa</span><input type="number" value={u.bodyFatPct} onChange={e=>setU({...u,bodyFatPct:e.target.value})} placeholder="Opcional"/></label></div><label><span>Etapa actual</span><select value={u.goal} onChange={e=>setU({...u,goal:e.target.value})}><option>Retomar constancia</option><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Recomposición</option><option>Mantener</option></select></label><div className="row2"><label><span>Gym / mes</span><input type="number" value={u.monthlyGoalGym} onChange={e=>setU({...u,monthlyGoalGym:e.target.value})}/></label><label><span>Mov. / mes</span><input type="number" value={u.monthlyGoalMove} onChange={e=>setU({...u,monthlyGoalMove:e.target.value})}/></label></div><button className="btn btn-p" disabled={!u.name.trim()} style={{opacity:u.name.trim()?1:.4,marginTop:18}} onClick={()=>setStep(1)}><span>SIGUIENTE</span><span className="ar">→</span></button></div>}
+ {step===1&&<div className="fade"><div className="L">PASO 2 DE 4</div><h1>DÍAS DE<br/><span className="a">GYM</span></h1><p className="lead">Elige tus días base. Luego podrás editarlos cuando cambies de rutina.</p><div className="dtog-wrap">{DL.map(d=><button key={d.d} className={`dtog${tDays.includes(d.d)?' on':''}`} onClick={()=>tog(d.d)}>{d.l}</button>)}</div><div style={{display:'flex',gap:10}}><button className="btn btn-g" style={{flex:1}} onClick={()=>setStep(0)}>← ATRÁS</button><button className="btn btn-p" disabled={!tDays.length} style={{opacity:tDays.length?1:.4,flex:2}} onClick={()=>setStep(2)}><span>SIGUIENTE</span><span className="ar">→</span></button></div></div>}
+ {step===2&&<div className="fade"><div className="L">PASO 3 DE 4</div><h1>TU<br/><span className="a">RUTINA</span></h1><p className="lead">Empieza con plantilla o arma tu base desde cero.</p><button className="btn btn-p" onClick={buildTpl}><span>USAR PLANTILLA</span><span className="ar">✦</span></button><button className="btn btn-g" style={{marginTop:10}} onClick={buildBlank}>CREAR DESDE CERO</button><button className="btn btn-g" style={{marginTop:8,borderColor:'transparent'}} onClick={()=>setStep(1)}>← ATRÁS</button></div>}
+ {step===3&&<RoutineEditorContent rtn={rtn} setRtn={setRtn} editDow={editDow} setEditDow={setEditDow} addEx={addEx} updEx={updEx} rmEx={rmEx} updFocus={updFocus} footer={<div style={{display:'flex',gap:10,marginTop:18}}><button className="btn btn-g" style={{flex:1}} onClick={()=>setStep(2)}>← ATRÁS</button><button className="btn btn-p" style={{flex:2}} onClick={finish}><span>¡EMPEZAR!</span><span className="ar">✓</span></button></div>}/>}
+ </div>;
+}
+function RoutineEditorContent({rtn,setRtn,editDow,setEditDow,addEx,updEx,rmEx,updFocus,footer}){return <div className="fade"><div className="L">EDITAR RUTINA</div><h1>RUTINA<br/><span className="a">BASE</span></h1><p className="lead">Marca descanso dejando el día sin ejercicios. Puedes cambiar esto cuando quieras.</p>{[1,2,3,4,5,6,0].map(dow=>{const day=rtn[dow]||{focus:'DESCANSO',exercises:[]},isR=day.exercises.length===0,isO=editDow===dow;return <div key={dow} style={{marginBottom:8,background:isO?'var(--bg2)':'var(--white)',border:'1px solid var(--line)',borderRadius:13,overflow:'hidden'}}><div onClick={()=>setEditDow(isO?null:dow)} style={{padding:'12px 14px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}><div><div className="D" style={{fontSize:17,letterSpacing:'.06em',color:'var(--ink)'}}>{DOWS[dow]}</div><div className="M" style={{fontSize:10,color:'var(--muted)',marginTop:2}}>{isR?'Descanso':`${day.exercises.length} ejercicios · ${day.focus}`}</div></div><div style={{color:'var(--dim)',fontSize:16,fontFamily:'var(--fm)'}}>{isO?'−':'+'}</div></div>{isO&&<div style={{padding:'0 14px 14px',borderTop:'1px solid var(--line)'}}><div style={{display:'flex',gap:8,margin:'10px 0'}}><button className="small-btn" onClick={()=>{setRtn(p=>({...p,[dow]:{focus:'ENTRENAMIENTO',exercises:p[dow]?.exercises?.length?p[dow].exercises:[{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}))}}>Día de gym</button><button className="small-btn danger" onClick={()=>setRtn(p=>({...p,[dow]:{focus:'DESCANSO',exercises:[]}}))}>Descanso</button></div>{!isR&&<><div style={{marginBottom:10}}><div className="L" style={{marginBottom:4}}>FOCO</div><input value={day.focus} onChange={e=>updFocus(dow,e.target.value)} style={{background:'var(--white)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fm)',fontSize:13,padding:'8px 10px',borderRadius:8,width:'100%',outline:'none'}}/></div>{day.exercises.map(ex=><div key={ex.id} className="ee"><div style={{display:'flex',alignItems:'center',gap:8}}><input value={ex.name} onChange={e=>updEx(dow,ex.id,'name',e.target.value)} placeholder="Ejercicio" style={{flex:1,background:'var(--white)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:14,padding:'8px 10px',borderRadius:7,outline:'none'}}/><button className="rm" onClick={()=>rmEx(dow,ex.id)}>×</button></div><div className="ee-row"><input value={ex.muscle} onChange={e=>updEx(dow,ex.id,'muscle',e.target.value)} placeholder="Músculo"/><input value={ex.target} onChange={e=>updEx(dow,ex.id,'target',e.target.value)} placeholder="10–12 reps"/></div></div>)}<button className="add-ex" onClick={()=>addEx(dow)}>+ AGREGAR EJERCICIO</button></>}</div>}</div>})}{footer}</div>}
 
-  return(
-    <div className="onb">
-      <Logo/>
-      <div className="dots" style={{marginTop:22}}>{[0,1,2,3].map(i=><span key={i} className={i<=step?'on':''}/>)}</div>
-      {step===0&&<div className="fade">
-        <div className="L">PASO 1 DE 4</div>
-        <h1>BIENVEN<span className="a">IDA</span></h1>
-        <p className="lead">Tu tracker de gym personal. Cuéntanos sobre ti.</p>
-        <label><span>¿Cómo te llamas?</span><input value={u.name} onChange={e=>setU({...u,name:e.target.value})} placeholder="Tu nombre" autoFocus/></label>
-        <div className="row2">
-          <label><span>Peso (kg)</span><input type="number" inputMode="decimal" value={u.weightKg} onChange={e=>setU({...u,weightKg:e.target.value})} placeholder="60"/></label>
-          <label><span>Altura (cm)</span><input type="number" inputMode="numeric" value={u.heightCm} onChange={e=>setU({...u,heightCm:e.target.value})} placeholder="165"/></label>
-        </div>
-        <label><span>Objetivo</span><select value={u.goal} onChange={e=>setU({...u,goal:e.target.value})}><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Mantener</option><option>Recomposición</option></select></label>
-        <div className="row2"><label><span>Gym / mes</span><input type="number" inputMode="numeric" value={u.monthlyGoal} onChange={e=>setU({...u,monthlyGoal:e.target.value})}/></label><label><span>Movimiento / mes</span><input type="number" inputMode="numeric" value={u.movementGoal} onChange={e=>setU({...u,movementGoal:e.target.value})}/></label></div><label><span>% grasa opcional</span><input type="number" inputMode="decimal" value={u.bodyFat} onChange={e=>setU({...u,bodyFat:e.target.value})} placeholder="Opcional"/></label>
-        <button className="btn btn-p" disabled={!can0} style={{opacity:can0?1:.4,marginTop:18}} onClick={()=>setStep(1)}><span>SIGUIENTE</span><span className="ar">→</span></button>
-      </div>}
-      {step===1&&<div className="fade">
-        <div className="L">PASO 2 DE 4</div>
-        <h1>DÍAS DE<br/><span className="a">GYM</span></h1>
-        <p className="lead">Selecciona tus días de entrenamiento.</p>
-        <div className="dtog-wrap">{DL.map(d=><button key={d.d} className={`dtog${tDays.includes(d.d)?' on':''}`} onClick={()=>tog(d.d)}>{d.l}</button>)}</div>
-        <div style={{display:'flex',gap:10}}>
-          <button className="btn btn-g" style={{flex:1}} onClick={()=>setStep(0)}>← ATRÁS</button>
-          <button className="btn btn-p" disabled={!can1} style={{opacity:can1?1:.4,flex:2}} onClick={()=>setStep(2)}><span>SIGUIENTE</span><span className="ar">→</span></button>
-        </div>
-      </div>}
-      {step===2&&<div className="fade">
-        <div className="L">PASO 3 DE 4</div>
-        <h1>TU<br/><span className="a">RUTINA</span></h1>
-        <p className="lead">Empieza con una plantilla o crea desde cero.</p>
-        <button className="btn btn-p" onClick={useTpl}><span>USAR PLANTILLA</span><span className="ar">✦</span></button>
-        <button className="btn btn-g" style={{marginTop:10}} onClick={useBlank}>CREAR DESDE CERO</button>
-        <button className="btn btn-g" style={{marginTop:8,borderColor:'transparent',color:'var(--muted)'}} onClick={()=>setStep(1)}>← ATRÁS</button>
-        <div className="tpl-box">
-          <div className="L" style={{marginBottom:8}}>PLANTILLA INCLUYE</div>
-          <div style={{fontSize:13,color:'var(--muted)',lineHeight:1.7}}>Glúteos · Brazos · Cuádriceps · Core y cardio · Full piernas<br/><span style={{fontSize:11}}>Editable en el paso siguiente</span></div>
-        </div>
-      </div>}
-      {step===3&&<div className="fade">
-        <div className="L">PASO 4 DE 4</div>
-        <h1>REVISA &<br/><span className="a">AJUSTA</span></h1>
-        <p className="lead">Toca un día para editar sus ejercicios.</p>
-        {[1,2,3,4,5,6,0].map(dow=>{
-          const day=rtn[dow];if(!day)return null;
-          const isR=day.exercises.length===0,isO=editDow===dow;
-          return(<div key={dow} style={{marginBottom:8,background:isO?'var(--bg2)':'var(--white)',border:'1px solid var(--line)',borderRadius:13,overflow:'hidden'}}>
-            <div onClick={()=>setEditDow(isO?null:dow)} style={{padding:'12px 14px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}>
-              <div><div className="D" style={{fontSize:17,letterSpacing:'.06em',color:'var(--ink)'}}>{DOWS[dow]}</div><div className="M" style={{fontSize:10,color:'var(--muted)',marginTop:2}}>{isR?'Descanso':`${day.exercises.length} ejercicios · ${day.focus}`}</div></div>
-              <div style={{color:'var(--dim)',fontSize:16,fontFamily:'var(--fm)'}}>{isO?'−':'+'}</div>
-            </div>
-            {isO&&!isR&&<div style={{padding:'0 14px 14px',borderTop:'1px solid var(--line)'}}>
-              <div style={{marginBottom:10,marginTop:10}}>
-                <div className="L" style={{marginBottom:4}}>FOCO DEL DÍA</div>
-                <input value={day.focus} onChange={e=>updFocus(dow,e.target.value)} style={{background:'var(--white)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fm)',fontSize:13,padding:'8px 10px',borderRadius:8,width:'100%',outline:'none'}}/>
-              </div>
-              {day.exercises.map(ex=><div key={ex.id} className="ee">
-                <div style={{display:'flex',alignItems:'center',gap:8}}>
-                  <input value={ex.name} onChange={e=>updEx(dow,ex.id,'name',e.target.value)} placeholder="Nombre del ejercicio" style={{flex:1,background:'var(--white)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:14,padding:'8px 10px',borderRadius:7,outline:'none'}}/>
-                  <button className="rm" onClick={()=>rmEx(dow,ex.id)}>×</button>
-                </div>
-                <div className="ee-row">
-                  <input value={ex.muscle} onChange={e=>updEx(dow,ex.id,'muscle',e.target.value)} placeholder="Músculo"/>
-                  <input value={ex.target} onChange={e=>updEx(dow,ex.id,'target',e.target.value)} placeholder="10–12 reps"/>
-                </div>
-              </div>)}
-              <button className="add-ex" onClick={()=>addEx(dow)}>+ AGREGAR EJERCICIO</button>
-            </div>}
-          </div>);
-        })}
-        <div style={{display:'flex',gap:10,marginTop:18}}>
-          <button className="btn btn-g" style={{flex:1}} onClick={()=>setStep(2)}>← ATRÁS</button>
-          <button className="btn btn-p" style={{flex:2}} onClick={finish}><span>¡EMPEZAR!</span><span className="ar">✓</span></button>
-        </div>
-      </div>}
-    </div>
-  );
+function Home({st,setSt,onStart,onAv}){
+ const td=now(),iso=todayISO(),dow=td.getDay(),rtn=st.routine[dow]||{focus:'DESCANSO',exercises:[]},week=weekRange(iso),wStats=statsForRange(st,week[0],week[6]),mStats=moStats(st,td);const weekGoal=Math.max(1,Math.round((st.user.monthlyGoalMove||20)/4));const pct=Math.min(100,Math.round((wStats.total/weekGoal)*100));
+ return <div className="body"><TB user={st.user} onAv={onAv}/><div style={{padding:'0 20px',marginBottom:12}}><div className="card card-ink" style={{padding:'18px'}}><div className="L" style={{color:'rgba(255,255,255,.45)'}}>HOY</div><div className="D" style={{fontSize:30,color:'var(--white)',marginTop:6,lineHeight:1}}>{rtn.exercises.length?`TOCA ${rtn.focus}`:'SIN GYM PROGRAMADO'}</div><div className="M" style={{fontSize:11,color:'rgba(255,255,255,.55)',marginTop:9}}>{hasMovement(st,iso)?'Ya registraste movimiento hoy.':'Registra algo, aunque sea simple.'}</div><button className="btn btn-p" style={{marginTop:14,background:'var(--acc)',color:'var(--ink)'}} onClick={()=>onStart(iso)}><span>{rtn.exercises.length?'EMPEZAR GYM':'ABRIR GYM'}</span><span className="ar" style={{background:'var(--ink)',color:'var(--acc)'}}>→</span></button></div></div><div className="kpi-grid"><div className="mini-card"><div className="L">SEMANA</div><div className="D" style={{fontSize:36,marginTop:4}}>{wStats.total}<span style={{fontSize:17,color:'var(--muted)'}}>/{weekGoal}</span></div><div className="pb" style={{height:6,marginTop:7}}><div className="pf" style={{width:`${pct}%`}}/></div></div><div className="mini-card"><div className="L">MES</div><div className="D" style={{fontSize:36,marginTop:4}}>{mStats.total}<span style={{fontSize:17,color:'var(--muted)'}}>/{st.user.monthlyGoalMove||20}</span></div><div className="M" style={{fontSize:9,color:'var(--muted)'}}>movimientos</div></div></div><Tape>SEMANA EN MOVIMIENTO</Tape><div className="week-row">{week.map(d=>{const k=dk(d),acts=dayActivities(st,k),main=acts[0],isT=k===iso;return <div key={k} className={`week-cell${acts.length?' on':''}${isT?' today':''}`}><div className="week-day">{DOWS[d.getDay()]}</div><div className="week-emoji">{main?ACTS[main.type]?.emoji:'○'}</div><div className="week-num">{d.getDate()}</div></div>})}</div><Tape>REGISTRO RÁPIDO</Tape><div className="quick-grid">{ACT_ORDER.map(type=><button key={type} className="qbtn" onClick={()=> type==='gym'?onStart(iso):markActivity(setSt,iso,type)}><span className="em">{ACTS[type].emoji}</span><span>{type==='gym'?'Gym':ACTS[type].label}</span></button>)}</div><Tape>ÚLTIMO AVANCE</Tape><div style={{padding:'0 20px'}}><div className="note-box">{mStats.total===0?'Empieza registrando tu primer movimiento. MUVIT se vuelve útil cuando acumulas evidencia.':`Este mes llevas ${mStats.total} movimientos. Gym: ${mStats.counts.gym||0}, Pilates: ${mStats.counts.pilates||0}, Caminata: ${mStats.counts.walk||0}.`}</div></div></div>;
 }
 
-function TB({user,sub,onAv}){return(
-  <div className="tb">
-    <div><div className="tb-sub">{sub||fmtSub(now())}</div><div className="tb-name">HOLA, {(user?.name||'').toUpperCase()}</div></div>
-    <div className="av" onClick={onAv}>{(user?.name||'?')[0].toUpperCase()}</div>
-  </div>
-);}
-function Tape({children}){return <div className="tape">{children}</div>;}
-function Nav({active,onChange}){
-  const tabs=[{id:'home',l:'HOY',ic:'▣'},{id:'calendar',l:'MES',ic:'▦'},{id:'workout',l:'TRAIN',ic:'◉'},{id:'stats',l:'STATS',ic:'◢'}];
-  return(<nav className="nav">{tabs.map(t=><button key={t.id} className={`nt${active===t.id?' on':''}`} onClick={()=>onChange(t.id)}><span className="ic">{t.ic}</span><span>{t.l}</span></button>)}</nav>);
-}
+function Calendar({st,setSt,onAv}){const td=now(),stats=moStats(st,td),days=mDays(td.getFullYear(),td.getMonth()),first=days[0].dow;const [logIso,setLogIso]=useState(null);return <div className="body"><TB user={st.user} sub={fmtMo(td)} onAv={onAv}/><div style={{padding:'0 20px',marginBottom:10}}><div className="card card-ink" style={{padding:'16px 18px'}}><div className="L" style={{color:'rgba(255,255,255,.45)'}}>MOVIMIENTOS DEL MES</div><div className="D" style={{fontSize:58,color:'var(--acc)',marginTop:2}}>{stats.total}<span style={{fontSize:25,color:'rgba(255,255,255,.35)'}}>/{st.user.monthlyGoalMove||20}</span></div><div className="M" style={{fontSize:11,color:'rgba(255,255,255,.55)'}}>{stats.activeDays} días activos · {stats.counts.gym||0} gym</div></div></div><div className="pill-row">{ACT_ORDER.map(t=><div key={t} className="pill"><strong>{stats.counts[t]||0}</strong>{ACTS[t].emoji} {ACTS[t].label}</div>)}</div><Tape>CALENDARIO</Tape><div className="cg" style={{marginBottom:5}}>{['D','L','M','M','J','V','S'].map((d,i)=><div key={i} className="cd-h">{d}</div>)}</div><div className="cg">{Array.from({length:first}).map((_,i)=><div key={'b'+i}/>)}{days.map(d=>{const acts=dayActivities(st,d.iso),main=acts[0],isT=d.iso===todayISO();return <div key={d.iso} className={`month-cell${acts.length?' active':''}${isT?' today':''}`} onClick={()=>setLogIso(d.iso)}><div>{d.day}</div><div className="month-emoji">{main?ACTS[main.type]?.emoji:''}{acts.length>1?`+${acts.length-1}`:''}</div></div>})}</div><div style={{padding:'16px 20px 0'}}><button className="btn btn-p" onClick={()=>setLogIso(todayISO())}><span>REGISTRAR OTRO DÍA</span><span className="ar">+</span></button></div>{logIso&&<ActivityModal iso={logIso} setIso={setLogIso} st={st} setSt={setSt} onClose={()=>setLogIso(null)}/>}</div>}
+function ActivityModal({iso,setIso,st,setSt,onClose}){const acts=dayActivities(st,iso);return <div className="modal-bg" onClick={onClose}><div className="modal" onClick={e=>e.stopPropagation()}><div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}><div><div className="D" style={{fontSize:22}}>REGISTRAR</div><div className="M" style={{fontSize:10,color:'var(--muted)'}}>{iso}</div></div><button onClick={onClose} style={{background:'transparent',border:'none',color:'var(--muted)',fontSize:20}}>✕</button></div><label style={{display:'flex',flexDirection:'column',gap:5,marginBottom:14}}><span className="L">FECHA</span><input className="date-inp" type="date" value={iso} onChange={e=>setIso(e.target.value)}/></label><div className="quick-grid" style={{padding:0}}>{ACT_ORDER.map(type=>{const on=acts.some(a=>a.type===type);return <button key={type} className="qbtn" style={{background:on?'var(--ink)':'var(--white)',color:on?'var(--acc)':'var(--ink)'}} onClick={()=>on?removeActivity(setSt,iso,type):markActivity(setSt,iso,type)}><span className="em">{ACTS[type].emoji}</span><span>{ACTS[type].label}</span></button>})}</div><button className="btn btn-p" style={{marginTop:18}} onClick={onClose}><span>LISTO</span><span className="ar">✓</span></button></div></div>}
 
-function CalMini({st,td,onPick}){
-  const days=mDays(td.getFullYear(),td.getMonth()),first=days[0].dow;
-  return(<>
-    <div className="cg" style={{marginBottom:5}}>{['D','L','M','M','J','V','S'].map((d,i)=><div key={i} className="cd-h">{d}</div>)}</div>
-    <div className="cg">
-      {Array.from({length:first}).map((_,i)=><div key={'b'+i}/>)}
-      {days.map(d=>{const s=dayStatus(d,st,td);let c='cd';if(s==='done')c+=' done';else if(s==='today')c+=' today';else if(s.startsWith('rest'))c+=' rest';else if(s==='future')c+=' future';else if(s==='missed')c+=' missed';return<div key={d.day} className={c} onClick={()=>onPick&&onPick(d.iso)}>{d.day}</div>;})}
-    </div>
-  </>);
-}
+function Workout({st,setSt,onAv,activeDate,setActiveDate}){const [selIso,setSelIso]=useState(activeDate||todayISO());useEffect(()=>{if(activeDate)setSelIso(activeDate)},[activeDate]);const date=iso2d(selIso),dow=date.getDay(),rtn=st.routine[dow]||{focus:'DESCANSO',exercises:[]};const day=ensureGym(daySession(st,selIso));const [timer,setTimer]=useState(null);const [adding,setAdding]=useState(false);useEffect(()=>{if(!timer)return;const t=setInterval(()=>setTimer(r=>r&&r>1?r-1:null),1000);return()=>clearInterval(t)},[timer]);const exs=[...(rtn.exercises||[]),...(day.gym.extras||[])];const getSets=id=>day.gym.sets[id]||[{weight:0,reps:0,rir:null,done:false},{weight:0,reps:0,rir:null,done:false},{weight:0,reps:0,rir:null,done:false}];const saveDay=d=>setSt(s=>setDay(s,selIso,d));const upd=(id,si,f,v)=>{const d=ensureGym(daySession(st,selIso));const cur=d.gym.sets[id]||getSets(id);d.gym.sets[id]=cur.map((x,i)=>i===si?{...x,[f]:v}:x);if(!d.activities.some(a=>a.type==='gym'))d.activities.unshift({id:gid(),type:'gym',ts:Date.now()});saveDay(d)};const tog=(id,si)=>{const was=getSets(id)[si].done;upd(id,si,'done',!was);if(!was)setTimer(90)};const omit=id=>{const d=ensureGym(daySession(st,selIso));d.gym.omitted=d.gym.omitted.includes(id)?d.gym.omitted.filter(x=>x!==id):[...d.gym.omitted,id];saveDay(d)};const addExtra=name=>{const d=ensureGym(daySession(st,selIso));d.gym.extras.push({id:gid(),name:name||'Ejercicio extra',muscle:'Extra',target:'10–12 reps'});if(!d.activities.some(a=>a.type==='gym'))d.activities.unshift({id:gid(),type:'gym',ts:Date.now()});saveDay(d);setAdding(false)};const doneS=exs.reduce((n,ex)=>n+(day.gym.omitted.includes(ex.id)?0:getSets(ex.id).filter(s=>s.done).length),0);const total=exs.filter(ex=>!day.gym.omitted.includes(ex.id)).length*3;const pct=total?Math.round(doneS/total*100):0;return <div className="body">{timer&&<div className="timer-b">{Math.floor(timer/60)}:{String(timer%60).padStart(2,'0')}</div>}<TB user={st.user} sub={`${DOWS[dow]} · ${selIso}`} onAv={onAv}/><div style={{padding:'0 20px 12px'}}><label style={{display:'flex',flexDirection:'column',gap:5}}><span className="L">FECHA DE ENTRENAMIENTO</span><input className="date-inp" type="date" value={selIso} onChange={e=>{setSelIso(e.target.value);setActiveDate(e.target.value)}}/></label></div><div style={{padding:'0 20px',marginBottom:4}}><div className="card card-ink"><div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:10}}><div><div className="L" style={{color:'rgba(255,255,255,.5)'}}>SESIÓN REAL</div><div className="D" style={{fontSize:25,color:'var(--white)',marginTop:2}}>{rtn.focus||'GYM'}</div></div><div className="M" style={{fontSize:20,fontWeight:700,color:'var(--acc)'}}>{pct}%</div></div><div style={{height:5,background:'rgba(255,255,255,.15)',borderRadius:999,overflow:'hidden'}}><div style={{width:`${pct}%`,height:'100%',background:'var(--acc)'}}/></div><div className="M" style={{fontSize:9,color:'rgba(255,255,255,.5)',marginTop:6}}>{doneS}/{total} series · puedes omitir o agregar ejercicios</div></div></div><Tape>EJERCICIOS</Tape><div style={{padding:'0 20px'}}>{exs.length===0&&<div className="card" style={{padding:20,textAlign:'center'}}><div className="D" style={{fontSize:20}}>SIN RUTINA BASE</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Agrega ejercicios para registrar esta sesión.</div></div>}{exs.map((ex,i)=><ExCard key={ex.id} ex={ex} num={i+1} sets={getSets(ex.id)} omitted={day.gym.omitted.includes(ex.id)} last={lastForExercise(st,ex,selIso)} onUpd={(si,f,v)=>upd(ex.id,si,f,v)} onTog={si=>tog(ex.id,si)} onOmit={()=>omit(ex.id)}/>) }{adding?<AddExerciseInline onAdd={addExtra} onCancel={()=>setAdding(false)}/>:<button className="btn btn-p" style={{marginTop:8}} onClick={()=>setAdding(true)}><span>AGREGAR EJERCICIO HOY</span><span className="ar">+</span></button>}</div></div>}
+function AddExerciseInline({onAdd,onCancel}){const [name,setName]=useState('');return <div className="card" style={{marginTop:8}}><div className="L" style={{marginBottom:6}}>EJERCICIO EXTRA</div><input className="modal-inp" value={name} onChange={e=>setName(e.target.value)} placeholder="Ej. Patada de glúteo"/><div style={{display:'flex',gap:8,marginTop:10}}><button className="small-btn" style={{flex:1}} onClick={onCancel}>Cancelar</button><button className="small-btn" style={{flex:2,background:'var(--ink)',color:'var(--acc)'}} onClick={()=>onAdd(name)}>Agregar</button></div></div>}
+function ExCard({ex,num,sets,omitted,last,onUpd,onTog,onOmit}){const [open,setOpen]=useState(!omitted);return <div className="ex-row" style={{opacity:omitted?.55:1}}><div style={{display:'flex',justifyContent:'space-between',gap:8,alignItems:'flex-start'}}><div style={{flex:1,cursor:'pointer'}} onClick={()=>setOpen(!open)}><div style={{display:'flex',alignItems:'center',gap:8}}><div className="D" style={{fontSize:11,color:'var(--dim)',width:18}}>0{num}</div><div className="ex-n">{ex.name.toUpperCase()}</div></div><div className="ex-m">{omitted?'OMITIDO HOY':`${(ex.muscle||'').toUpperCase()} · ${ex.target||''}`}</div></div><button className="small-btn" onClick={onOmit}>{omitted?'hacer':'omitir'}</button></div>{!omitted&&<div className="note-box">Última: {last.last?`${last.last.weight} kg · ${last.last.reps} reps (${last.last.iso})`:'sin registro previo'} · Mejor: {last.best?`${last.best.weight} kg · ${last.best.reps} reps`:'—'}</div>}{open&&!omitted&&<><div className="sh"><div/><div className="ch">KG</div><div className="ch">REPS</div><div className="ch">RIR</div><div/></div>{sets.map((s,i)=><div key={i} className="sr"><div className="sn">{i+1}</div><input type="number" inputMode="decimal" className={`inp${s.done?' done':''}`} value={s.weight||''} placeholder="—" onChange={e=>onUpd(i,'weight',parseFloat(e.target.value)||0)}/><input type="number" inputMode="numeric" className={`inp${s.done?' done':''}`} value={s.reps||''} placeholder="—" onChange={e=>onUpd(i,'reps',parseInt(e.target.value)||0)}/><input type="number" inputMode="numeric" className={`inp${s.done?' done':''}`} value={s.rir!=null?s.rir:''} placeholder="—" min={0} max={4} onChange={e=>onUpd(i,'rir',e.target.value===''?null:parseInt(e.target.value))}/><button className={`chk${s.done?' done':''}`} onClick={()=>onTog(i)}>✓</button></div>)}</>}</div>}
 
+function Stats({st,onAv}){const td=now(),m=moStats(st,td),strk=calcStreak(st,td);const prMap={};for(const[iso,day]of Object.entries(st.sessions||{}))for(const[id,arr]of Object.entries(day.gym?.sets||{}))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.weight){const name=findExerciseName(st,id);if(!prMap[name]||Number(s.weight)>prMap[name].kg)prMap[name]={kg:Number(s.weight),reps:s.reps||0,date:iso,name};}const prs=Object.values(prMap).sort((a,b)=>b.kg-a.kg).slice(0,8);return <div className="body"><TB user={st.user} sub="Tu progreso" onAv={onAv}/><div className="kpi-grid"><div className="mini-card"><div className="L">RACHA</div><div className="D" style={{fontSize:40}}>{strk}<span style={{fontSize:14,color:'var(--muted)'}}> días</span></div><div style={{fontSize:19,marginTop:4}}>{Array.from({length:7}).map((_,i)=>i<Math.min(strk,7)?'🔥':'○').join(' ')}</div></div><div className="mini-card"><div className="L">VOLUMEN MES</div><div className="D" style={{fontSize:40}}>{(m.vol/1000).toFixed(1)}<span style={{fontSize:14,color:'var(--muted)'}}>t</span></div><div className="M" style={{fontSize:9,color:'var(--muted)'}}>{m.vol.toLocaleString()} kg</div></div></div><Tape>DISTRIBUCIÓN</Tape><div className="pill-row">{ACT_ORDER.map(t=><div key={t} className="pill"><strong>{m.counts[t]||0}</strong>{ACTS[t].emoji} {ACTS[t].label}</div>)}</div><Tape>RÉCORDS Y MEJORAS</Tape><div style={{padding:'0 20px'}}>{prs.length===0?<div className="card" style={{padding:18,textAlign:'center'}}><div className="M" style={{fontSize:11,color:'var(--muted)'}}>Completa ejercicios para ver tus marcas.</div></div>:prs.map((pr,i)=><div key={i} className="card" style={{padding:'12px 14px',marginBottom:8,display:'flex',alignItems:'center',justifyContent:'space-between'}}><div><div style={{fontFamily:'var(--fd)',fontSize:14,color:'var(--ink)'}}>{(pr.name||'').toUpperCase().slice(0,24)}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:2}}>{pr.date} · {pr.reps} reps</div></div><div style={{textAlign:'right'}}><div className="D" style={{fontSize:26}}>{pr.kg}</div><div className="M" style={{fontSize:8,color:'var(--muted)'}}>KG</div></div></div>)}</div></div>}
 
-function QuickActivityModal({st,setSt,onClose,onGym}){
-  const add=type=>{
-    if(type==='gym'){onClose();onGym();return;}
-    const iso=todayISO();
-    setSt(s=>{const activities={...(s.activities||{})};activities[iso]=[...(activities[iso]||[]),{id:gid(),type,createdAt:new Date().toISOString()}];return{...s,activities};});
-    onClose();
-  };
-  return(<div className="modal-bg" onClick={onClose}>
-    <div className="modal" onClick={e=>e.stopPropagation()}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
-        <div><div className="D" style={{fontSize:24,color:'var(--ink)'}}>REGISTRAR</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:4}}>Un toque y listo. Sin llenar formularios.</div></div>
-        <button onClick={onClose} style={{background:'transparent',border:'none',color:'var(--muted)',fontSize:20,cursor:'pointer'}}>✕</button>
-      </div>
-      <div className="act-grid">{ACTS.map(a=><button key={a.id} className="act-btn" onClick={()=>add(a.id)}><div className="act-ic">{a.ic}</div><div className="act-name">{a.name.toUpperCase()}</div><div className="act-hint">MARCAR HECHO</div></button>)}</div>
-    </div>
-  </div>);
-}
+function ProfileModal({st,setSt,onClose}){const [name,setName]=useState(st.user.name||''),[wt,setWt]=useState(st.user.weightKg||''),[bf,setBf]=useState(st.user.bodyFatPct||''),[goal,setGoal]=useState(st.user.goal||'Retomar constancia'),[mg,setMg]=useState(st.user.monthlyGoalGym||12),[mm,setMm]=useState(st.user.monthlyGoalMove||20),[edit,setEdit]=useState(false);const save=()=>{setSt(s=>{const changed=goal!==s.user.goal;return{...s,user:{...s.user,name:name.trim()||s.user.name,weightKg:parseFloat(wt)||null,bodyFatPct:parseFloat(bf)||null,goal,monthlyGoalGym:parseInt(mg)||12,monthlyGoalMove:parseInt(mm)||20,stages:changed?[...(s.user.stages||[]),{id:gid(),goal,start:todayISO()}]:(s.user.stages||[])}}});onClose()};const iStyle={background:'var(--bg2)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:15,padding:'10px 12px',borderRadius:10,width:'100%',outline:'none'};if(edit)return <RoutineEditorModal st={st} setSt={setSt} onBack={()=>setEdit(false)}/>;return <div className="modal-bg" onClick={onClose}><div className="modal" onClick={e=>e.stopPropagation()}><div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:18}}><div className="D" style={{fontSize:22}}>PERFIL</div><button onClick={onClose} style={{background:'transparent',border:'none',color:'var(--muted)',fontSize:20}}>✕</button></div><div style={{display:'grid',gap:10}}><label><span className="L">NOMBRE</span><input style={iStyle} value={name} onChange={e=>setName(e.target.value)}/></label><div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}><label><span className="L">PESO KG</span><input type="number" style={iStyle} value={wt} onChange={e=>setWt(e.target.value)} placeholder="Opcional"/></label><label><span className="L">% GRASA</span><input type="number" style={iStyle} value={bf} onChange={e=>setBf(e.target.value)} placeholder="Opcional"/></label></div><label><span className="L">ETAPA ACTUAL</span><select style={iStyle} value={goal} onChange={e=>setGoal(e.target.value)}><option>Retomar constancia</option><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Recomposición</option><option>Mantener</option></select></label><div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}><label><span className="L">GYM / MES</span><input type="number" style={iStyle} value={mg} onChange={e=>setMg(e.target.value)}/></label><label><span className="L">MOV. / MES</span><input type="number" style={iStyle} value={mm} onChange={e=>setMm(e.target.value)}/></label></div></div><button className="btn btn-g" style={{marginTop:14}} onClick={()=>setEdit(true)}>EDITAR RUTINA SEMANAL</button><button className="btn btn-p" style={{marginTop:10}} onClick={save}><span>GUARDAR</span><span className="ar">✓</span></button></div></div>}
+function RoutineEditorModal({st,setSt,onBack}){const [rtn,setRtn]=useState(JSON.parse(JSON.stringify(normalizeRoutine(st.routine)))),[editDow,setEditDow]=useState(null);const addEx=dow=>setRtn(p=>({...p,[dow]:{...p[dow],focus:p[dow]?.focus==='DESCANSO'?'ENTRENAMIENTO':p[dow]?.focus,exercises:[...(p[dow]?.exercises||[]),{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));const updEx=(dow,id,f,v)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.map(e=>e.id===id?{...e,[f]:v}:e)}}));const rmEx=(dow,id)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.filter(e=>e.id!==id)}}));const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...p[dow],focus:v}}));const save=()=>{setSt(s=>({...s,routine:normalizeRoutine(rtn)}));onBack()};return <div className="modal-bg"><div className="modal" style={{maxHeight:'92vh',overflowY:'auto'}}><button className="slink" onClick={onBack}>← volver al perfil</button><RoutineEditorContent rtn={rtn} setRtn={setRtn} editDow={editDow} setEditDow={setEditDow} addEx={addEx} updEx={updEx} rmEx={rmEx} updFocus={updFocus} footer={<button className="btn btn-p" style={{marginTop:18}} onClick={save}><span>GUARDAR RUTINA</span><span className="ar">✓</span></button>}/></div></div>}
 
-function Home({st,onStart,onCal,onAv,onLog,setSt}){
-  const td=now(),dow=td.getDay(),rtn=st.routine[dow]||{focus:'DESCANSO',exercises:[]};
-  const isR=rtn.exercises.length===0,stats=moStats(st,td),astats=moActivityStats(st,td),strk=calcStreak(st,td);
-  const pct=Math.min(100,Math.round((astats.total/(st.user.movementGoal||20))*100));
-  const tSes=st.sessions[todayISO()]||{},totalS=rtn.exercises.length*3;
-  const doneS=Object.values(tSes).reduce((n,a)=>n+(Array.isArray(a)?a.filter(s=>s&&s.done).length:0),0);
-  const tActs=dayActs(st,todayISO());
-  const removeAct=id=>setSt(s=>{const activities={...(s.activities||{})};activities[todayISO()]=(activities[todayISO()]||[]).filter(a=>a.id!==id);return{...s,activities};});
-  const mo=fmtMo(td);
-  const DS=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const wk=[];const diff=dow===0?-6:1-dow;for(let i=0;i<7;i++){const d=new Date(td);d.setDate(td.getDate()+diff+i);wk.push(d);}
-
-  return(<div className="body">
-    <TB user={st.user} onAv={onAv}/>
-
-    <div style={{padding:'0 20px',marginBottom:12}}>
-      <div className="card card-ink" style={{padding:'16px 18px',display:'flex',alignItems:'flex-end',justifyContent:'space-between'}}>
-        <div>
-          <div className="L" style={{color:'rgba(255,255,255,.45)'}}>RACHA</div>
-          <div style={{display:'flex',alignItems:'baseline',gap:6,marginTop:2}}>
-            <div className="D" style={{fontSize:76,color:'var(--acc)'}}>{strk}</div>
-            <div className="M" style={{fontSize:12,color:'rgba(255,255,255,.45)'}}>{strk===1?'día':'días'}</div>
-          </div>
-          <div className="M" style={{fontSize:9,color:'rgba(255,255,255,.4)',marginTop:2}}>{strk===0?'EMPECEMOS HOY →':'MANTÉN EL RITMO'}</div>
-        </div>
-        <div style={{textAlign:'right'}}>
-          <div className="L" style={{color:'rgba(255,255,255,.45)'}}>{mo.split(' ')[0]}</div>
-          <div className="D" style={{fontSize:32,marginTop:4,color:'var(--white)'}}>{astats.total}<span style={{color:'rgba(255,255,255,.28)',fontSize:20}}>/{st.user.movementGoal||20}</span></div>
-          <div className="M" style={{fontSize:8,color:'rgba(255,255,255,.38)'}}>MOVIMIENTOS</div>
-        </div>
-      </div>
-    </div>
-
-    <div style={{padding:'0 20px',marginBottom:14}}>
-      <div style={{display:'flex',justifyContent:'space-between',marginBottom:5}}>
-        <span className="L">MOVIMIENTO {mo}</span>
-        <span className="M" style={{fontSize:10,color:'var(--ink)',fontWeight:500}}>{pct}%</span>
-      </div>
-      <div className="pb"><div className="pf" style={{width:`${pct}%`}}/></div>
-    </div>
-
-    <div style={{display:'flex',gap:5,padding:'0 20px',overflowX:'auto',marginBottom:14,paddingBottom:2}}>
-      {wk.map(d=>{const k=dk(d),jd=d.getDay(),r=st.routine[jd]||{exercises:[]},acts=dayActs(st,k),isDone=hasMovement(st,k),isT=k===todayISO(),isRst=r.exercises.length===0;
-        return(<div key={k} className={`wday${isT?' wt':isDone?' wd':''}`} style={{flex:'0 0 44px'}}>
-          <div className="M" style={{fontSize:8,color:isT?'var(--acc)':'var(--muted)'}}>{DS[jd]}</div>
-          <div className="D" style={{fontSize:9,marginTop:2,color:isT?'var(--white)':isDone?'var(--ink)':isRst?'var(--dim)':'var(--muted)'}}>{acts.length?actName(acts[0].type).slice(0,5):(hasLogs(st,k)?'GYM':(r.focus?r.focus.split('·')[0].trim().split(' ')[0].slice(0,5):'—'))}</div>
-          {isDone&&!isT&&<div style={{width:4,height:4,borderRadius:'50%',background:'var(--ink)',margin:'3px auto 0'}}/>}
-        </div>);
-      })}
-    </div>
-
-    <Tape>{mo}</Tape>
-    <CalMini st={st} td={td} onPick={onCal}/>
-
-    <Tape>MOVIMIENTO DE HOY</Tape>
-    <div style={{padding:'0 20px',marginBottom:12}}>
-      <button className="btn btn-p" onClick={onLog}><span>+ REGISTRAR MOVIMIENTO</span><span className="ar">+</span></button>
-      {(hasLogs(st,todayISO())||tActs.length>0)&&<div className="chips">{hasLogs(st,todayISO())&&<span className="chip">🏋️ GYM</span>}{tActs.map(a=><span key={a.id} className="chip">{actIcon(a.type)} {actName(a.type).toUpperCase()} <button onClick={()=>removeAct(a.id)}>×</button></span>)}</div>}
-    </div>
-    <Tape>SESIÓN DE GYM</Tape>
-    <div style={{padding:'0 20px'}}>
-      <div className="card" style={{marginBottom:10}}>
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
-          <div>
-            <div className="L">{DOWS[dow]} {String(td.getDate()).padStart(2,'0')}</div>
-            <div className="D" style={{fontSize:21,marginTop:5,maxWidth:180,lineHeight:1.05,color:'var(--ink)'}}>{rtn.focus}</div>
-          </div>
-          <div style={{textAlign:'right'}}>
-            {isR?<div className="D" style={{fontSize:18,color:'var(--dim)'}}>REST</div>:<>
-              <div className="M" style={{fontSize:22,color:'var(--ink)',fontWeight:700}}>{rtn.exercises.length}</div>
-              <div className="L" style={{marginTop:2}}>ejercicios</div>
-            </>}
-          </div>
-        </div>
-        {!isR&&doneS>0&&<div style={{marginTop:10}}>
-          <div className="pb" style={{height:6}}><div className="pf" style={{width:`${(doneS/totalS)*100}%`}}/></div>
-          <div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:4}}>{doneS}/{totalS} series</div>
-        </div>}
-      </div>
-      {!isR
-        ?<button className="btn btn-p" style={{marginBottom:16}} onClick={onStart}><span>{doneS>0?'CONTINUAR SESIÓN':'EMPEZAR SESIÓN'}</span><span className="ar">→</span></button>
-        :<div className="card" style={{padding:18,textAlign:'center',marginBottom:16}}><div className="D" style={{fontSize:20,color:'var(--ink)'}}>DESCANSO</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Recupera para mañana</div></div>
-      }
-    </div>
-  </div>);
-}
-
-function Workout({st,setSt}){
-  const td=now(),tdDow=td.getDay();
-  const [selDow,setSelDow]=useState(tdDow);
-  const [timer,setTimer]=useState(null);
-  const rtn=st.routine[selDow]||{focus:'DESCANSO',exercises:[]};
-  const iso=todayISO();
-  useEffect(()=>{if(!timer)return;const t=setInterval(()=>setTimer(r=>r&&r>1?r-1:null),1000);return()=>clearInterval(t);},[timer]);
-  const getSets=exId=>(st.sessions[iso]||{})[exId]||[{weight:0,reps:0,rir:null,done:false},{weight:0,reps:0,rir:null,done:false},{weight:0,reps:0,rir:null,done:false}];
-  const upd=(exId,si,f,v)=>setSt(s=>{const ses={...s.sessions},day={...(ses[iso]||{})},cur=day[exId]||getSets(exId);day[exId]=cur.map((x,i)=>i===si?{...x,[f]:v}:x);ses[iso]=day;return{...s,sessions:ses};});
-  const tog=(exId,si)=>{const was=getSets(exId)[si].done;upd(exId,si,'done',!was);if(!was)setTimer(90);};
-  const totS=rtn.exercises.length*3,doneS=rtn.exercises.reduce((n,ex)=>n+getSets(ex.id).filter(s=>s.done).length,0),pct=totS?Math.round((doneS/totS)*100):0;
-  const DP=[{d:1,l:'LUN'},{d:2,l:'MAR'},{d:3,l:'MIÉ'},{d:4,l:'JUE'},{d:5,l:'VIE'},{d:6,l:'SÁB'},{d:0,l:'DOM'}];
-  const isRest=rtn.exercises.length===0;
-
-  return(<div className="body">
-    {timer&&<div className="timer-b">{Math.floor(timer/60)}:{String(timer%60).padStart(2,'0')}</div>}
-    <TB user={st.user} sub={rtn.focus}/>
-    <div style={{display:'flex',gap:5,padding:'4px 20px 12px',overflowX:'auto'}}>
-      {DP.map(d=>{const isOn=d.d===selDow,isT=d.d===tdDow;return(<button key={d.d} className={`dp${isOn?' on':''}`} onClick={()=>setSelDow(d.d)}>{d.l}{isT&&!isOn&&<span className="dot"/>}</button>);})}
-    </div>
-    {isRest
-      ?<div style={{padding:'0 20px'}}><div className="card" style={{padding:28,textAlign:'center'}}><div className="D" style={{fontSize:24,color:'var(--ink)'}}>DESCANSO</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:10}}>Hidratación · sueño · recuperación</div></div></div>
-      :<>
-        <div style={{padding:'0 20px',marginBottom:4}}>
-          <div className="card card-ink" style={{padding:'14px 16px'}}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:10}}>
-              <div><div className="L" style={{color:'rgba(255,255,255,.5)'}}>{selDow===tdDow?'SESIÓN DE HOY':'VISTA PREVIA'}</div><div className="D" style={{fontSize:26,color:'var(--white)',marginTop:2}}>{doneS}<span style={{opacity:.4}}>/{totS}</span> SETS</div></div>
-              <div className="M" style={{fontSize:20,fontWeight:700,color:'var(--acc)'}}>{pct}<span style={{fontSize:12}}>%</span></div>
-            </div>
-            <div style={{height:5,background:'rgba(255,255,255,.15)',borderRadius:999,overflow:'hidden'}}><div style={{width:`${pct}%`,height:'100%',background:'var(--acc)',transition:'width .4s'}}/></div>
-          </div>
-        </div>
-        <Tape>EJERCICIOS · 3 SERIES · 8–10 REPS</Tape>
-        <div style={{padding:'0 20px'}}>
-          {rtn.exercises.map((ex,idx)=><ExCard key={ex.id} ex={ex} num={idx+1} sets={getSets(ex.id)} editable={selDow===tdDow} onUpd={(si,f,v)=>upd(ex.id,si,f,v)} onTog={si=>tog(ex.id,si)}/>)}
-          {selDow===tdDow&&doneS===totS&&totS>0&&<div className="card card-ink" style={{padding:20,textAlign:'center',marginTop:8}}><div className="D" style={{fontSize:22,color:'var(--acc)'}}>SESIÓN COMPLETADA</div><div className="M" style={{fontSize:11,color:'rgba(255,255,255,.6)',marginTop:4}}>+1 día de racha</div></div>}
-        </div>
-      </>
-    }
-  </div>);
-}
-
-function ExCard({ex,num,sets,editable,onUpd,onTog}){
-  const [open,setOpen]=useState(true);
-  const allD=sets.every(s=>s.done);
-  return(<div className="ex-row">
-    <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',cursor:'pointer'}} onClick={()=>setOpen(!open)}>
-      <div style={{flex:1}}>
-        <div style={{display:'flex',alignItems:'center',gap:8}}>
-          <div className="D" style={{fontSize:11,color:'var(--dim)',width:18}}>0{num}</div>
-          <div className="ex-n">{ex.name.toUpperCase()}</div>
-        </div>
-        <div className="ex-m">{(ex.muscle||'').toUpperCase()} · {ex.target} · 3 SETS</div>
-      </div>
-      <div style={{width:27,height:27,borderRadius:999,background:allD?'var(--ink)':'var(--bg2)',color:allD?'var(--acc)':'var(--muted)',display:'grid',placeItems:'center',fontFamily:'var(--fm)',fontSize:10,fontWeight:700,border:'1px solid var(--line)',flexShrink:0}}>{sets.filter(s=>s.done).length}/3</div>
-    </div>
-    {open&&<><div className="sh"><div/><div className="ch">KG</div><div className="ch">REPS</div><div className="ch">RIR</div><div/></div>
-      {sets.map((s,i)=><div key={i} className="sr">
-        <div className="sn">{i+1}</div>
-        <input type="number" inputMode="decimal" disabled={!editable} className={`inp${s.done?' done':''}`} value={s.weight||''} placeholder="—" onChange={e=>onUpd(i,'weight',parseFloat(e.target.value)||0)}/>
-        <input type="number" inputMode="numeric" disabled={!editable} className={`inp${s.done?' done':''}`} value={s.reps||''} placeholder="—" onChange={e=>onUpd(i,'reps',parseInt(e.target.value)||0)}/>
-        <input type="number" inputMode="numeric" disabled={!editable} className={`inp${s.done?' done':''}`} value={s.rir!=null?s.rir:''} placeholder="—" min={0} max={4} onChange={e=>onUpd(i,'rir',e.target.value===''?null:parseInt(e.target.value))}/>
-        <button className={`chk${s.done?' done':''}`} onClick={()=>onTog(i)} disabled={!editable}>✓</button>
-      </div>)}
-    </>}
-  </div>);
-}
-
-function Calendar({st}){
-  const td=now(),stats=moStats(st,td),astats=moActivityStats(st,td),strk=calcStreak(st,td);
-  const days=mDays(td.getFullYear(),td.getMonth()),first=days[0].dow,mo=fmtMo(td);
-  return(<div className="body">
-    <TB user={st.user} sub={mo}/>
-    <div style={{padding:'0 20px',marginBottom:4}}>
-      <div className="card card-ink" style={{padding:'16px 18px',display:'flex',alignItems:'flex-start',justifyContent:'space-between'}}>
-        <div><div className="L" style={{color:'rgba(255,255,255,.45)'}}>MOVIMIENTOS</div><div className="D" style={{fontSize:64,color:'var(--acc)',marginTop:2}}>{astats.total}</div><div className="M" style={{fontSize:11,color:'rgba(255,255,255,.4)'}}>de {st.user.movementGoal||20} objetivo</div></div>
-        <div style={{display:'flex',flexDirection:'column',gap:8,alignItems:'flex-end',marginTop:4}}>
-          {[[astats.by.gym,'var(--acc)','gym'],[astats.by.pilates,'rgba(255,255,255,.45)','pilates'],[astats.by.running+astats.by.walk,'var(--acc2)','cardio/walk']].map(([n,c,l])=><div key={l} style={{display:'flex',alignItems:'center',gap:6}}><span style={{width:8,height:8,borderRadius:2,background:c}}/><span className="M" style={{fontSize:11,color:'rgba(255,255,255,.6)'}}>{n} {l}</span></div>)}
-        </div>
-      </div>
-    </div>
-    <Tape>{mo}</Tape>
-    <div className="cg" style={{marginBottom:5}}>{['D','L','M','M','J','V','S'].map((d,i)=><div key={i} className="cd-h">{d}</div>)}</div>
-    <div className="cg">
-      {Array.from({length:first}).map((_,i)=><div key={'b'+i}/>)}
-      {days.map(d=>{const s=dayStatus(d,st,td);let c='cd';if(s==='done')c+=' done';else if(s==='today')c+=' today';else if(s.startsWith('rest'))c+=' rest';else if(s==='future')c+=' future';else if(s==='missed')c+=' missed';return<div key={d.day} className={c}>{d.day}</div>;})}
-    </div>
-    <Tape>RACHA & VOLUMEN</Tape>
-    <div style={{padding:'0 20px'}}><div className="card" style={{padding:16,display:'flex',alignItems:'center',justifyContent:'space-around'}}>
-      <div><div className="L">RACHA</div><div style={{display:'flex',alignItems:'baseline',gap:5}}><div className="D" style={{fontSize:40,color:'var(--ink)'}}>{strk}</div><div className="M" style={{fontSize:11,color:'var(--muted)'}}>días</div></div></div>
-      <div style={{width:1,alignSelf:'stretch',background:'var(--line)'}}/>
-      <div><div className="L">VOLUMEN MES</div><div style={{display:'flex',alignItems:'baseline',gap:5}}><div className="D" style={{fontSize:40,color:'var(--ink)'}}>{(stats.vol/1000).toFixed(1)}</div><div className="M" style={{fontSize:11,color:'var(--muted)'}}>t</div></div></div>
-    </div></div>
-  </div>);
-}
-
-function Stats({st}){
-  const td=now(),stats=moStats(st,td),astats=moActivityStats(st,td);
-  const weeks=[];
-  for(let w=5;w>=0;w--){const end=new Date(td);end.setDate(end.getDate()-w*7);const start=new Date(end);start.setDate(start.getDate()-6);let kg=0;for(const[iso,day]of Object.entries(st.sessions)){const d=iso2d(iso);if(d>=start&&d<=end)for(const arr of Object.values(day))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.weight&&s.reps)kg+=s.weight*s.reps;}const tmp=new Date(end);tmp.setDate(tmp.getDate()-end.getDay()+1);const oj=new Date(tmp.getFullYear(),0,1);weeks.push({w:'W'+Math.ceil((((tmp-oj)/86400000)+oj.getDay()+1)/7),kg});}
-  const maxKg=Math.max(1,...weeks.map(w=>w.kg));
-  const prMap={};
-  for(const[iso,day]of Object.entries(st.sessions))for(const[exId,arr]of Object.entries(day)){if(!Array.isArray(arr))continue;for(const s of arr)if(s&&s.done&&s.weight&&(!prMap[exId]||s.weight>prMap[exId].kg))prMap[exId]={kg:s.weight,reps:s.reps||0,date:iso};}
-  const exN={};for(const dow of Object.keys(st.routine))for(const ex of(st.routine[dow].exercises||[]))exN[ex.id]=ex.name;
-  const prs=Object.entries(prMap).map(([id,v])=>({...v,name:exN[id]||id})).sort((a,b)=>b.kg-a.kg).slice(0,8);
-  let rS=0,rC=0;for(const day of Object.values(st.sessions))for(const arr of Object.values(day))if(Array.isArray(arr))for(const s of arr)if(s&&s.done&&s.rir!=null){rS+=s.rir;rC++;}
-  const avgRIR=rC?rS/rC:null;
-  const empty=stats.done===0&&prs.length===0;
-
-  return(<div className="body">
-    <TB user={st.user} sub="Tu progreso"/>
-    <div style={{padding:'0 20px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:4}}>
-      <div className="card" style={{padding:13}}><div className="L">VOLUMEN MES</div><div className="D" style={{fontSize:32,marginTop:4,color:'var(--ink)'}}>{(stats.vol/1000).toFixed(1)}<span style={{fontSize:13,color:'var(--muted)'}}>t</span></div><div className="M" style={{fontSize:9,color:'var(--muted)'}}>{stats.vol.toLocaleString()} KG</div></div>
-      <div className="card" style={{padding:13}}><div className="L">RIR PROM.</div><div className="D" style={{fontSize:32,marginTop:4,color:'var(--ink)'}}>{avgRIR==null?'—':avgRIR.toFixed(1)}</div><div className="M" style={{fontSize:9,color:'var(--muted)'}}>{avgRIR==null?'SIN DATOS':avgRIR<1.5?'INTENSIDAD ALTA':'MODERADA'}</div></div>
-    </div>
-    <Tape>DISCIPLINAS DEL MES</Tape>
-    <div style={{padding:'0 20px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:4}}>
-      {ACTS.filter(a=>a.id!=='other').map(a=><div key={a.id} className="card" style={{padding:'12px 13px'}}><div className="M" style={{fontSize:18}}>{a.ic}</div><div className="D" style={{fontSize:26,color:'var(--ink)',marginTop:3}}>{astats.by[a.id]||0}</div><div className="L">{a.name}</div></div>)}
-    </div>
-    <Tape>VOLUMEN POR SEMANA</Tape>
-    <div style={{padding:'0 20px'}}><div className="card" style={{padding:'14px 14px 10px'}}>
-      {empty?<div style={{padding:'26px 0',textAlign:'center'}}><div className="D" style={{fontSize:16,color:'var(--dim)'}}>SIN DATOS AÚN</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Completa sesiones para ver tu progreso</div></div>
-        :<>
-          <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',height:110,gap:5,borderBottom:'1px dashed var(--line)',paddingBottom:5}}>
-            {weeks.map((w,i)=>{const h=(w.kg/maxKg)*100,isL=i===weeks.length-1;return(<div key={i} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-end',height:'100%'}}>
-              <div className="M" style={{fontSize:7,color:'var(--muted)',marginBottom:2}}>{w.kg>0?(w.kg/1000).toFixed(1)+'t':'—'}</div>
-              <div style={{width:'100%',height:w.kg>0?`${h}%`:'2px',background:isL?'var(--ink)':'var(--bg3)',border:`1px solid ${isL?'var(--ink)':'var(--line)'}`,borderRadius:3}}/>
-            </div>);})}
-          </div>
-          <div style={{display:'flex',marginTop:4}}>{weeks.map((w,i)=><div key={i} className="M" style={{fontSize:7,color:'var(--muted)',flex:1,textAlign:'center'}}>{w.w}</div>)}</div>
-        </>}
-    </div></div>
-    <Tape>RÉCORDS PERSONALES</Tape>
-    <div style={{padding:'0 20px'}}>
-      {prs.length===0?<div className="card" style={{padding:18,textAlign:'center'}}><div className="M" style={{fontSize:11,color:'var(--muted)'}}>Tus PRs aparecerán al completar series</div></div>
-        :prs.map((pr,i)=><div key={i} className="card" style={{padding:'12px 14px',marginBottom:8,display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <div><div style={{display:'flex',alignItems:'center',gap:8}}><span className="D" style={{fontSize:9,color:'var(--acc2)'}}>PR</span><span style={{fontFamily:'var(--fd)',fontSize:14,color:'var(--ink)'}}>{(pr.name||'').toUpperCase().slice(0,22)}</span></div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:2}}>{pr.date} · {pr.reps} reps</div></div>
-          <div style={{textAlign:'right'}}><div className="D" style={{fontSize:26,color:'var(--ink)'}}>{pr.kg}</div><div className="M" style={{fontSize:8,color:'var(--muted)',letterSpacing:'.1em'}}>KG</div></div>
-        </div>)}
-    </div>
-  </div>);
-}
-
-function ProfileModal({st,setSt,onClose}){
-  const [name,setName]=useState(st.user.name||'');
-  const [wt,setWt]=useState(st.user.weightKg||'');
-  const [ht,setHt]=useState(st.user.heightCm||'');
-  const [bf,setBf]=useState(st.user.bodyFat||'');
-  const [goal,setGoal]=useState(st.user.goal||'');
-  const [mg,setMg]=useState(st.user.monthlyGoal||12);
-  const [mov,setMov]=useState(st.user.movementGoal||20);
-  const [rtn,setRtn]=useState(JSON.parse(JSON.stringify(st.routine||{})));
-  const [editDow,setEditDow]=useState(null);
-  const iStyle={background:'var(--bg2)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:15,padding:'10px 12px',borderRadius:10,width:'100%',outline:'none'};
-  const addEx=dow=>setRtn(p=>({...p,[dow]:{...(p[dow]||{}),focus:p[dow]?.focus||'ENTRENAMIENTO',exercises:[...(p[dow]?.exercises||[]),{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));
-  const updEx=(dow,id,f,v)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:(p[dow].exercises||[]).map(e=>e.id===id?{...e,[f]:v}:e)}}));
-  const rmEx=(dow,id)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:(p[dow].exercises||[]).filter(e=>e.id!==id)}}));
-  const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...(p[dow]||{}),focus:v,exercises:p[dow]?.exercises||[]}}));
-  const makeRest=dow=>setRtn(p=>({...p,[dow]:{focus:'DESCANSO',exercises:[]}}));
-  const makeTrain=dow=>setRtn(p=>({...p,[dow]:{focus:'ENTRENAMIENTO',exercises:p[dow]?.exercises?.length?p[dow].exercises:[{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));
-  const save=()=>{setSt(s=>{const newStage=goal&&goal!==s.user.goal?{id:gid(),date:todayISO(),goal}:null;return{...s,user:{...s.user,name:name.trim()||s.user.name,weightKg:parseFloat(wt)||null,heightCm:parseInt(ht)||null,bodyFat:parseFloat(bf)||null,goal,monthlyGoal:parseInt(mg)||12,movementGoal:parseInt(mov)||20},routine:rtn,goalStages:newStage?[...(s.goalStages||[]),newStage]:(s.goalStages||[])};});onClose();};
-  const reset=()=>{if(confirm('¿Borrar todos los datos y empezar de cero?')){localStorage.removeItem(KEY);localStorage.removeItem(OLD_KEY);window.location.reload();}};
-  return(<div className="modal-bg" onClick={onClose}>
-    <div className="modal" onClick={e=>e.stopPropagation()} style={{maxHeight:'92vh',overflowY:'auto'}}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:20}}>
-        <div className="D" style={{fontSize:22,color:'var(--ink)'}}>PERFIL & RUTINA</div>
-        <button onClick={onClose} style={{background:'transparent',border:'none',color:'var(--muted)',fontSize:20,cursor:'pointer'}}>✕</button>
-      </div>
-      <div style={{display:'grid',gap:10}}>
-        <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">NOMBRE</span><input style={iStyle} value={name} onChange={e=>setName(e.target.value)}/></label>
-        <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">ETAPA / OBJETIVO ACTUAL</span><select style={iStyle} value={goal} onChange={e=>setGoal(e.target.value)}><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Mantener</option><option>Recomposición</option><option>Retomar constancia</option></select></label>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8}}>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">PESO</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={wt} onChange={e=>setWt(e.target.value)}/></label>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">ALTURA</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={ht} onChange={e=>setHt(e.target.value)}/></label>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">% GRASA</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={bf} onChange={e=>setBf(e.target.value)} placeholder="—"/></label>
-        </div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">GYM/MES</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={mg} onChange={e=>setMg(e.target.value)}/></label>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">MOV./MES</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={mov} onChange={e=>setMov(e.target.value)}/></label>
-        </div>
-      </div>
-      <Tape>EDITAR RUTINA</Tape>
-      {[1,2,3,4,5,6,0].map(dow=>{const day=rtn[dow]||{focus:'DESCANSO',exercises:[]};const isR=day.exercises.length===0,isO=editDow===dow;return(<div key={dow} style={{marginBottom:8,background:isO?'var(--bg2)':'var(--white)',border:'1px solid var(--line)',borderRadius:13,overflow:'hidden'}}>
-        <div onClick={()=>setEditDow(isO?null:dow)} style={{padding:'12px 14px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}>
-          <div><div className="D" style={{fontSize:17,letterSpacing:'.06em',color:'var(--ink)'}}>{DOWS[dow]}</div><div className="M" style={{fontSize:10,color:'var(--muted)',marginTop:2}}>{isR?'Descanso':`${day.exercises.length} ejercicios · ${day.focus}`}</div></div>
-          <div style={{color:'var(--dim)',fontSize:16,fontFamily:'var(--fm)'}}>{isO?'−':'+'}</div>
-        </div>
-        {isO&&<div style={{padding:'0 14px 14px',borderTop:'1px solid var(--line)'}}>
-          <div style={{display:'flex',gap:8,margin:'10px 0'}}><button className="btn btn-g" onClick={()=>makeRest(dow)}>DESCANSO</button><button className="btn btn-g" onClick={()=>makeTrain(dow)}>ENTRENAR</button></div>
-          {!isR&&<>
-            <div className="L" style={{marginBottom:4}}>FOCO DEL DÍA</div>
-            <input value={day.focus} onChange={e=>updFocus(dow,e.target.value)} style={{...iStyle,fontFamily:'var(--fm)',fontSize:13,marginBottom:10}}/>
-            {(day.exercises||[]).map(ex=><div key={ex.id} className="ee">
-              <div style={{display:'flex',alignItems:'center',gap:8}}><input value={ex.name} onChange={e=>updEx(dow,ex.id,'name',e.target.value)} placeholder="Ejercicio" style={{flex:1,...iStyle,fontSize:13,padding:'8px 10px'}}/><button className="rm" onClick={()=>rmEx(dow,ex.id)}>×</button></div>
-              <div className="ee-row"><input value={ex.muscle} onChange={e=>updEx(dow,ex.id,'muscle',e.target.value)} placeholder="Músculo"/><input value={ex.target} onChange={e=>updEx(dow,ex.id,'target',e.target.value)} placeholder="10–12 reps"/></div>
-            </div>)}
-            <button className="add-ex" onClick={()=>addEx(dow)}>+ AGREGAR EJERCICIO</button>
-          </>}
-        </div>}
-      </div>);})}
-      <button className="btn btn-p" style={{marginTop:18}} onClick={save}><span>GUARDAR CAMBIOS</span><span className="ar">✓</span></button>
-      <button onClick={reset} style={{width:'100%',marginTop:10,padding:12,border:'1px solid var(--line)',borderRadius:12,background:'transparent',color:'var(--acc2)',fontFamily:'var(--fm)',fontSize:11,letterSpacing:'.06em',cursor:'pointer'}}>BORRAR TODOS LOS DATOS</button>
-    </div>
-  </div>);
-}
-
-function App(){
-  const [st,setSt]=useState(()=>load()||blank());
-  const [tab,setTab]=useState('home');
-  const [prof,setProf]=useState(false);
-  const [act,setAct]=useState(false);
-  useEffect(()=>{persist(st);},[st]);
-  if(!st.onboarded)return <Onboarding onDone={s=>setSt({...blank(),...s,onboarded:true})}/>;
-  let body;
-  if(tab==='home')body=<Home st={st} setSt={setSt} onStart={()=>setTab('workout')} onCal={()=>setTab('calendar')} onAv={()=>setProf(true)} onLog={()=>setAct(true)}/>;
-  else if(tab==='calendar')body=<Calendar st={st}/>;
-  else if(tab==='workout')body=<Workout st={st} setSt={setSt}/>;
-  else if(tab==='stats')body=<Stats st={st}/>;
-  return(<>
-    <div className="app"><div className="scroll">{body}</div><Nav active={tab} onChange={setTab}/></div>
-    {prof&&<ProfileModal st={st} setSt={setSt} onClose={()=>setProf(false)}/>}
-    {act&&<QuickActivityModal st={st} setSt={setSt} onClose={()=>setAct(false)} onGym={()=>setTab('workout')}/>}
-  </>);
-}
+function App(){const [st,setSt]=useState(()=>load());const [tab,setTab]=useState('home');const [prof,setProf]=useState(false);const [activeDate,setActiveDate]=useState(todayISO());useEffect(()=>persist(st),[st]);if(!st.onboarded)return <Onboarding onDone={s=>setSt({...blank(),...s,onboarded:true})}/>;let body;if(tab==='home')body=<Home st={st} setSt={setSt} onStart={iso=>{setActiveDate(iso);markActivity(setSt,iso,'gym');setTab('workout')}} onAv={()=>setProf(true)}/>;else if(tab==='calendar')body=<Calendar st={st} setSt={setSt} onAv={()=>setProf(true)}/>;else if(tab==='workout')body=<Workout st={st} setSt={setSt} onAv={()=>setProf(true)} activeDate={activeDate} setActiveDate={setActiveDate}/>;else body=<Stats st={st} onAv={()=>setProf(true)}/>;return <><div className="app"><div className="scroll">{body}</div><Nav active={tab} onChange={setTab}/></div>{prof&&<ProfileModal st={st} setSt={setSt} onClose={()=>setProf(false)}/>}</>}
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
