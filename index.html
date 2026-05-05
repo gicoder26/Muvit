@@ -231,8 +231,6 @@ function Onboarding({onDone}){
   const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...p[dow],focus:v}}));
   const finish=()=>onDone({onboarded:true,user:{name:u.name.trim()||'ATLETA',weightKg:parseFloat(u.weightKg)||null,heightCm:parseInt(u.heightCm)||null,goal:u.goal,monthlyGoal:parseInt(u.monthlyGoal)||16},routine:rtn,sessions:{},notes:{}});
   const can0=u.name.trim().length>0,can1=tDays.length>0;
-  const totalEx=Object.values(rtn).reduce((n,d)=>n+(d.exercises?d.exercises.filter(e=>e.name.trim()).length:0),0);
-  const can3=totalEx>0;
 
   return(
     <div className="onb">
@@ -304,9 +302,9 @@ function Onboarding({onDone}){
             </div>}
           </div>);
         })}
-        {!can3&&<div className="M" style={{fontSize:11,color:'var(--acc2)',textAlign:'center',marginBottom:8}}>Agrega al menos un ejercicio para continuar.</div>}<div style={{display:'flex',gap:10,marginTop:18}}>
+        <div style={{display:'flex',gap:10,marginTop:18}}>
           <button className="btn btn-g" style={{flex:1}} onClick={()=>setStep(2)}>← ATRÁS</button>
-          <button className="btn btn-p" disabled={!can3} style={{flex:2,opacity:can3?1:.4}} onClick={finish}><span>¡EMPEZAR!</span><span className="ar">✓</span></button>
+          <button className="btn btn-p" style={{flex:2}} onClick={finish}><span>¡EMPEZAR!</span><span className="ar">✓</span></button>
         </div>
       </div>}
     </div>
@@ -340,7 +338,7 @@ function CalMini({st,td,onPick}){
   </>);
 }
 
-function Home({st,onStart,onCal,onAv}){
+function Home({st,onStart,onCal,onAv,onReset}){
   const td=now(),dow=td.getDay(),rtn=st.routine[dow]||{focus:'DESCANSO',exercises:[]};
   const isR=rtn.exercises.length===0,stats=moStats(st,td),strk=calcStreak(st,td);
   const pct=Math.min(100,Math.round((stats.done/st.user.monthlyGoal)*100));
@@ -416,6 +414,8 @@ function Home({st,onStart,onCal,onAv}){
         ?<button className="btn btn-p" style={{marginBottom:16}} onClick={onStart}><span>{doneS>0?'CONTINUAR SESIÓN':'EMPEZAR SESIÓN'}</span><span className="ar">→</span></button>
         :<div className="card" style={{padding:18,textAlign:'center',marginBottom:16}}><div className="D" style={{fontSize:20,color:'var(--ink)'}}>DESCANSO</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Recupera para mañana</div></div>
       }
+      <button onClick={onReset} style={{width:'100%',marginTop:2,padding:'11px 12px',border:'1px solid var(--line)',borderRadius:12,background:'transparent',color:'var(--muted)',fontFamily:'var(--fm)',fontSize:10,letterSpacing:'.08em',textTransform:'uppercase',cursor:'pointer'}}>Reiniciar app</button>
+      <div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginTop:6,marginBottom:8}}>Borra los datos guardados en este dispositivo.</div>
     </div>
   </div>);
 }
@@ -462,10 +462,8 @@ function Workout({st,setSt}){
   </div>);
 }
 
-const RIR_GUIDE=[{v:0,l:'Fallo',d:'No puedes más'},{v:1,l:'RIR 1',d:'Una más y ya'},{v:2,l:'RIR 2',d:'Ideal'},{v:3,l:'RIR 3+',d:'Sube el peso'}];
 function ExCard({ex,num,sets,editable,onUpd,onTog}){
   const [open,setOpen]=useState(true);
-  const [showRir,setShowRir]=useState(false);
   const allD=sets.every(s=>s.done);
   return(<div className="ex-row">
     <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',cursor:'pointer'}} onClick={()=>setOpen(!open)}>
@@ -478,25 +476,7 @@ function ExCard({ex,num,sets,editable,onUpd,onTog}){
       </div>
       <div style={{width:27,height:27,borderRadius:999,background:allD?'var(--ink)':'var(--bg2)',color:allD?'var(--acc)':'var(--muted)',display:'grid',placeItems:'center',fontFamily:'var(--fm)',fontSize:10,fontWeight:700,border:'1px solid var(--line)',flexShrink:0}}>{sets.filter(s=>s.done).length}/3</div>
     </div>
-    {open&&<>
-      <div className="sh">
-        <div/>
-        <div className="ch">KG</div>
-        <div className="ch">REPS</div>
-        <div className="ch" style={{display:'flex',alignItems:'center',justifyContent:'center',gap:3}}>
-          RIR
-          <button onClick={e=>{e.stopPropagation();setShowRir(!showRir);}} style={{width:14,height:14,borderRadius:'50%',border:'1px solid var(--line)',background:'var(--bg2)',cursor:'pointer',fontSize:8,color:'var(--muted)',lineHeight:1,padding:0,display:'grid',placeItems:'center'}}>?</button>
-        </div>
-        <div/>
-      </div>
-      {showRir&&<div style={{background:'var(--bg2)',borderRadius:9,padding:'10px 12px',marginBottom:4}}>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:5}}>
-          {RIR_GUIDE.map(r=><div key={r.v} style={{textAlign:'center',padding:'6px 4px',borderRadius:7,background:'var(--white)',border:'1px solid var(--line)'}}>
-            <div className="D" style={{fontSize:16,color:'var(--ink)'}}>{r.v}</div>
-            <div className="M" style={{fontSize:8,color:'var(--muted)',marginTop:2,letterSpacing:'.04em'}}>{r.d}</div>
-          </div>)}
-        </div>
-      </div>}
+    {open&&<><div className="sh"><div/><div className="ch">KG</div><div className="ch">REPS</div><div className="ch">RIR</div><div/></div>
       {sets.map((s,i)=><div key={i} className="sr">
         <div className="sn">{i+1}</div>
         <input type="number" inputMode="decimal" disabled={!editable} className={`inp${s.done?' done':''}`} value={s.weight||''} placeholder="—" onChange={e=>onUpd(i,'weight',parseFloat(e.target.value)||0)}/>
@@ -557,10 +537,7 @@ function Stats({st}){
     </div>
     <Tape>VOLUMEN POR SEMANA</Tape>
     <div style={{padding:'0 20px'}}><div className="card" style={{padding:'14px 14px 10px'}}>
-      {empty?<div style={{padding:'20px 0',textAlign:'center'}}>
-          <div className="D" style={{fontSize:18,color:'var(--ink)'}}>TU PRIMERA SEMANA</div>
-          <div className="M" style={{fontSize:12,color:'var(--muted)',marginTop:8,lineHeight:1.6}}>Completa tu primera sesión y<br/>aquí verás cómo vas subiendo.</div>
-        </div>
+      {empty?<div style={{padding:'26px 0',textAlign:'center'}}><div className="D" style={{fontSize:16,color:'var(--dim)'}}>SIN DATOS AÚN</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Completa sesiones para ver tu progreso</div></div>
         :<>
           <div style={{display:'flex',alignItems:'flex-end',justifyContent:'space-between',height:110,gap:5,borderBottom:'1px dashed var(--line)',paddingBottom:5}}>
             {weeks.map((w,i)=>{const h=(w.kg/maxKg)*100,isL=i===weeks.length-1;return(<div key={i} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-end',height:'100%'}}>
@@ -583,85 +560,29 @@ function Stats({st}){
 }
 
 function ProfileModal({st,setSt,onClose}){
-  const [tab,setTab]=useState('perfil');
   const [name,setName]=useState(st.user.name||'');
   const [wt,setWt]=useState(st.user.weightKg||'');
   const [ht,setHt]=useState(st.user.heightCm||'');
   const [mg,setMg]=useState(st.user.monthlyGoal||16);
-  const [rtn,setRtn]=useState(JSON.parse(JSON.stringify(st.routine)));
-  const [editDow,setEditDow]=useState(null);
   const iStyle={background:'var(--bg2)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:15,padding:'10px 12px',borderRadius:10,width:'100%',outline:'none'};
-  const saveUser=()=>{setSt(s=>({...s,user:{...s.user,name:name.trim()||s.user.name,weightKg:parseFloat(wt)||s.user.weightKg,heightCm:parseInt(ht)||s.user.heightCm,monthlyGoal:parseInt(mg)||s.user.monthlyGoal}}));onClose();};
-  const saveRtn=()=>{setSt(s=>({...s,routine:rtn}));onClose();};
+  const save=()=>{setSt(s=>({...s,user:{...s.user,name:name.trim()||s.user.name,weightKg:parseFloat(wt)||s.user.weightKg,heightCm:parseInt(ht)||s.user.heightCm,monthlyGoal:parseInt(mg)||s.user.monthlyGoal}}));onClose();};
   const reset=()=>resetApp();
-  const addEx=dow=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:[...(p[dow]?.exercises||[]),{id:gid(),name:'',muscle:'',target:'10–12 reps'}]}}));
-  const updEx=(dow,id,f,v)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.map(e=>e.id===id?{...e,[f]:v}:e)}}));
-  const rmEx=(dow,id)=>setRtn(p=>({...p,[dow]:{...p[dow],exercises:p[dow].exercises.filter(e=>e.id!==id)}}));
-  const updFocus=(dow,v)=>setRtn(p=>({...p,[dow]:{...p[dow],focus:v}}));
-  const gymDows=Object.keys(rtn).filter(d=>rtn[d]&&rtn[d].exercises&&rtn[d].exercises.length>0).map(Number);
-
   return(<div className="modal-bg" onClick={onClose}>
-    <div className="modal" style={{maxHeight:'85vh',overflowY:'auto'}} onClick={e=>e.stopPropagation()}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
-        <div style={{display:'flex',gap:6}}>
-          {[['perfil','PERFIL'],['rutina','RUTINA']].map(([id,l])=>(
-            <button key={id} onClick={()=>setTab(id)} style={{padding:'6px 14px',borderRadius:20,border:'1px solid var(--line)',background:tab===id?'var(--ink)':'transparent',color:tab===id?'var(--acc)':'var(--muted)',fontFamily:'var(--fd)',fontSize:12,letterSpacing:'.06em',cursor:'pointer'}}>{l}</button>
-          ))}
-        </div>
+    <div className="modal" onClick={e=>e.stopPropagation()}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:20}}>
+        <div className="D" style={{fontSize:22,color:'var(--ink)'}}>PERFIL</div>
         <button onClick={onClose} style={{background:'transparent',border:'none',color:'var(--muted)',fontSize:20,cursor:'pointer'}}>✕</button>
       </div>
-
-      {tab==='perfil'&&<>
-        <div style={{display:'grid',gap:10}}>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">NOMBRE</span><input style={iStyle} value={name} onChange={e=>setName(e.target.value)}/></label>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
-            <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">PESO KG</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={wt} onChange={e=>setWt(e.target.value)}/></label>
-            <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">ALTURA CM</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={ht} onChange={e=>setHt(e.target.value)}/></label>
-          </div>
-          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">META SESIONES/MES</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={mg} onChange={e=>setMg(e.target.value)}/></label>
+      <div style={{display:'grid',gap:10}}>
+        <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">NOMBRE</span><input style={iStyle} value={name} onChange={e=>setName(e.target.value)}/></label>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8}}>
+          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">PESO KG</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={wt} onChange={e=>setWt(e.target.value)}/></label>
+          <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">ALTURA CM</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={ht} onChange={e=>setHt(e.target.value)}/></label>
         </div>
-        <button className="btn btn-p" style={{marginTop:18}} onClick={saveUser}><span>GUARDAR</span><span className="ar">✓</span></button>
-        <div style={{borderTop:'1px solid var(--line)',marginTop:24,paddingTop:16}}>
-          <div className="L" style={{marginBottom:8,color:'var(--dim)'}}>ZONA DE PELIGRO</div>
-          <button onClick={reset} style={{width:'100%',padding:12,border:'1px solid var(--acc2)',borderRadius:12,background:'transparent',color:'var(--acc2)',fontFamily:'var(--fm)',fontSize:11,letterSpacing:'.06em',cursor:'pointer'}}>BORRAR TODOS LOS DATOS</button>
-          <div className="M" style={{fontSize:10,color:'var(--dim)',textAlign:'center',marginTop:6}}>Esto borra todo en este dispositivo y no se puede deshacer.</div>
-        </div>
-      </>}
-
-      {tab==='rutina'&&<>
-        <div className="M" style={{fontSize:11,color:'var(--muted)',marginBottom:14}}>Toca un día para editar sus ejercicios.</div>
-        {[1,2,3,4,5,6,0].map(dow=>{
-          const day=rtn[dow]; if(!day)return null;
-          const isR=!day.exercises||day.exercises.length===0, isO=editDow===dow;
-          return(<div key={dow} style={{marginBottom:8,background:isO?'var(--bg2)':'var(--white)',border:'1px solid var(--line)',borderRadius:13,overflow:'hidden'}}>
-            <div onClick={()=>setEditDow(isO?null:dow)} style={{padding:'11px 13px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}>
-              <div>
-                <div className="D" style={{fontSize:16,letterSpacing:'.06em',color:'var(--ink)'}}>{DOWS[dow]}</div>
-                <div className="M" style={{fontSize:10,color:'var(--muted)',marginTop:2}}>{isR?'Descanso':`${day.exercises.length} ejercicios · ${day.focus}`}</div>
-              </div>
-              <div style={{color:'var(--dim)',fontSize:15,fontFamily:'var(--fm)'}}>{isO?'−':'+'}</div>
-            </div>
-            {isO&&!isR&&<div style={{padding:'0 13px 13px',borderTop:'1px solid var(--line)'}}>
-              <div style={{marginBottom:10,marginTop:10}}>
-                <div className="L" style={{marginBottom:4}}>FOCO</div>
-                <input value={day.focus||''} onChange={e=>updFocus(dow,e.target.value)} style={{background:'var(--white)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fm)',fontSize:13,padding:'7px 10px',borderRadius:8,width:'100%',outline:'none'}}/>
-              </div>
-              {(day.exercises||[]).map(ex=><div key={ex.id} className="ee">
-                <div style={{display:'flex',alignItems:'center',gap:8}}>
-                  <input value={ex.name} onChange={e=>updEx(dow,ex.id,'name',e.target.value)} placeholder="Ejercicio" style={{flex:1,background:'var(--white)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:13,padding:'7px 10px',borderRadius:7,outline:'none'}}/>
-                  <button className="rm" onClick={()=>rmEx(dow,ex.id)}>×</button>
-                </div>
-                <div className="ee-row">
-                  <input value={ex.muscle||''} onChange={e=>updEx(dow,ex.id,'muscle',e.target.value)} placeholder="Músculo"/>
-                  <input value={ex.target||''} onChange={e=>updEx(dow,ex.id,'target',e.target.value)} placeholder="10–12 reps"/>
-                </div>
-              </div>)}
-              <button className="add-ex" onClick={()=>addEx(dow)}>+ AGREGAR EJERCICIO</button>
-            </div>}
-          </div>);
-        })}
-        <button className="btn btn-p" style={{marginTop:12}} onClick={saveRtn}><span>GUARDAR RUTINA</span><span className="ar">✓</span></button>
-      </>}
+        <label style={{display:'flex',flexDirection:'column',gap:4}}><span className="L">META SESIONES/MES</span><input type="number" style={{...iStyle,fontFamily:'var(--fm)'}} value={mg} onChange={e=>setMg(e.target.value)}/></label>
+      </div>
+      <button className="btn btn-p" style={{marginTop:18}} onClick={save}><span>GUARDAR</span><span className="ar">✓</span></button>
+      <button onClick={reset} style={{width:'100%',marginTop:10,padding:12,border:'1px solid var(--line)',borderRadius:12,background:'transparent',color:'var(--acc2)',fontFamily:'var(--fm)',fontSize:11,letterSpacing:'.06em',cursor:'pointer'}}>BORRAR TODOS LOS DATOS</button>
     </div>
   </div>);
 }
@@ -673,7 +594,7 @@ function App(){
   useEffect(()=>{persist(st);},[st]);
   if(!st.onboarded)return <Onboarding onDone={s=>setSt({...blank(),...s,onboarded:true})}/>;
   let body;
-  if(tab==='home')body=<Home st={st} onStart={()=>setTab('workout')} onCal={()=>setTab('calendar')} onAv={()=>setProf(true)}/>;
+  if(tab==='home')body=<Home st={st} onStart={()=>setTab('workout')} onCal={()=>setTab('calendar')} onAv={()=>setProf(true)} onReset={resetApp}/>;
   else if(tab==='calendar')body=<Calendar st={st}/>;
   else if(tab==='workout')body=<Workout st={st} setSt={setSt}/>;
   else if(tab==='stats')body=<Stats st={st}/>;
