@@ -191,6 +191,14 @@ const LEGACY_KEY='lifts_v1';
 const load=()=>{try{const r=localStorage.getItem(KEY)||localStorage.getItem(LEGACY_KEY);if(r)return JSON.parse(r);}catch(e){}return null;};
 const persist=s=>{try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}};
 const blank=()=>({onboarded:false,user:{name:'',weightKg:null,heightCm:null,goal:'',monthlyGoal:16},routine:{},sessions:{},notes:{}});
+const resetApp=()=>{
+  const ok=confirm('Esto borrará tu rutina, sesiones y progreso guardado en este dispositivo. ¿Quieres reiniciar MUVIT?');
+  if(!ok)return;
+  const sure=confirm('Última confirmación: esta acción no se puede deshacer.');
+  if(!sure)return;
+  try{localStorage.removeItem(KEY);localStorage.removeItem(LEGACY_KEY);}catch(e){}
+  window.location.reload();
+};
 
 function Logo(){return(
   <div className="logo">
@@ -330,7 +338,7 @@ function CalMini({st,td,onPick}){
   </>);
 }
 
-function Home({st,onStart,onCal,onAv}){
+function Home({st,onStart,onCal,onAv,onReset}){
   const td=now(),dow=td.getDay(),rtn=st.routine[dow]||{focus:'DESCANSO',exercises:[]};
   const isR=rtn.exercises.length===0,stats=moStats(st,td),strk=calcStreak(st,td);
   const pct=Math.min(100,Math.round((stats.done/st.user.monthlyGoal)*100));
@@ -406,6 +414,8 @@ function Home({st,onStart,onCal,onAv}){
         ?<button className="btn btn-p" style={{marginBottom:16}} onClick={onStart}><span>{doneS>0?'CONTINUAR SESIÓN':'EMPEZAR SESIÓN'}</span><span className="ar">→</span></button>
         :<div className="card" style={{padding:18,textAlign:'center',marginBottom:16}}><div className="D" style={{fontSize:20,color:'var(--ink)'}}>DESCANSO</div><div className="M" style={{fontSize:11,color:'var(--muted)',marginTop:6}}>Recupera para mañana</div></div>
       }
+      <button onClick={onReset} style={{width:'100%',marginTop:2,padding:'11px 12px',border:'1px solid var(--line)',borderRadius:12,background:'transparent',color:'var(--muted)',fontFamily:'var(--fm)',fontSize:10,letterSpacing:'.08em',textTransform:'uppercase',cursor:'pointer'}}>Reiniciar app</button>
+      <div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginTop:6,marginBottom:8}}>Borra los datos guardados en este dispositivo.</div>
     </div>
   </div>);
 }
@@ -556,7 +566,7 @@ function ProfileModal({st,setSt,onClose}){
   const [mg,setMg]=useState(st.user.monthlyGoal||16);
   const iStyle={background:'var(--bg2)',border:'1px solid var(--line)',color:'var(--ink)',fontFamily:'var(--fb)',fontSize:15,padding:'10px 12px',borderRadius:10,width:'100%',outline:'none'};
   const save=()=>{setSt(s=>({...s,user:{...s.user,name:name.trim()||s.user.name,weightKg:parseFloat(wt)||s.user.weightKg,heightCm:parseInt(ht)||s.user.heightCm,monthlyGoal:parseInt(mg)||s.user.monthlyGoal}}));onClose();};
-  const reset=()=>{if(confirm('¿Borrar todos los datos y empezar de cero?')){localStorage.removeItem(KEY);window.location.reload();}};
+  const reset=()=>resetApp();
   return(<div className="modal-bg" onClick={onClose}>
     <div className="modal" onClick={e=>e.stopPropagation()}>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:20}}>
@@ -584,7 +594,7 @@ function App(){
   useEffect(()=>{persist(st);},[st]);
   if(!st.onboarded)return <Onboarding onDone={s=>setSt({...blank(),...s,onboarded:true})}/>;
   let body;
-  if(tab==='home')body=<Home st={st} onStart={()=>setTab('workout')} onCal={()=>setTab('calendar')} onAv={()=>setProf(true)}/>;
+  if(tab==='home')body=<Home st={st} onStart={()=>setTab('workout')} onCal={()=>setTab('calendar')} onAv={()=>setProf(true)} onReset={resetApp}/>;
   else if(tab==='calendar')body=<Calendar st={st}/>;
   else if(tab==='workout')body=<Workout st={st} setSt={setSt}/>;
   else if(tab==='stats')body=<Stats st={st}/>;
