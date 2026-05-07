@@ -173,7 +173,7 @@ function defaultRoutine(){
   {day:6,groups:[],exercises:[]}
  ];
 }
-function defaults(){return {version:1,user:{name:'Giulliana',goal:'Bajar grasa',monthlyGoal:20,weight:'',fat:''},routine:defaultRoutine(),logs:{},body:[]}}
+function defaults(){return {version:1,onboarded:false,user:{name:'Giulliana',goal:'Bajar grasa',monthlyGoal:20,weight:'',fat:''},routine:defaultRoutine(),logs:{},body:[]}}
 function normalizeRoutine(r){
  if(Array.isArray(r)) return [0,1,2,3,4,5,6].map(i=>{
    const p=r.find(x=>Number(x.day)===i)||r[i]||{};
@@ -199,7 +199,7 @@ function migrate(d){
  if(d.sessions){Object.entries(d.sessions).forEach(([date,l])=>{
    if(l.gym||l.activities){logs[date]={date,activities:(l.activities||[]).map(a=>a.type||a),noTraining:!!l.noTraining,notes:l.notes||'',gym:{groups:l.gym?.groups||[],exercises:[...(l.gym?.extras||[]).map(e=>({...normalizeEx(e),extra:true,sets:[{n:1,weight:'',reps:'',done:false},{n:2,weight:'',reps:'',done:false},{n:3,weight:'',reps:'',done:false}]}))]}}}
  })}
- return {version:1,user,routine,logs,body:d.body||d.bodyLog||user.bodyLog||[]};
+ return {version:1,onboarded:!!d.onboarded,user,routine,logs,body:d.body||d.bodyLog||user.bodyLog||[]};
 }
 function load(){
  for(const k of MIGRATE_KEYS){const raw=localStorage.getItem(k); if(raw){try{return migrate(JSON.parse(raw))}catch(e){}}}
@@ -232,7 +232,7 @@ function statusFor(k){const l=getLog(k); if(l?.noTraining)return ['No entrené',
 function daySummary(k){const l=getLog(k); if(!l)return 'Sin registro'; if(l.noTraining)return 'No entrené'; const acts=logActivities(k); if(!acts.length)return 'Sin registro'; return acts.map(a=>ACTS[a]?.label||a).join(' + ')}
 function renderHeader(){document.getElementById('dateHeader').textContent=pretty(new Date());document.getElementById('profileBtn').textContent=(state.user.name||'G').trim().charAt(0).toUpperCase()}
 function go(v){view=v;['Today','Gym','Month','Stats'].forEach(x=>{document.getElementById('view'+x).classList.toggle('active',x===v);document.getElementById('tab'+x).classList.toggle('active',x===v)});render()}
-function render(){renderHeader(); if(view==='Today')renderToday(); if(view==='Gym')renderGym(); if(view==='Month')renderMonth(); if(view==='Stats')renderStats(); save()}
+function render(){document.querySelector('.topbar').style.display='flex';document.querySelector('.tabs').style.display='grid';document.querySelector('.app > .credit').style.display='block';renderHeader(); if(view==='Today')renderToday(); if(view==='Gym')renderGym(); if(view==='Month')renderMonth(); if(view==='Stats')renderStats(); save()}
 
 function renderToday(){
  const k=todayKey(), p=getPlan(), l=ensureLog(k), wk=weekKeys(), done=wk.filter(isTraining).length, goal=Math.ceil((state.user.monthlyGoal||20)/4), [status,cls]=statusFor(k);
@@ -310,7 +310,7 @@ function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'
 function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=migrate(JSON.parse(r.result));save();closeModal();render();toast('Backup importado')}catch(err){alert('No se pudo importar el archivo')}};r.readAsText(f)}
 function resetApp(){if(!confirm('¿Borrar todos los datos de MUVIT en este dispositivo?'))return;if(!confirm('Última confirmación: esta acción no se puede deshacer.'))return;MIGRATE_KEYS.concat([KEY]).forEach(k=>localStorage.removeItem(k));state=defaults();save();closeModal();render();toast('App reiniciada')}
 function renderOnboarding(){document.querySelector('.topbar').style.display='none';document.querySelector('.tabs').style.display='none';document.querySelector('.credit').style.display='none';document.getElementById('viewToday').innerHTML=`<div class="onb"><div class="logo" style="margin-bottom:20px"><img src="apple-touch-icon.png" onerror="this.style.display='none';this.parentElement.textContent='M'"></div><div class="eyebrow">MUVIT</div><h1>¡EMPIEZA HOY!</h1><p style="margin-top:8px"><strong style="color:var(--ink)">Todo entrenamiento cuenta.</strong> Planifica tu semana, registra tus sesiones y mira tu progreso sin complicarte.</p><div class="form" style="margin-top:20px"><div><label>Nombre</label><input id="onName" placeholder="Tu nombre"></div><div><label>Objetivo</label><select id="onGoal"><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Recomposición</option><option>Mantener</option></select></div><div><label>Meta mensual de entrenamiento</label><input id="onMonthly" type="number" value="20"></div><button class="btn" onclick="finishOnboarding()">Crear MUVIT</button></div><div class="credit">Desarrollado por Gicoder26</div></div>`}
-function finishOnboarding(){state=defaults();state.user.name=document.getElementById('onName').value||'Atleta';state.user.goal=document.getElementById('onGoal').value;state.user.monthlyGoal=Number(document.getElementById('onMonthly').value||20);state.onboarded=true;save();location.reload()}
+function finishOnboarding(){state=defaults();state.user.name=document.getElementById('onName').value||'Atleta';state.user.goal=document.getElementById('onGoal').value;state.user.monthlyGoal=Number(document.getElementById('onMonthly').value||20);state.onboarded=true;save();view='Today';['Today','Gym','Month','Stats'].forEach(x=>{document.getElementById('view'+x).classList.toggle('active',x==='Today');document.getElementById('tab'+x).classList.toggle('active',x==='Today')});render();toast('MUVIT creado')}
 if(!state.onboarded){renderOnboarding()}else{render()}
 </script>
 </body>
