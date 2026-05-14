@@ -7,6 +7,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="apple-mobile-web-app-title" content="MUVIT"/>
 <meta name="theme-color" content="#F7F6F2"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
 <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"/>
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png"/>
@@ -66,14 +69,89 @@ const fmtMonth=d=>`${MTHS[d.getMonth()]} ${d.getFullYear()}`;
 const monthDays=(d=new Date())=>{const y=d.getFullYear(),m=d.getMonth(),last=new Date(y,m+1,0).getDate(),a=[];for(let i=1;i<=last;i++)a.push(new Date(y,m,i));return a};
 const ACTS={gym:{label:'Gym',emoji:'🏋️'},pilates:{label:'Pilates',emoji:'🧘‍♀️'},yoga:{label:'Yoga',emoji:'🧘'},running:{label:'Running',emoji:'🏃'},walk:{label:'Caminata',emoji:'🚶'},sauna:{label:'Sauna',emoji:'♨️',care:true},other:{label:'Otro',emoji:'✨'},none:{label:'No entrené',emoji:'—'}};
 const ACT_ORDER=['gym','pilates','yoga','running','walk','sauna','other'];
-const FOCUS_OPTIONS=['Glúteos · posterior','Cuádriceps · glúteo','Piernas completo','Espalda · bíceps','Pecho · tríceps','Hombros · core','Core · cardio','Full body','Rutina libre','Descanso'];
+const FOCUS_OPTIONS=['Glúteos · posterior','Cuádriceps · glúteo','Piernas completo','Espalda · bíceps','Espalda · tríceps','Pecho · tríceps','Pecho · hombros','Hombros · core','Brazos completo','Core · cardio','Full body','Cardio','Movilidad','Rutina libre','Descanso'];
 const EX_LIBRARY=[
- {name:'Hip thrust',muscle:'Glúteo',target:'8–12 reps'},{name:'Peso muerto rumano',muscle:'Posterior',target:'8–10 reps'},{name:'Sentadilla en Smith',muscle:'Pierna',target:'8–10 reps'},{name:'Sentadilla libre',muscle:'Pierna',target:'6–10 reps'},{name:'Prensa',muscle:'Cuádriceps',target:'10–12 reps'},{name:'Extensión de cuádriceps',muscle:'Cuádriceps',target:'12–15 reps'},{name:'Curl femoral sentado',muscle:'Femoral',target:'10–12 reps'},{name:'Curl femoral echado',muscle:'Femoral',target:'10–12 reps'},{name:'Abductores en máquina',muscle:'Glúteo medio',target:'15–20 reps'},{name:'Patada de glúteo en polea',muscle:'Glúteo',target:'12–15 reps'},{name:'Zancadas caminando',muscle:'Pierna',target:'10–12 reps'},{name:'Bulgarian split squat',muscle:'Pierna',target:'8–10 reps'},
- {name:'Press banca',muscle:'Pecho',target:'8–10 reps'},{name:'Press inclinado mancuernas',muscle:'Pecho',target:'8–12 reps'},{name:'Aperturas en máquina',muscle:'Pecho',target:'12–15 reps'},{name:'Jalón al pecho',muscle:'Espalda',target:'10–12 reps'},{name:'Remo sentado',muscle:'Espalda',target:'10–12 reps'},{name:'Remo con mancuerna',muscle:'Espalda',target:'8–12 reps'},{name:'Pull down',muscle:'Espalda',target:'10–12 reps'},
- {name:'Press militar',muscle:'Hombro',target:'8–10 reps'},{name:'Elevaciones laterales',muscle:'Hombro',target:'12–15 reps'},{name:'Face pull',muscle:'Hombro posterior',target:'12–15 reps'},{name:'Curl bíceps',muscle:'Bíceps',target:'10–12 reps'},{name:'Curl martillo',muscle:'Bíceps',target:'10–12 reps'},{name:'Tríceps en polea',muscle:'Tríceps',target:'10–12 reps'},{name:'Fondos asistidos',muscle:'Tríceps',target:'8–12 reps'},
- {name:'Plancha',muscle:'Core',target:'45–60 seg'},{name:'Crunch en polea',muscle:'Abdomen',target:'12–15 reps'},{name:'Elevación de piernas',muscle:'Core',target:'10–15 reps'},{name:'Cardio en cinta',muscle:'Cardio',target:'20 min'},{name:'Escaladora',muscle:'Cardio',target:'15–20 min'}
+ {name:'Hip thrust',muscle:'Glúteo',target:'8–12 reps'},
+ {name:'Hip thrust en Smith',muscle:'Glúteo',target:'8–12 reps'},
+ {name:'Puente de glúteo',muscle:'Glúteo',target:'12–15 reps'},
+ {name:'Patada de glúteo en polea',muscle:'Glúteo',target:'12–15 reps'},
+ {name:'Patada de glúteo en máquina',muscle:'Glúteo',target:'12–15 reps'},
+ {name:'Abductores en máquina',muscle:'Glúteo medio',target:'15–20 reps'},
+ {name:'Abducción con banda',muscle:'Glúteo medio',target:'15–20 reps'},
+ {name:'Pull through en polea',muscle:'Glúteo',target:'10–12 reps'},
+ {name:'Peso muerto rumano',muscle:'Posterior',target:'8–10 reps'},
+ {name:'Peso muerto convencional',muscle:'Posterior',target:'6–8 reps'},
+ {name:'Buenos días',muscle:'Posterior',target:'10–12 reps'},
+ {name:'Curl femoral sentado',muscle:'Femoral',target:'10–12 reps'},
+ {name:'Curl femoral echado',muscle:'Femoral',target:'10–12 reps'},
+ {name:'Curl femoral de pie',muscle:'Femoral',target:'10–12 reps'},
+ {name:'Hiperextensiones',muscle:'Posterior',target:'10–15 reps'},
+ {name:'Prensa',muscle:'Cuádriceps',target:'10–12 reps'},
+ {name:'Prensa pies altos',muscle:'Glúteo',target:'10–12 reps'},
+ {name:'Prensa pies bajos',muscle:'Cuádriceps',target:'10–12 reps'},
+ {name:'Sentadilla en Smith',muscle:'Pierna',target:'8–10 reps'},
+ {name:'Sentadilla libre',muscle:'Pierna',target:'6–10 reps'},
+ {name:'Sentadilla goblet',muscle:'Pierna',target:'10–12 reps'},
+ {name:'Hack squat',muscle:'Cuádriceps',target:'8–12 reps'},
+ {name:'Extensión de cuádriceps',muscle:'Cuádriceps',target:'12–15 reps'},
+ {name:'Zancadas caminando',muscle:'Pierna',target:'10–12 reps'},
+ {name:'Bulgarian split squat',muscle:'Pierna',target:'8–10 reps'},
+ {name:'Step up',muscle:'Pierna',target:'10–12 reps'},
+ {name:'Elevación de pantorrillas sentado',muscle:'Pantorrilla',target:'12–20 reps'},
+ {name:'Elevación de pantorrillas de pie',muscle:'Pantorrilla',target:'12–20 reps'},
+ {name:'Jalón al pecho',muscle:'Espalda',target:'10–12 reps'},
+ {name:'Jalón agarre cerrado',muscle:'Espalda',target:'10–12 reps'},
+ {name:'Remo sentado',muscle:'Espalda',target:'10–12 reps'},
+ {name:'Remo con mancuerna',muscle:'Espalda',target:'8–12 reps'},
+ {name:'Remo en máquina',muscle:'Espalda',target:'10–12 reps'},
+ {name:'Remo T-bar',muscle:'Espalda',target:'8–10 reps'},
+ {name:'Pull down',muscle:'Espalda',target:'10–12 reps'},
+ {name:'Dominadas asistidas',muscle:'Espalda',target:'6–10 reps'},
+ {name:'Pullover en polea',muscle:'Espalda',target:'10–12 reps'},
+ {name:'Face pull',muscle:'Hombro posterior',target:'12–15 reps'},
+ {name:'Press banca',muscle:'Pecho',target:'8–10 reps'},
+ {name:'Press banca con mancuernas',muscle:'Pecho',target:'8–12 reps'},
+ {name:'Press inclinado mancuernas',muscle:'Pecho',target:'8–12 reps'},
+ {name:'Press inclinado en máquina',muscle:'Pecho',target:'8–12 reps'},
+ {name:'Aperturas en máquina',muscle:'Pecho',target:'12–15 reps'},
+ {name:'Aperturas con mancuernas',muscle:'Pecho',target:'12–15 reps'},
+ {name:'Cruce de poleas',muscle:'Pecho',target:'12–15 reps'},
+ {name:'Fondos asistidos',muscle:'Tríceps',target:'8–12 reps'},
+ {name:'Press militar',muscle:'Hombro',target:'8–10 reps'},
+ {name:'Press hombro con mancuernas',muscle:'Hombro',target:'8–10 reps'},
+ {name:'Press hombro en máquina',muscle:'Hombro',target:'8–12 reps'},
+ {name:'Elevaciones laterales',muscle:'Hombro',target:'12–15 reps'},
+ {name:'Elevaciones frontales',muscle:'Hombro',target:'12–15 reps'},
+ {name:'Pájaros / reverse fly',muscle:'Hombro posterior',target:'12–15 reps'},
+ {name:'Encogimientos de hombro',muscle:'Trapecio',target:'10–15 reps'},
+ {name:'Curl bíceps',muscle:'Bíceps',target:'10–12 reps'},
+ {name:'Curl martillo',muscle:'Bíceps',target:'10–12 reps'},
+ {name:'Curl predicador',muscle:'Bíceps',target:'10–12 reps'},
+ {name:'Curl en polea',muscle:'Bíceps',target:'10–12 reps'},
+ {name:'Curl inclinado con mancuernas',muscle:'Bíceps',target:'10–12 reps'},
+ {name:'Tríceps en polea',muscle:'Tríceps',target:'10–12 reps'},
+ {name:'Tríceps cuerda',muscle:'Tríceps',target:'10–12 reps'},
+ {name:'Extensión de tríceps sobre cabeza',muscle:'Tríceps',target:'10–12 reps'},
+ {name:'Press francés',muscle:'Tríceps',target:'8–12 reps'},
+ {name:'Patada de tríceps',muscle:'Tríceps',target:'12–15 reps'},
+ {name:'Plancha',muscle:'Core',target:'45–60 seg'},
+ {name:'Plancha lateral',muscle:'Core',target:'30–45 seg'},
+ {name:'Crunch en polea',muscle:'Abdomen',target:'12–15 reps'},
+ {name:'Crunch en máquina',muscle:'Abdomen',target:'12–15 reps'},
+ {name:'Elevación de piernas',muscle:'Core',target:'10–15 reps'},
+ {name:'Dead bug',muscle:'Core',target:'10–12 reps'},
+ {name:'Russian twist',muscle:'Core',target:'12–20 reps'},
+ {name:'Pallof press',muscle:'Core',target:'10–12 reps'},
+ {name:'Cardio en cinta',muscle:'Cardio',target:'20 min'},
+ {name:'Caminata inclinada',muscle:'Cardio',target:'20–30 min'},
+ {name:'Escaladora',muscle:'Cardio',target:'15–20 min'},
+ {name:'Bicicleta estática',muscle:'Cardio',target:'20 min'},
+ {name:'Elíptica',muscle:'Cardio',target:'20 min'},
+ {name:'Remo ergómetro',muscle:'Cardio',target:'10–20 min'},
+ {name:'Movilidad de cadera',muscle:'Movilidad',target:'8–10 min'},
+ {name:'Movilidad de hombros',muscle:'Movilidad',target:'8–10 min'},
+ {name:'Estiramientos dinámicos',muscle:'Movilidad',target:'8–10 min'}
 ];
-
 const MANTRAS=[
  'Pequeño avance, gran dirección.',
  'Hoy no tiene que ser perfecto, solo tiene que contar.',
@@ -91,12 +169,17 @@ const focusKey=t=>String(t||'').toLowerCase();
 const FOCUS_PRESETS={
  'glúteos · posterior':['Hip thrust','Peso muerto rumano','Curl femoral sentado','Abductores en máquina','Patada de glúteo en polea'],
  'cuádriceps · glúteo':['Prensa','Sentadilla en Smith','Extensión de cuádriceps','Bulgarian split squat','Abductores en máquina'],
- 'piernas completo':['Hip thrust','Prensa','Sentadilla en Smith','Peso muerto rumano','Extensión de cuádriceps'],
- 'espalda · bíceps':['Jalón al pecho','Remo sentado','Pull down','Remo con mancuerna','Curl bíceps'],
+ 'piernas completo':['Hip thrust','Prensa','Sentadilla en Smith','Peso muerto rumano','Extensión de cuádriceps','Elevación de pantorrillas de pie'],
+ 'espalda · bíceps':['Jalón al pecho','Remo sentado','Pull down','Remo con mancuerna','Curl bíceps','Curl martillo'],
+ 'espalda · tríceps':['Jalón al pecho','Remo sentado','Pull down','Tríceps en polea','Tríceps cuerda'],
  'pecho · tríceps':['Press banca','Press inclinado mancuernas','Aperturas en máquina','Tríceps en polea','Fondos asistidos'],
+ 'pecho · hombros':['Press inclinado mancuernas','Aperturas en máquina','Press hombro con mancuernas','Elevaciones laterales'],
  'hombros · core':['Press militar','Elevaciones laterales','Face pull','Plancha','Crunch en polea'],
+ 'brazos completo':['Curl bíceps','Curl martillo','Curl predicador','Tríceps en polea','Extensión de tríceps sobre cabeza'],
  'core · cardio':['Plancha','Crunch en polea','Elevación de piernas','Cardio en cinta','Escaladora'],
  'full body':['Sentadilla libre','Press banca','Jalón al pecho','Peso muerto rumano','Plancha'],
+ 'cardio':['Cardio en cinta','Caminata inclinada','Escaladora','Bicicleta estática'],
+ 'movilidad':['Movilidad de cadera','Movilidad de hombros','Estiramientos dinámicos'],
  'rutina libre':[],
  'descanso':[]
 };
@@ -234,7 +317,40 @@ function BodyMetricChart({items=[],field,label,suffix}){
 }
 
 function MiniBodyChart({items=[],field,label,suffix}){const rows=(items||[]).map(x=>({date:x.date||'',value:Number(x[field])})).filter(x=>Number.isFinite(x.value)&&x.value>0).sort((a,b)=>String(a.date).localeCompare(String(b.date)));if(rows.length===0)return <div className="empty card">Aún no hay datos de {label.toLowerCase()}.</div>;const vals=rows.map(r=>r.value),min=Math.min(...vals),max=Math.max(...vals),span=Math.max(1,max-min),last=rows[rows.length-1];return <div className="chart"><div style={{display:'flex',justifyContent:'space-between',alignItems:'baseline',marginBottom:10}}><div><div className="L">{label}</div><div className="D" style={{fontSize:28,marginTop:4}}>{last.value}<span style={{fontSize:12,color:'var(--muted)'}}>{suffix}</span></div></div><div className="M" style={{fontSize:10,color:'var(--muted)'}}>{rows[0].value}{suffix} → {last.value}{suffix}</div></div><div className="line">{rows.slice(-8).map((r,i)=>{const h=((r.value-min)/span)*72+10;return <div key={i} className="dotcol"><div style={{height:h,display:'flex',alignItems:'flex-start'}}><div className="dot"></div></div></div>})}</div></div>}
-function Stats({st,onAv}){const allDates=Object.keys(st.sessions||{}).sort(),allStats=rangeStats(st,allDates.map(iso2d)),activeDays=allStats.activeDays,totalTrainings=allStats.total,gymDays=allDates.filter(iso=>hasGym(st,iso)).length,weeks=Array.from({length:8},(_,i)=>{const end=new Date();end.setDate(end.getDate()-(7-i)*7);return rangeStats(st,weekDates(dk(end)))}),maxW=Math.max(1,...weeks.map(w=>w.total));const names=allExerciseNames(st),prs=[];let setCount=0;Object.values(st.sessions||{}).forEach(day=>Object.entries(day.gym?.sets||{}).forEach(([id,arr])=>(arr||[]).forEach(s=>{if(s?.done){setCount++;if(s.weight)prs.push({name:names[id]||'Ejercicio',kg:Number(s.weight),reps:s.reps||0})}})));prs.sort((a,b)=>b.kg-a.kg);const unique=[];prs.forEach(p=>{if(!unique.some(u=>u.name===p.name))unique.push(p)});const body=st.user.bodyLog||[],avgWeek=weeks.length?(weeks.reduce((n,w)=>n+w.total,0)/weeks.length).toFixed(1):'0';return <div className="body fade"><TB user={st.user} sub="Análisis de progreso" onAv={onAv}/><div className="grid2"><div className="kpi"><div className="L">Entrenamientos</div><div className="num">{totalTrainings}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>Desde que iniciaste</div></div><div className="kpi"><div className="L">Días activos</div><div className="num">{activeDays}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>{avgWeek} prom./semana</div></div></div><div className="grid2" style={{marginTop:10}}><div className="kpi"><div className="L">Sesiones gym</div><div className="num">{gymDays}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>Con ejercicios registrados</div></div><div className="kpi"><div className="L">Sauna</div><div className="num">{allStats.counts.sauna||0}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>Cuidado acumulado</div></div></div><div className="kpi" style={{marginTop:10}}><div className="L">Series hechas</div><div className="num">{setCount}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>Total acumulado</div></div><Section>Entrenamientos por semana</Section><div className="chart"><div className="bars">{weeks.map((w,i)=><div key={i} className="bar" style={{height:`${Math.max(4,w.total/maxW*100)}%`}}><span>{w.total}</span></div>)}</div><div className="xaxis">{weeks.map((_,i)=><span key={i}>S{i+1}</span>)}</div></div><Section>Distribución acumulada</Section><div className="chart">{ACT_ORDER.map(t=>{const max=Math.max(1,...ACT_ORDER.map(k=>allStats.counts[k]||0));return <div className="hbar" key={t}><label>{ACTS[t].emoji} {ACTS[t].label}</label><div className="track"><div className="fill" style={{width:`${(allStats.counts[t]||0)/max*100}%`}}/></div><b>{allStats.counts[t]||0}</b></div>})}</div><Section>Récords de fuerza</Section><div>{unique.length===0?<div className="empty card">Completa series para ver récords y comparativas.</div>:unique.slice(0,7).map((p,i)=><div key={i} className="card" style={{marginBottom:8,display:'flex',justifyContent:'space-between',alignItems:'center'}}><div><div className="D" style={{fontSize:15}}>{p.name.toUpperCase()}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:4}}>{p.reps} reps</div></div><div className="D" style={{fontSize:28}}>{p.kg}<span style={{fontSize:11,color:'var(--muted)'}}>kg</span></div></div>)}</div><Section>Evolución corporal</Section><MiniBodyChart items={body} field="weightKg" label="Peso" suffix="kg"/><div style={{height:10}}/><MiniBodyChart items={body} field="bodyFatPct" label="Grasa corporal" suffix="%"/></div>}
+
+function muscleGroupFromExercise(ex){
+  const txt=String(`${ex?.muscle||''} ${ex?.name||''}`).toLowerCase();
+  if(txt.includes('glúte')||txt.includes('glute')||txt.includes('hip thrust')||txt.includes('abductor')||txt.includes('patada'))return 'Glúteos';
+  if(txt.includes('femoral')||txt.includes('posterior')||txt.includes('rumano')||txt.includes('peso muerto'))return 'Posterior';
+  if(txt.includes('cuádr')||txt.includes('cuadr')||txt.includes('prensa')||txt.includes('sentadilla')||txt.includes('extensión'))return 'Cuádriceps';
+  if(txt.includes('espalda')||txt.includes('jalón')||txt.includes('jalon')||txt.includes('remo')||txt.includes('pull down')||txt.includes('dominada'))return 'Espalda';
+  if(txt.includes('pecho')||txt.includes('press banca')||txt.includes('apertura'))return 'Pecho';
+  if(txt.includes('hombro')||txt.includes('militar')||txt.includes('laterales')||txt.includes('face pull'))return 'Hombros';
+  if(txt.includes('bíceps')||txt.includes('biceps')||txt.includes('curl'))return 'Bíceps';
+  if(txt.includes('tríceps')||txt.includes('triceps')||txt.includes('fondos'))return 'Tríceps';
+  if(txt.includes('core')||txt.includes('abdomen')||txt.includes('plancha')||txt.includes('crunch')||txt.includes('piernas'))return 'Core';
+  if(txt.includes('cardio')||txt.includes('cinta')||txt.includes('escaladora'))return 'Cardio';
+  return 'Otros';
+}
+function weeklyMuscleGroups(st,base=todayISO()){
+  const dates=weekDates(base).map(dk),names=allExerciseNames(st),counts={};
+  dates.forEach(iso=>{
+    const day=getDay(st,iso),baseDay=st.routine?.[iso2d(iso).getDay()]||{exercises:[]};
+    const exMap={};
+    (baseDay.exercises||[]).forEach(e=>exMap[e.id]=e);
+    (day.gym?.extras||[]).forEach(e=>exMap[e.id]=e);
+    Object.entries(day.gym?.sets||{}).forEach(([id,arr])=>{
+      const done=(arr||[]).some(s=>s?.done);
+      if(!done)return;
+      const ex=exMap[id]||{name:names[id]||''};
+      const group=muscleGroupFromExercise(ex);
+      counts[group]=(counts[group]||0)+1;
+    });
+  });
+  return Object.entries(counts).map(([name,count])=>({name,count})).sort((a,b)=>b.count-a.count||a.name.localeCompare(b.name));
+}
+
+function Stats({st,onAv}){const allDates=Object.keys(st.sessions||{}).sort(),allStats=rangeStats(st,allDates.map(iso2d)),activeDays=allStats.activeDays,totalTrainings=allStats.total,gymDays=allDates.filter(iso=>hasGym(st,iso)).length,weeks=Array.from({length:8},(_,i)=>{const end=new Date();end.setDate(end.getDate()-(7-i)*7);return rangeStats(st,weekDates(dk(end)))}),weeklyGroups=weeklyMuscleGroups(st,todayISO()),maxGroup=Math.max(1,...weeklyGroups.map(g=>g.count)),maxW=Math.max(1,...weeks.map(w=>w.total));const names=allExerciseNames(st),prs=[];let setCount=0;Object.values(st.sessions||{}).forEach(day=>Object.entries(day.gym?.sets||{}).forEach(([id,arr])=>(arr||[]).forEach(s=>{if(s?.done){setCount++;if(s.weight)prs.push({name:names[id]||'Ejercicio',kg:Number(s.weight),reps:s.reps||0})}})));prs.sort((a,b)=>b.kg-a.kg);const unique=[];prs.forEach(p=>{if(!unique.some(u=>u.name===p.name))unique.push(p)});const body=st.user.bodyLog||[],avgWeek=weeks.length?(weeks.reduce((n,w)=>n+w.total,0)/weeks.length).toFixed(1):'0';return <div className="body fade"><TB user={st.user} sub="Análisis de progreso" onAv={onAv}/><div className="grid2"><div className="kpi"><div className="L">Entrenamientos</div><div className="num">{totalTrainings}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>Desde que iniciaste</div></div><div className="kpi"><div className="L">Días activos</div><div className="num">{activeDays}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>{avgWeek} prom./semana</div></div></div><div className="grid2" style={{marginTop:10}}><div className="kpi"><div className="L">Sesiones gym</div><div className="num">{gymDays}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>Con ejercicios registrados</div></div><div className="kpi"><div className="L">Sauna</div><div className="num">{allStats.counts.sauna||0}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:5}}>Cuidado acumulado</div></div></div><Section>Grupos musculares esta semana</Section><div className="chart">{weeklyGroups.length===0?<div className="empty">Aún no hay grupos musculares registrados esta semana.</div>:weeklyGroups.map(g=><div className="hbar" key={g.name}><label>{g.name}</label><div className="track"><div className="fill" style={{width:`${g.count/maxGroup*100}%`}}/></div><b>{g.count}</b></div>)}</div><Section>Entrenamientos por semana</Section><div className="chart"><div className="bars">{weeks.map((w,i)=><div key={i} className="bar" style={{height:`${Math.max(4,w.total/maxW*100)}%`}}><span>{w.total}</span></div>)}</div><div className="xaxis">{weeks.map((_,i)=><span key={i}>S{i+1}</span>)}</div></div><Section>Distribución acumulada</Section><div className="chart">{ACT_ORDER.map(t=>{const max=Math.max(1,...ACT_ORDER.map(k=>allStats.counts[k]||0));return <div className="hbar" key={t}><label>{ACTS[t].emoji} {ACTS[t].label}</label><div className="track"><div className="fill" style={{width:`${(allStats.counts[t]||0)/max*100}%`}}/></div><b>{allStats.counts[t]||0}</b></div>})}</div><Section>Récords de fuerza</Section><div>{unique.length===0?<div className="empty card">Completa series para ver récords y comparativas.</div>:unique.slice(0,7).map((p,i)=><div key={i} className="card" style={{marginBottom:8,display:'flex',justifyContent:'space-between',alignItems:'center'}}><div><div className="D" style={{fontSize:15}}>{p.name.toUpperCase()}</div><div className="M" style={{fontSize:9,color:'var(--muted)',marginTop:4}}>{p.reps} reps</div></div><div className="D" style={{fontSize:28}}>{p.kg}<span style={{fontSize:11,color:'var(--muted)'}}>kg</span></div></div>)}</div><Section>Evolución corporal</Section><MiniBodyChart items={body} field="weightKg" label="Peso" suffix="kg"/><div style={{height:10}}/><MiniBodyChart items={body} field="bodyFatPct" label="Grasa corporal" suffix="%"/></div>}
 
 function exportData(st){
   try{
@@ -275,8 +391,51 @@ function importDataFile(event,setSt,onDone){
   reader.readAsText(file);
 }
 
-function ProfileModal({st,setSt,onClose}){const [name,setName]=useState(st.user.name||''),[goal,setGoal]=useState(st.user.goal||'Bajar grasa'),[wt,setWt]=useState(st.user.weightKg||''),[bf,setBf]=useState(st.user.bodyFatPct||''),[mg,setMg]=useState(st.user.monthlyGoalGym||12),[mm,setMm]=useState(st.user.monthlyGoalMove||20),[edit,setEdit]=useState(false);const save=()=>{setSt(s=>{const stages=goal!==s.user.goal?[...(s.user.stages||[]),{id:gid(),goal,start:todayISO()}]:(s.user.stages||[]);const bodyLog=[...(s.user.bodyLog||[])];const nw=parseFloat(wt)||null,nb=parseFloat(bf)||null;if(nw!==s.user.weightKg||nb!==s.user.bodyFatPct)bodyLog.push({id:gid(),date:todayISO(),weightKg:nw,bodyFatPct:nb});return {...s,user:{...s.user,name:name.trim()||s.user.name,goal,weightKg:nw,bodyFatPct:nb,monthlyGoalGym:parseInt(mm)||20,monthlyGoalMove:parseInt(mm)||20,stages,bodyLog}}});onClose()};if(edit)return <RoutineEditor st={st} setSt={setSt} onBack={()=>setEdit(false)}/>;return <div className="modal-bg" onClick={onClose}><div className="modal" onClick={e=>e.stopPropagation()}><div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}><div className="D" style={{fontSize:24}}>PERFIL</div><button className="small-btn" onClick={onClose}>cerrar</button></div><label className="field"><span>Nombre</span><input value={name} onChange={e=>setName(e.target.value)}/></label><label className="field"><span>Objetivo</span><select value={goal} onChange={e=>setGoal(e.target.value)}><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Recomposición</option><option>Mantener</option></select></label><div className="grid2"><label className="field"><span>Peso kg</span><input type="number" value={wt} onChange={e=>setWt(e.target.value)} placeholder="Opcional"/></label><label className="field"><span>% grasa</span><input type="number" value={bf} onChange={e=>setBf(e.target.value)} placeholder="Opcional"/></label></div><label className="field"><span>Meta mensual de entrenamiento</span><input type="number" value={mm} onChange={e=>{setMm(e.target.value);setMg(e.target.value)}}/></label><p className="M" style={{fontSize:10,color:'var(--muted)',marginTop:-6,marginBottom:10}}>Esta meta cuenta entrenamientos. Sauna se guarda como cuidado, sin sumar a la meta.</p><button className="btn btn-s" style={{width:'100%',marginTop:8}} onClick={()=>setEdit(true)}><span>Editar rutina semanal</span><span>→</span></button><button className="btn btn-p" style={{width:'100%',marginTop:10}} onClick={save}><span>Guardar perfil</span><span className="round">✓</span></button><div style={{borderTop:'1px solid var(--line)',marginTop:18,paddingTop:14}}><div className="L" style={{marginBottom:8,color:'var(--dim)'}}>BACKUP Y AJUSTES</div><button className="small-btn" style={{width:'100%',borderRadius:14,padding:12,marginBottom:8}} onClick={()=>exportData(st)}>Descargar backup</button><button className="small-btn" style={{width:'100%',borderRadius:14,padding:12,marginBottom:8}} onClick={()=>document.getElementById('muvitImportFile').click()}>Importar backup</button><input id="muvitImportFile" className="hidden" type="file" accept="application/json" onChange={e=>importDataFile(e,setSt,onClose)}/><div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginBottom:10}}>Usa el backup antes de actualizar o reinstalar MUVIT.</div><button className="small-btn" style={{width:'100%',borderColor:'var(--acc2)',color:'var(--acc2)',borderRadius:14,padding:12}} onClick={resetApp}>Borrar datos y reiniciar</button><div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginTop:6}}>Reinicia MUVIT solo en este dispositivo.</div></div></div></div>}
-function RoutineEditor({st,setSt,onBack}){const [rtn,setRtn]=useState(JSON.parse(JSON.stringify(normalizeRoutine(st.routine)))),[dow,setDow]=useState(1);const day=rtn[dow];const updateEx=(id,field,val)=>setRtn(r=>({...r,[dow]:{...r[dow],exercises:r[dow].exercises.map(e=>e.id===id?{...e,[field]:val}:e)}}));const add=ex=>setRtn(r=>({...r,[dow]:{...r[dow],focus:r[dow].focus==='DESCANSO'?'ENTRENAMIENTO':r[dow].focus,exercises:[...r[dow].exercises,{...ex,id:gid()}]}}));const del=id=>setRtn(r=>({...r,[dow]:{...r[dow],exercises:r[dow].exercises.filter(e=>e.id!==id)}}));const save=()=>{setSt(s=>({...s,routine:normalizeRoutine(rtn)}));onBack()};return <div className="modal-bg"><div className="modal"><button className="small-btn" onClick={onBack}>← perfil</button><div className="D" style={{fontSize:25,margin:'14px 0'}}>EDITAR RUTINA</div><div className="dtog-wrap">{[1,2,3,4,5,6,0].map(d=><button key={d} className={`dtog${dow===d?' on':''}`} onClick={()=>setDow(d)}>{DOWS[d]}</button>)}</div><label className="field"><span>Foco del día</span><input value={day.focus} onChange={e=>setRtn(r=>({...r,[dow]:{...r[dow],focus:e.target.value}}))}/></label>{day.exercises.map(ex=><div className="card" key={ex.id} style={{marginBottom:8}}><div className="suggest"><input className="input" value={ex.name} onChange={e=>updateEx(ex.id,'name',e.target.value)} placeholder="Ejercicio"/></div><div className="grid2" style={{marginTop:8}}><input className="input" value={ex.muscle} onChange={e=>updateEx(ex.id,'muscle',e.target.value)} placeholder="Músculo"/><input className="input" value={ex.target} onChange={e=>updateEx(ex.id,'target',e.target.value)} placeholder="Objetivo"/></div><button className="small-btn" style={{marginTop:8}} onClick={()=>del(ex.id)}>Eliminar</button></div>)}<AddExercise onAdd={add}/><button className="btn btn-p" style={{width:'100%',marginTop:12}} onClick={save}><span>Guardar rutina</span><span className="round">✓</span></button></div></div>}
+
+function clearAppCacheOnly(){
+  try{
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.getRegistrations()
+        .then(regs=>regs.forEach(reg=>reg.unregister()))
+        .catch(()=>{});
+    }
+    if(window.caches){
+      caches.keys()
+        .then(keys=>keys.forEach(k=>caches.delete(k)))
+        .catch(()=>{});
+    }
+  }catch(e){}
+}
+function updateAppVersion(){
+  clearAppCacheOnly();
+  const base=window.location.origin+window.location.pathname;
+  const sep=base.includes('?')?'&':'?';
+  window.location.href=base+sep+'v='+Date.now();
+}
+
+function ProfileModal({st,setSt,onClose}){const [name,setName]=useState(st.user.name||''),[goal,setGoal]=useState(st.user.goal||'Bajar grasa'),[wt,setWt]=useState(st.user.weightKg||''),[bf,setBf]=useState(st.user.bodyFatPct||''),[mg,setMg]=useState(st.user.monthlyGoalGym||12),[mm,setMm]=useState(st.user.monthlyGoalMove||20),[edit,setEdit]=useState(false);const save=()=>{setSt(s=>{const stages=goal!==s.user.goal?[...(s.user.stages||[]),{id:gid(),goal,start:todayISO()}]:(s.user.stages||[]);const bodyLog=[...(s.user.bodyLog||[])];const nw=parseFloat(wt)||null,nb=parseFloat(bf)||null;if(nw!==s.user.weightKg||nb!==s.user.bodyFatPct)bodyLog.push({id:gid(),date:todayISO(),weightKg:nw,bodyFatPct:nb});return {...s,user:{...s.user,name:name.trim()||s.user.name,goal,weightKg:nw,bodyFatPct:nb,monthlyGoalGym:parseInt(mm)||20,monthlyGoalMove:parseInt(mm)||20,stages,bodyLog}}});onClose()};if(edit)return <RoutineEditor st={st} setSt={setSt} onBack={()=>setEdit(false)}/>;return <div className="modal-bg" onClick={onClose}><div className="modal" onClick={e=>e.stopPropagation()}><div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}><div className="D" style={{fontSize:24}}>PERFIL</div><button className="small-btn" onClick={onClose}>cerrar</button></div><label className="field"><span>Nombre</span><input value={name} onChange={e=>setName(e.target.value)}/></label><label className="field"><span>Objetivo</span><select value={goal} onChange={e=>setGoal(e.target.value)}><option>Bajar grasa</option><option>Ganar músculo</option><option>Ganar fuerza</option><option>Recomposición</option><option>Mantener</option></select></label><div className="grid2"><label className="field"><span>Peso kg</span><input type="number" value={wt} onChange={e=>setWt(e.target.value)} placeholder="Opcional"/></label><label className="field"><span>% grasa</span><input type="number" value={bf} onChange={e=>setBf(e.target.value)} placeholder="Opcional"/></label></div><label className="field"><span>Meta mensual de entrenamiento</span><input type="number" value={mm} onChange={e=>{setMm(e.target.value);setMg(e.target.value)}}/></label><p className="M" style={{fontSize:10,color:'var(--muted)',marginTop:-6,marginBottom:10}}>Esta meta cuenta entrenamientos. Sauna se guarda como cuidado, sin sumar a la meta.</p><button className="btn btn-s" style={{width:'100%',marginTop:8}} onClick={()=>setEdit(true)}><span>Editar rutina semanal</span><span>→</span></button><button className="btn btn-p" style={{width:'100%',marginTop:10}} onClick={save}><span>Guardar perfil</span><span className="round">✓</span></button><div style={{borderTop:'1px solid var(--line)',marginTop:18,paddingTop:14}}><div className="L" style={{marginBottom:8,color:'var(--dim)'}}>BACKUP Y AJUSTES</div><button className="small-btn" style={{width:'100%',borderRadius:14,padding:12,marginBottom:8}} onClick={()=>exportData(st)}>Descargar backup</button><button className="small-btn" style={{width:'100%',borderRadius:14,padding:12,marginBottom:8}} onClick={()=>document.getElementById('muvitImportFile').click()}>Importar backup</button><button className="small-btn dark" style={{width:'100%',borderRadius:14,padding:12,marginBottom:8}} onClick={updateAppVersion}>Actualizar app</button><input id="muvitImportFile" className="hidden" type="file" accept="application/json" onChange={e=>importDataFile(e,setSt,onClose)}/><div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginBottom:10}}>Usa el backup antes de cambios grandes. Actualizar app no borra tus datos.</div><button className="small-btn" style={{width:'100%',borderColor:'var(--acc2)',color:'var(--acc2)',borderRadius:14,padding:12}} onClick={resetApp}>Borrar datos y reiniciar</button><div className="M" style={{fontSize:9,color:'var(--dim)',textAlign:'center',marginTop:6}}>Reinicia MUVIT solo en este dispositivo.</div></div></div></div>}
+
+function focusMatchesExercise(focus,ex){
+  const f=focusKey(focus),m=String(ex?.muscle||'').toLowerCase(),n=String(ex?.name||'').toLowerCase();
+  if(f.includes('descanso'))return false;
+  if(f.includes('rutina libre'))return true;
+  if(f.includes('glúte'))return m.includes('glúte')||m.includes('glute')||n.includes('hip thrust')||n.includes('abductor')||n.includes('patada');
+  if(f.includes('posterior'))return m.includes('posterior')||m.includes('femoral')||n.includes('rumano')||n.includes('peso muerto')||n.includes('hiperextensiones');
+  if(f.includes('cuádr')||f.includes('cuadr'))return m.includes('cuádr')||m.includes('cuadr')||n.includes('prensa')||n.includes('sentadilla')||n.includes('extensión')||n.includes('bulgarian')||n.includes('hack');
+  if(f.includes('piernas'))return ['glúte','glute','posterior','femoral','cuádr','cuadr','pierna','pantorrilla'].some(x=>m.includes(x)||n.includes(x));
+  if(f.includes('espalda'))return m.includes('espalda')||n.includes('jalón')||n.includes('jalon')||n.includes('remo')||n.includes('pull down')||n.includes('dominada')||n.includes('pullover');
+  if(f.includes('pecho'))return m.includes('pecho')||n.includes('press banca')||n.includes('apertura')||n.includes('poleas');
+  if(f.includes('hombros')||f.includes('hombro'))return m.includes('hombro')||m.includes('trapecio')||n.includes('laterales')||n.includes('militar')||n.includes('face pull');
+  if(f.includes('bíceps')||f.includes('biceps'))return m.includes('bíceps')||m.includes('biceps')||n.includes('curl');
+  if(f.includes('tríceps')||f.includes('triceps'))return m.includes('tríceps')||m.includes('triceps')||n.includes('fondos')||n.includes('francés');
+  if(f.includes('brazos'))return m.includes('bíceps')||m.includes('biceps')||m.includes('tríceps')||m.includes('triceps')||n.includes('curl')||n.includes('tríceps');
+  if(f.includes('core'))return m.includes('core')||m.includes('abdomen')||n.includes('plancha')||n.includes('crunch')||n.includes('dead bug')||n.includes('twist')||n.includes('pallof');
+  if(f.includes('cardio'))return m.includes('cardio')||n.includes('cinta')||n.includes('escaladora')||n.includes('bicicleta')||n.includes('elíptica')||n.includes('remo ergómetro');
+  if(f.includes('movilidad'))return m.includes('movilidad')||n.includes('movilidad')||n.includes('estiramiento');
+  return true;
+}
+function exercisesForFocus(focus){return EX_LIBRARY.filter(e=>focusMatchesExercise(focus,e))}
+function RoutineEditor({st,setSt,onBack}){const [rtn,setRtn]=useState(JSON.parse(JSON.stringify(normalizeRoutine(st.routine)))),[dow,setDow]=useState(1);const day=rtn[dow]||{focus:'Descanso',exercises:[]};const updateFocus=v=>setRtn(r=>({...r,[dow]:{...r[dow],focus:v,exercises:r[dow]?.exercises||[]}}));const updateEx=(id,field,val)=>setRtn(r=>({...r,[dow]:{...r[dow],exercises:r[dow].exercises.map(e=>e.id===id?{...e,[field]:val}:e)}}));const add=ex=>setRtn(r=>({...r,[dow]:{...r[dow],focus:r[dow].focus==='DESCANSO'?'Rutina libre':r[dow].focus,exercises:[...r[dow].exercises,{...ex,id:gid()}]}}));const addFromLibrary=ex=>add(libEx(ex.name));const addPreset=()=>{const preset=presetExercisesForFocus(day.focus);setRtn(r=>{const current=r[dow]?.exercises||[],existing=new Set(current.map(e=>String(e.name).toLowerCase()));const toAdd=preset.filter(e=>!existing.has(String(e.name).toLowerCase()));return {...r,[dow]:{...r[dow],exercises:[...current,...toAdd]}}})};const del=id=>setRtn(r=>({...r,[dow]:{...r[dow],exercises:r[dow].exercises.filter(e=>e.id!==id)}}));const save=()=>{setSt(s=>({...s,routine:normalizeRoutine(rtn)}));onBack()};const suggestions=exercisesForFocus(day.focus).slice(0,18);return <div className="modal-bg"><div className="modal"><button className="small-btn" onClick={onBack}>← perfil</button><div className="D" style={{fontSize:25,margin:'14px 0'}}>EDITAR RUTINA</div><div className="dtog-wrap">{[1,2,3,4,5,6,0].map(d=><button key={d} className={`dtog${dow===d?' on':''}`} onClick={()=>setDow(d)}>{DOWS[d]}</button>)}</div><label className="field"><span>Foco del día</span><select value={day.focus||'Rutina libre'} onChange={e=>updateFocus(e.target.value)}>{FOCUS_OPTIONS.map(f=><option key={f} value={f}>{f}</option>)}</select></label><div style={{display:'flex',gap:8,marginBottom:10}}><button className="small-btn dark" style={{flex:1}} onClick={addPreset}>Agregar sugeridos del foco</button><button className="small-btn" style={{flex:1}} onClick={()=>setRtn(r=>({...r,[dow]:{...r[dow],exercises:[]}}))}>Limpiar día</button></div><div className="card soft" style={{marginBottom:10}}><div className="L" style={{marginBottom:8}}>SUGERENCIAS PARA {String(day.focus||'').toUpperCase()}</div><div className="pill-row" style={{flexWrap:'wrap',overflow:'visible'}}>{suggestions.length? suggestions.map(ex=><button key={ex.name} className="pill" onClick={()=>addFromLibrary(ex)}>{ex.name}</button>):<div className="M" style={{fontSize:11,color:'var(--muted)'}}>Elige un foco para ver ejercicios asociados.</div>}</div></div>{day.exercises.map(ex=><div className="card" key={ex.id} style={{marginBottom:8}}><div className="suggest"><input className="input" value={ex.name} onChange={e=>updateEx(ex.id,'name',e.target.value)} placeholder="Ejercicio"/></div><div className="grid2" style={{marginTop:8}}><input className="input" value={ex.muscle} onChange={e=>updateEx(ex.id,'muscle',e.target.value)} placeholder="Músculo"/><input className="input" value={ex.target} onChange={e=>updateEx(ex.id,'target',e.target.value)} placeholder="Objetivo"/></div><button className="small-btn" style={{marginTop:8}} onClick={()=>del(ex.id)}>Eliminar</button></div>)}<AddExercise onAdd={add}/><button className="btn btn-p" style={{width:'100%',marginTop:12}} onClick={save}><span>Guardar rutina</span><span className="round">✓</span></button></div></div>}
 function App(){const [st,setSt]=useState(()=>load()),[tab,setTab]=useState('home'),[prof,setProf]=useState(false),[activeDate,setActiveDate]=useState(todayISO());useEffect(()=>persist(st),[st]);if(!st.onboarded)return <Onboarding onDone={setSt}/>;const openGym=iso=>{setActiveDate(iso);markActivity(setSt,iso,'gym');setTab('workout')};let body=tab==='home'?<Home st={st} setSt={setSt} onAv={()=>setProf(true)} onStartGym={openGym}/>:tab==='calendar'?<Calendar st={st} setSt={setSt} onAv={()=>setProf(true)} onGym={openGym}/>:tab==='workout'?<Workout st={st} setSt={setSt} onAv={()=>setProf(true)} activeDate={activeDate} setActiveDate={setActiveDate}/>:<Stats st={st} onAv={()=>setProf(true)}/>;return <><div className="app"><div className="scroll">{body}</div><Nav active={tab} onChange={setTab}/></div>{prof&&<ProfileModal st={st} setSt={setSt} onClose={()=>setProf(false)}/>}</>}
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
